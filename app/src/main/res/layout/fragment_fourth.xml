@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.FourthFragment"
+    android:background="@color/colorBackground">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/buttons">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fadeScrollbars="true"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="10dp">
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="HIV Status"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="20sp"
+                            android:gravity="center_horizontal"/>
+
+                        <TextView
+                            android:layout_marginTop="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="What is the patient's HIV status"
+                            android:textSize="18sp"
+                            android:textColor="@color/colorTextPrimary"/>
+
+
+                        <RadioGroup
+                            android:id="@+id/radioGroup"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <RadioButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Negative"
+                                android:textSize="18sp"
+                                android:id="@+id/negative"
+                                android:buttonTint="@color/colorPrimary"/>
+
+                            <RadioButton
+                                android:layout_marginTop="10dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Positive"
+                                android:textSize="18sp"
+                                android:id="@+id/positive"
+                                android:buttonTint="@color/colorPrimary"/>
+
+                            <RadioButton
+                                android:layout_marginTop="10dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Unknown"
+                                android:id="@+id/unknown"
+                                android:textSize="18sp"
+                                android:buttonTint="@color/colorPrimary"/>
+
+                        </RadioGroup>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttons"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/primary_btn"
+            android:layout_margin="10dp"
+            android:text="Back"
+            android:textColor="@color/colorBackground"/>
+
+        <Button
+            android:id="@+id/next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="next"
+            android:layout_margin="10dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/primary_btn"
+            android:textColor="@color/colorBackground"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    Basic color-->
+    <color name="colorPrimary">#0086D8</color>
+    <!--    <color name="colorPrimaryDark">#CEE4EC</color>-->
+    <color name="colorPrimaryDark">#c6c6c6</color>
+<!--    <color name="colorAccent">#817F8A</color>-->
+    <color name="colorAccent">#FFFFFF</color>
+    <color name="colorTransparent">#00ffffff</color>
+
+
+    <!--    tertiary colors-->
+    <!--    #CEE4EC-->
+    <color name="colorGradientStart">#00FFFFFF</color>
+    <color name="colorGradientCenter">#00FFFFFF</color>
+    <color name="colorGradientEnd">#33CEE4EC</color>
+    <!--    <color name="colorGradientEnd">#FF1493</color>-->
+
+
+    <color name="colorStripeStart">#33CEE4EC</color>
+    <color name="colorStripeEnd">#0Dffffff</color>
+    <color name="colorFadedGold">#FCD69E</color>
+
+    <color name="colorRed">#C33B2F</color>
+    <color name="colorGold">#FFA726</color>
+    <color name="colorGreen">#57BB8A</color>
+    <color name="colorLine">#c6c6c6</color>
+    <color name="colorGrey">#9E9E9E</color>
+    <color name="mtn_color">#FDCD56</color>
+    <color name="airtel_color">#DB4437</color>
+    <color name="lineSeparatorColor">#e6e6e6</color>
+    <color name="headerColor">#CEE4EC</color>
+    <color name="statusColor">#c6c6c6</color>
+
+    <color name="colorTextPrimary">#212121</color>
+    <color name="colorBottom">#2C2525</color>
+    <color name="colorTextSecondary">#757575</color>
+    <color name="colorBackground">#FFFFFF</color>
+    <color name="colorOnboardingIndicatorInactive">#72BCF7</color>
+
+    <!--        uci color palette-->
+    <color name="colorMainGold">#fa9928</color>
+    <color name="colorMain">#131d33</color>
+    <color name="colorMain2">#182440</color>
+    <color name="colorMainBlue">#0086D8</color>
+    <color name="colorMainBlack">#0b111e</color>
+</resources>

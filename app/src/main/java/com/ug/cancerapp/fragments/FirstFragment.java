@@ -2,10 +2,14 @@ package com.ug.cancerapp.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +54,7 @@ public class FirstFragment extends Fragment {
 
         etzone = view.findViewById(R.id.zone);
 
-
+        etage.addTextChangedListener(textWatcher);
 
 //        back = view.findViewById(R.id.back);
         next = view.findViewById(R.id.next);
@@ -83,7 +87,25 @@ public class FirstFragment extends Fragment {
         return view;
     }
 
+    TextWatcher textWatcher =new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+        }
 
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            String age = etage.getText().toString().trim();
+            int number = Integer.parseInt(age);
+            if (number <= 15){
+                etage.setError("The Age only should be greater than 15");
+            }
+        }
 
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
+    
 }

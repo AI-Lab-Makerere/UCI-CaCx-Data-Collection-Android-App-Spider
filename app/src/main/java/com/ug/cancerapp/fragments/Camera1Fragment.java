@@ -23,9 +23,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.ug.cancerapp.R;
-import com.ug.cancerapp.activities.MainActivity;
-
-import static android.app.Activity.RESULT_OK;
 
 
 public class Camera1Fragment extends Fragment {

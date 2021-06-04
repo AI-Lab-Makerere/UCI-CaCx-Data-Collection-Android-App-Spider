@@ -13,8 +13,11 @@ import java.util.List;
 @Dao
 public interface FormDAO {
 
-    @Query("Select * from Cervix_Screening")
+    @Query("SELECT * FROM Cervix_Screening")
     LiveData<List<Form>> getAllForms();
+
+    @Query("SELECT * FROM Cervix_Screening WHERE `key` = (SELECT MAX(`key`) FROM Cervix_Screening)")
+    Form filterdata(Form form);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long insertForm(Form form);

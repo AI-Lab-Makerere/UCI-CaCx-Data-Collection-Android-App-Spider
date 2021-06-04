@@ -18,7 +18,7 @@ public class Form {
     String district;
     String county;
     String village;
-    @ColumnInfo(defaultValue = "(datetime('now'))")
+    @ColumnInfo(defaultValue = "CURRENT_TIMESTAMP")
     String date;
 
     public String getStudyID() {

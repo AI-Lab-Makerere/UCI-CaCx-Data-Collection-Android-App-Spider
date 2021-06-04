@@ -25,6 +25,8 @@ public class SecondFragment extends Fragment {
     RadioButton radioButton;
     private static final int YES = 0;
     private static final int NO = 1;
+    String value = "";
+    FragmentTransaction fr;
 
     public SecondFragment() {
         // Required empty public constructor
@@ -55,9 +57,11 @@ public class SecondFragment extends Fragment {
                 switch (index){
                     case YES:
                         Toast.makeText(getActivity(), "Yes", Toast.LENGTH_SHORT).show();
+                        value = "Yes";
                         break;
                     case NO:
                         Toast.makeText(getActivity(), "No", Toast.LENGTH_SHORT).show();
+                        value = "No";
                         break;
                     default:
                         break;
@@ -69,10 +73,23 @@ public class SecondFragment extends Fragment {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction fr = getFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_container, new ThirdFragment());
-                fr.addToBackStack(null);
-                fr.commit();
+                if (value.equals("Yes")){
+                    fr = getFragmentManager().beginTransaction();
+                    fr.replace(R.id.fragment_container, new YesFragment());
+                    fr.addToBackStack(null);
+                    fr.commit();
+
+                }else if (value.equals("No")){
+                    fr = getFragmentManager().beginTransaction();
+                    fr.replace(R.id.fragment_container, new ThirdFragment());
+                    fr.addToBackStack(null);
+                    fr.commit();
+
+                }else {
+                    Toast.makeText(getActivity(), "Choose one option", Toast.LENGTH_SHORT).show();
+                }
+
+
             }
         });
 

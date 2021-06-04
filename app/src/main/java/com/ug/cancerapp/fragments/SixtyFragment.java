@@ -70,32 +70,41 @@ public class SixtyFragment extends Fragment {
     private void checkedlist() {
         String s = "";
         if(pill.isChecked()){
-            s += "\n Pills";
+            s += "Pills, ";
         }
         if(inj.isChecked()){
-            s += "\n InjectorPlan";
+            s += "InjectorPlan, ";
         }
         if(iud.isChecked()){
-            s += "\n IUD";
+            s += "IUD, ";
         }
         if(imp.isChecked()){
-            s += "\n Implant";
+            s += "Implant, ";
         }
         if(cds.isChecked()){
-            s += "\n Condoms";
+            s += "Condoms, ";
         }
         if(others.isChecked()){
-            s += "\n Others";
+            s = "Others";
         }
         if(none.isChecked()){
-            s += "\n None";
+            s = "None";
         }
 
         Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
 
-        FragmentTransaction fr = getFragmentManager().beginTransaction();
-        fr.replace(R.id.fragment_container, new Camera1Fragment());
-        fr.addToBackStack(null);
-        fr.commit();
+        if (s.contains("Others")){
+            FragmentTransaction fr = getFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_container, new Other2Fragment());
+            fr.addToBackStack(null);
+            fr.commit();
+
+        }else {
+            FragmentTransaction fr = getFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_container, new Camera1Fragment());
+            fr.addToBackStack(null);
+            fr.commit();
+        }
+
     }
 }

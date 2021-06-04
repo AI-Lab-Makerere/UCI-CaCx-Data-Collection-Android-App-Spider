@@ -19,6 +19,9 @@ import android.widget.Toast;
 
 import com.ug.cancerapp.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class FirstFragment extends Fragment {
 
     EditText etstudy, etinitial, etage, etdistrict, etcounty, etzone;
@@ -43,6 +46,10 @@ public class FirstFragment extends Fragment {
         view =  inflater.inflate(R.layout.fragment_first, container, false);
 
         etstudy = view.findViewById(R.id.studyId);
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+//        String format = simpleDateFormat.format(new Date());
+
+//        etstudy.setText(format);
 
         etinitial = view.findViewById(R.id.initials);
 

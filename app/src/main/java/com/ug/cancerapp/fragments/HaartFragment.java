@@ -15,8 +15,7 @@ import android.widget.Toast;
 
 import com.ug.cancerapp.R;
 
-
-public class ThirdFragment extends Fragment {
+public class HaartFragment extends Fragment {
 
     View view;
     Button back, next;
@@ -24,24 +23,14 @@ public class ThirdFragment extends Fragment {
     RadioButton radioButton;
     private static final int YES = 0;
     private static final int NO = 1;
+
     String value = "";
-
-    public ThirdFragment() {
-        // Required empty public constructor
-    }
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view =  inflater.inflate(R.layout.fragment_third, container, false);
+        view = inflater.inflate(R.layout.fragment_haart, container, false);
 
         back = view.findViewById(R.id.back);
         next = view.findViewById(R.id.next);
@@ -53,7 +42,7 @@ public class ThirdFragment extends Fragment {
                 View radioButton = radioGroup.findViewById(checkedId);
                 int index = radioGroup.indexOfChild(radioButton);
 
-                switch (index){
+                switch (index) {
                     case YES:
                         Toast.makeText(getActivity(), "Yes", Toast.LENGTH_SHORT).show();
                         value = "Yes";
@@ -62,6 +51,7 @@ public class ThirdFragment extends Fragment {
                         Toast.makeText(getActivity(), "No", Toast.LENGTH_SHORT).show();
                         value = "No";
                         break;
+
                     default:
                         break;
                 }
@@ -71,23 +61,19 @@ public class ThirdFragment extends Fragment {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (value.equals("Yes")){
-
+                if (value.equals("Yes")) {
                     FragmentTransaction fr = getFragmentManager().beginTransaction();
-                    fr.replace(R.id.fragment_container, new ScreenFragment());
+                    fr.replace(R.id.fragment_container, new Haart2Fragment());
                     fr.addToBackStack(null);
                     fr.commit();
 
-                }else if (value.equals("No")){
-
+                } else {
                     FragmentTransaction fr = getFragmentManager().beginTransaction();
-                    fr.replace(R.id.fragment_container, new FourthFragment());
+                    fr.replace(R.id.fragment_container, new FifthFragment());
                     fr.addToBackStack(null);
                     fr.commit();
-
-                }else {
-                    Toast.makeText(getActivity(), "Choose oe option", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 
@@ -95,10 +81,11 @@ public class ThirdFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentTransaction fr = getFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_container, new SecondFragment());
+                fr.replace(R.id.fragment_container, new FourthFragment());
                 fr.commit();
             }
         });
+
 
         return view;
     }

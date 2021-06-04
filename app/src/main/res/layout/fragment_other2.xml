@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
-    tools:context=".fragments.FifthFragment">
+    tools:context=".fragments.Other2Fragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -24,7 +23,6 @@
                 android:layout_margin="10dp"
                 android:orientation="vertical">
 
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -37,65 +35,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="What contraceptives does the patient use?"
+                    android:text="Specify other contraceptives used"
                     android:textColor="@color/colorTextPrimary"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
 
-                <CheckBox
-                    android:id="@+id/pills"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16sp"
-                    android:text="Pills" />
 
-                <CheckBox
-                    android:id="@+id/inj"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <EditText
+                    android:id="@+id/other"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
                     android:layout_marginTop="10dp"
-                    android:textSize="16sp"
-                    android:text="Injectaplan" />
-
-                <CheckBox
-                    android:id="@+id/iud"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16sp"
-                    android:text="IUD" />
-
-                <CheckBox
-                    android:id="@+id/cds"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16sp"
-                    android:text="Condoms" />
-
-                <CheckBox
-                    android:id="@+id/imp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16sp"
-                    android:text="Implant" />
-
-                <CheckBox
-                    android:id="@+id/oth"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16sp"
-                    android:text="Others" />
-
-                <CheckBox
-                    android:id="@+id/none"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16sp"
-                    android:text="None" />
+                    android:saveEnabled="false"
+                    android:background="@drawable/text_bg"
+                    android:paddingLeft="5dp" />
 
 
             </LinearLayout>
@@ -127,7 +79,7 @@
             android:layout_margin="10dp"
             android:background="@drawable/primary_btn"
             android:text="next"
-            android:textColor="@color/colorBackground" />
+            android:textColor="@color/colorBackground"/>
 
     </RelativeLayout>
 

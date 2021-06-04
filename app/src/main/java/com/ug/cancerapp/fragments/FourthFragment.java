@@ -25,6 +25,8 @@ public class FourthFragment extends Fragment {
     private static final int POSITIVE = 1;
     private static final int UNKNOWN = 2;
 
+    String value = "";
+
     public FourthFragment() {
         // Required empty public constructor
     }
@@ -56,12 +58,15 @@ public class FourthFragment extends Fragment {
                 switch (index){
                     case NEGATIVE:
                         Toast.makeText(getActivity(), "Negative", Toast.LENGTH_SHORT).show();
+                        value = "Negative";
                         break;
                     case POSITIVE:
                         Toast.makeText(getActivity(), "Positive", Toast.LENGTH_SHORT).show();
+                        value = "Positive";
                         break;
                     case UNKNOWN:
                         Toast.makeText(getActivity(), "Unknown", Toast.LENGTH_SHORT).show();
+                        value = "UnKnown";
                         break;
                     default:
                         break;
@@ -72,10 +77,19 @@ public class FourthFragment extends Fragment {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction fr = getFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_container, new FifthFragment());
-                fr.addToBackStack(null);
-                fr.commit();
+                if(value.equals("Positive")){
+                    FragmentTransaction fr = getFragmentManager().beginTransaction();
+                    fr.replace(R.id.fragment_container, new HaartFragment());
+                    fr.addToBackStack(null);
+                    fr.commit();
+
+                }else {
+                    FragmentTransaction fr = getFragmentManager().beginTransaction();
+                    fr.replace(R.id.fragment_container, new FifthFragment());
+                    fr.addToBackStack(null);
+                    fr.commit();
+                }
+
             }
         });
 

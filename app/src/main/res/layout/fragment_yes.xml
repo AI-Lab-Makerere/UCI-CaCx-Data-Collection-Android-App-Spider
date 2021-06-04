@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
-    tools:context=".fragments.FifthFragment">
+    tools:context=".fragments.YesFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -24,12 +24,11 @@
                 android:layout_margin="10dp"
                 android:orientation="vertical">
 
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:text="Contraceptives used"
+                    android:text="Symptoms"
                     android:textColor="@color/colorPrimary"
                     android:textSize="20sp" />
 
@@ -37,65 +36,50 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="What contraceptives does the patient use?"
+                    android:text="Select any symptoms"
                     android:textColor="@color/colorTextPrimary"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
+
+
+               <CheckBox
+                   android:id="@+id/vb"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Vaginal bleeding"
+                   android:textSize="16sp"
+                   android:layout_marginTop="10dp"/>
 
                 <CheckBox
-                    android:id="@+id/pills"
+                    android:id="@+id/vd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:text="Vaginal discharge"
                     android:textSize="16sp"
-                    android:text="Pills" />
+                    android:layout_marginTop="10dp"/>
 
                 <CheckBox
-                    android:id="@+id/inj"
+                    android:id="@+id/ap"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:text="Abdominal pain"
                     android:textSize="16sp"
-                    android:text="Injectaplan" />
+                    android:layout_marginTop="10dp"/>
 
                 <CheckBox
-                    android:id="@+id/iud"
+                    android:id="@+id/as"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:text="Abdominal swelling"
                     android:textSize="16sp"
-                    android:text="IUD" />
+                    android:layout_marginTop="10dp"/>
 
                 <CheckBox
-                    android:id="@+id/cds"
+                    android:id="@+id/other"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:text="Other"
                     android:textSize="16sp"
-                    android:text="Condoms" />
-
-                <CheckBox
-                    android:id="@+id/imp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16sp"
-                    android:text="Implant" />
-
-                <CheckBox
-                    android:id="@+id/oth"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16sp"
-                    android:text="Others" />
-
-                <CheckBox
-                    android:id="@+id/none"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16sp"
-                    android:text="None" />
+                    android:layout_marginTop="10dp"/>
 
 
             </LinearLayout>
@@ -127,7 +111,7 @@
             android:layout_margin="10dp"
             android:background="@drawable/primary_btn"
             android:text="next"
-            android:textColor="@color/colorBackground" />
+            android:textColor="@color/colorBackground"/>
 
     </RelativeLayout>
 

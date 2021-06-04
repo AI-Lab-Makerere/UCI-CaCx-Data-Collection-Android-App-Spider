@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
-    tools:context=".fragments.FifthFragment">
+    tools:context=".fragments.ScreenFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -29,53 +28,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:text="Pregnancy History"
+                    android:text="Past Cancer Screening"
                     android:textColor="@color/colorPrimary"
                     android:textSize="20sp" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Is the patient pregnant right now?"
-                    android:textColor="@color/colorTextPrimary"
-                    android:textSize="16sp" />
-
-
-                <RadioGroup
-                    android:id="@+id/radioGroup"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp">
-
-                    <RadioButton
-                        android:id="@+id/yes"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="@color/colorPrimary"
-                        android:text="Yes" />
-
-                    <RadioButton
-                        android:id="@+id/no"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="@color/colorPrimary"
-                        android:text="No" />
-
-                    <RadioButton
-                        android:id="@+id/not_sure"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:buttonTint="@color/colorPrimary"
-                        android:text="Not Sure" />
-
-                </RadioGroup>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="When was the last menstrual period?"
+                    android:text="When was the last CaCx Screening?"
                     android:textColor="@color/colorTextPrimary"
                     android:textSize="16sp" />
 
@@ -109,53 +71,83 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="Parity"
+                    android:text="How was the past cervical cancer screening done"
                     android:textColor="@color/colorTextPrimary"
                     android:textSize="16sp" />
 
-                <TextView
-                    android:layout_width="match_parent"
+                <CheckBox
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="How many children has the patient ever delivered (Alive or Dead)?"
-                    android:textColor="@color/colorTextSecondary" />
-
-                <EditText
-                    android:id="@+id/parity"
-                    android:layout_width="90dp"
-                    android:layout_height="40dp"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/text_bg"
-                    android:inputType="number"
-                    android:maxLength="3"
-                    android:paddingLeft="5dp" />
+                    android:text="HPV"
+                    android:id="@+id/hpv"
+                    android:textSize="16sp"/>
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="VIA/VILI"
+                    android:id="@+id/via"
+                    android:textSize="16sp"/>
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Other"
+                    android:id="@+id/other"
+                    android:textSize="16sp"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="Abortions"
+                    android:text="What was the result of the past CaCx screening"
                     android:textColor="@color/colorTextPrimary"
                     android:textSize="16sp" />
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioGroup">
+
+                    <RadioButton
+                        android:layout_marginTop="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Negative"
+                        android:id="@+id/negative"/>
+
+                    <RadioButton
+                        android:layout_marginTop="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Positive"
+                        android:id="@+id/positive"/>
+
+                </RadioGroup>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="How many abortions or miscarriges has the patient ever had?"
-                    android:textColor="@color/colorTextSecondary" />
+                    android:layout_marginTop="20dp"
+                    android:text="What any treatment given? Give details"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="16sp" />
 
                 <EditText
-                    android:id="@+id/abortions"
-                    android:layout_width="90dp"
-                    android:layout_height="40dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
+                    android:textSize="14sp"
+                    android:gravity="top"
+                    android:hint="Provide some brief notes about the treatment"
+                    android:padding="10dp"
+                    android:inputType="textMultiLine"
                     android:background="@drawable/text_bg"
-                    android:inputType="number"
-                    android:maxLength="3"
-                    android:paddingLeft="5dp" />
-
+                    />
 
             </LinearLayout>
 

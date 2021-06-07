@@ -1,5 +1,7 @@
 package com.ug.cancerapp.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -32,14 +34,20 @@ public class FirstFragment extends Fragment {
     EditText etstudy, etinitial, etage, etdistrict, etcounty, etzone;
     View view;
     Button back, next;
-    long rowId;
+
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String STUDY = "study";
+    public static final String INITIAL = "initial";
+    public static final String AGE = "age";
+    public static final String DISTRICT = "district";
+    public static final String COUNTY = "county";
+    public static final String ZONE = "zone";
+
+    String study, initial, age, district, county, zone;
 
     private FormViewModel formViewModel;
 
 
-    public FirstFragment() {
-        // Required empty public constructor
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,59 +70,63 @@ public class FirstFragment extends Fragment {
 //        etstudy.setText(format);
 
         etinitial = view.findViewById(R.id.initials);
-
         etage = view.findViewById(R.id.age);
-
         etdistrict = view.findViewById(R.id.district);
-
         etcounty = view.findViewById(R.id.county);
-
         etzone = view.findViewById(R.id.zone);
-
-        etage.addTextChangedListener(textWatcher);
-
-//        back = view.findViewById(R.id.back);
         next = view.findViewById(R.id.next);
+
+        loadData();
+        updateViews();
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                String study = etstudy.getText().toString().trim();
-                String initial = etinitial.getText().toString().trim();
-                String age = etage.getText().toString().trim();
-                int number = Integer.parseInt(age);
-                String district = etdistrict.getText().toString().trim();
-                String county = etcounty.getText().toString().trim();
-                String zone = etzone.getText().toString().trim();
+                study = etstudy.getText().toString().trim();
+                initial = etinitial.getText().toString().trim();
+                age = etage.getText().toString().trim();
+
+                district = etdistrict.getText().toString().trim();
+                county = etcounty.getText().toString().trim();
+                zone = etzone.getText().toString().trim();
 
                 if(study.isEmpty() && initial.isEmpty() && age.isEmpty() && district.isEmpty() && county.isEmpty() && zone.isEmpty()){
 
                     Toast.makeText(getActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
 
-                }else {
+                }else if (!age.isEmpty()){
+                    int number = Integer.parseInt(age);
+                    if (number <= 15){
+                        Toast.makeText(getActivity(), "The patient should be 16 years and above", Toast.LENGTH_SHORT).show();
+                        etage.setError("only 16 years and above");
+                    }else {
+                        saveData();
+                    }
 
-                    Form form = new Form();
+                }
+                else {
 
-                    form.setStudyID(study);
-                    form.setInitials(initial);
-                    form.setAge(number);
-                    form.setDistrict(district);
-                    form.setCounty(county);
-                    form.setVillage(zone);
-//                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
-//                    String format = simpleDateFormat.format(new Date());
-//                    form.setDate(format);
+                    saveData();
 
-                    rowId = formViewModel.insert(form);
+//                    Form form = new Form();
+//
+//                    form.setStudyID(study);
+//                    form.setInitials(initial);
+//                    form.setAge(number);
+//                    form.setDistrict(district);
+//                    form.setCounty(county);
+//                    form.setVillage(zone);
+////                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+////                    String format = simpleDateFormat.format(new Date());
+////                    form.setDate(format);
+//
+//                    rowId = formViewModel.insert(form);
+//
+//
+//                    Toast.makeText(getActivity(), "The ID is: " + rowId, Toast.LENGTH_SHORT).show();
 
 
-                    Toast.makeText(getActivity(), "The ID is: " + rowId, Toast.LENGTH_SHORT).show();
-
-//                    FragmentTransaction fr = getFragmentManager().beginTransaction();
-//                    fr.replace(R.id.fragment_container, new SecondFragment());
-//                    fr.addToBackStack(null);
-//                    fr.commit();
                 }
 
             }
@@ -123,25 +135,45 @@ public class FirstFragment extends Fragment {
         return view;
     }
 
-    TextWatcher textWatcher =new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+    private void saveData(){
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        }
+        editor.putString(STUDY, etstudy.getText().toString());
+        editor.putString(INITIAL, etinitial.getText().toString());
+        editor.putString(AGE, etage.getText().toString());
+        editor.putString(DISTRICT, etdistrict.getText().toString());
+        editor.putString(COUNTY, etcounty.getText().toString());
+        editor.putString(ZONE, etzone.getText().toString());
 
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            String age = etage.getText().toString().trim();
-            int number = Integer.parseInt(age);
-            if (number <= 15){
-                etage.setError("The Age only should be greater than 15");
-            }
-        }
+        editor.apply();
+        Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
+        FragmentTransaction fr = getFragmentManager().beginTransaction();
+        fr.replace(R.id.fragment_container, new SecondFragment());
+        fr.addToBackStack(null);
+        fr.commit();
+    }
 
-        @Override
-        public void afterTextChanged(Editable editable) {
+    public void loadData(){
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        study = sharedPreferences.getString(STUDY, "");
+        initial = sharedPreferences.getString(INITIAL, "");
+        age = sharedPreferences.getString(AGE, "");
+        district = sharedPreferences.getString(DISTRICT, "");
+        county = sharedPreferences.getString(COUNTY, "");
+        zone = sharedPreferences.getString(ZONE, "");
 
-        }
-    };
+
+    }
+
+    public void updateViews(){
+        etstudy.setText(study);
+        etinitial.setText(initial);
+        etage.setText(age);
+        etdistrict.setText(district);
+        etcounty.setText(county);
+        etzone.setText(zone);
+
+    }
     
 }

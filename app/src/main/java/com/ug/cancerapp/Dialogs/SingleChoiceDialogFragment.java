@@ -38,7 +38,7 @@ public class SingleChoiceDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.MaterialThemeDialog);
         final String[] list = getActivity().getResources().getStringArray(R.array.choice_items);
-        builder.setTitle("Register as a")
+        builder.setTitle("Login as a")
                 .setSingleChoiceItems(list, position, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

@@ -16,8 +16,8 @@ public interface FormDAO {
     @Query("SELECT * FROM Cervix_Screening")
     LiveData<List<Form>> getAllForms();
 
-    @Query("SELECT * FROM Cervix_Screening WHERE `key` = (SELECT MAX(`key`) FROM Cervix_Screening)")
-    Form filterdata(Form form);
+//    @Query("SELECT * FROM Cervix_Screening WHERE `key` = (SELECT MAX(`key`) FROM Cervix_Screening)")
+//    Form filterdata(Form form);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long insertForm(Form form);

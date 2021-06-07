@@ -28,15 +28,7 @@ public class SecondFragment extends Fragment {
     String value = "";
     FragmentTransaction fr;
 
-    public SecondFragment() {
-        // Required empty public constructor
-    }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

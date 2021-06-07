@@ -23,7 +23,7 @@ import com.ug.cancerapp.R;
 
 public class SplashActivity extends AppCompatActivity {
 
-    ConstraintLayout root_layout;
+    LinearLayout root_layout;
     static int SPLASH_TIME_OUT = 5000;
     boolean InternetCheck = true;
 

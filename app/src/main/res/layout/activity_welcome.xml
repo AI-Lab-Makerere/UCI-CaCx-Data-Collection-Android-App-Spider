@@ -37,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:text="Register"
+            android:text="Log In"
             android:onClick="joinUs"
             android:textSize="20sp"
             android:textAllCaps="false"

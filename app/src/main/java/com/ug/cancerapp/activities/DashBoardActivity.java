@@ -1,8 +1,7 @@
 package com.ug.cancerapp.activities;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,20 +12,34 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.ug.cancerapp.Dialogs.SingleChoiceDialogFragment;
 import com.ug.cancerapp.R;
 
-public class WelcomeActivity extends AppCompatActivity implements SingleChoiceDialogFragment.SingleChoiceListener{
-
-    String category = "";
+public class DashBoardActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcome);
+        setContentView(R.layout.activity_dash_board);
 
-        setUpStatus();
+//        setUpStatus();
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("UDA");
     }
+
+    public void collect(View view) {
+        startActivity(new Intent(DashBoardActivity.this, CollectActivity.class));
+    }
+
+    public void results(View view) {
+        startActivity(new Intent(DashBoardActivity.this, ResultsActivity.class));
+    }
+
+    public void diagnosis(View view) {
+        startActivity(new Intent(DashBoardActivity.this, DiagnosisActivity.class));
+    }
+
     private void setUpStatus() {
         //make translucent statusBar on kitkat devices
         if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
@@ -51,36 +64,5 @@ public class WelcomeActivity extends AppCompatActivity implements SingleChoiceDi
             winParams.flags &= ~bits;
         }
         win.setAttributes(winParams);
-    }
-
-    public void joinUs(View view) {
-        DialogFragment singleChoiceDialog = new SingleChoiceDialogFragment();
-        singleChoiceDialog.setCancelable(false);
-        singleChoiceDialog.show(getSupportFragmentManager(), "Single Choice Dialog");
-    }
-
-    @Override
-    public void onPositiveButtonClicked(String[] list, int position) {
-        String law = list[position];
-
-        if (law == list[1]){
-//            gynecologist
-            category = "gynecologist";
-            Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
-            intent.putExtra("category", category);
-            startActivity(intent);
-
-        }else if (law == list[0]){
-            //nurse
-            category = "nurse";
-            Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
-            intent.putExtra("category", category);
-            startActivity(intent);
-        }
-    }
-
-    @Override
-    public void onNegativeButtonClicked() {
-
     }
 }

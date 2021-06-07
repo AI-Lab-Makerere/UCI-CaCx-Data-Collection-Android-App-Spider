@@ -1,6 +1,8 @@
 package com.ug.cancerapp.fragments;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
@@ -31,23 +33,24 @@ public class FifthFragment extends Fragment {
     TextView date;
     EditText parity, abortions;
     RadioGroup radioGroup;
-    RadioButton radioButton;
+    RadioButton radioButton1, radioButton2, radioButton3;
     private static final int YES = 0;
     private static final int NO = 1;
     private static final int NOT_SURE = 2;
     DatePickerDialog.OnDateSetListener dateSetListener;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
+    String value, time, child, abort;
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String PREGNANT = "pregnant";
+    public static final String DATS = "date";
+    public static final String PARITY = "parity";
+    public static final String ABORTION = "abortion";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view =  inflater.inflate(R.layout.fragment_fifth, container, false);
+        view = inflater.inflate(R.layout.fragment_fifth, container, false);
 
         back = view.findViewById(R.id.back);
         next = view.findViewById(R.id.next);
@@ -56,6 +59,12 @@ public class FifthFragment extends Fragment {
         parity = view.findViewById(R.id.parity);
         abortions = view.findViewById(R.id.abortions);
         radioGroup = view.findViewById(R.id.radioGroup);
+        radioButton1 = view.findViewById(R.id.yes);
+        radioButton2 = view.findViewById(R.id.no);
+        radioButton3 = view.findViewById(R.id.not_sure);
+
+        loadData();
+        updateViews();
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -63,15 +72,18 @@ public class FifthFragment extends Fragment {
                 View radioButton = radioGroup.findViewById(checkedId);
                 int index = radioGroup.indexOfChild(radioButton);
 
-                switch (index){
+                switch (index) {
                     case YES:
                         Toast.makeText(getActivity(), "Yes", Toast.LENGTH_SHORT).show();
+                        value = "Yes";
                         break;
                     case NO:
                         Toast.makeText(getActivity(), "NO", Toast.LENGTH_SHORT).show();
+                        value = "No";
                         break;
                     case NOT_SURE:
                         Toast.makeText(getActivity(), "Not Sure", Toast.LENGTH_SHORT).show();
+                        value = "Not Sure";
                         break;
                     default:
                         break;
@@ -82,6 +94,7 @@ public class FifthFragment extends Fragment {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                saveData();
                 FragmentTransaction fr = getFragmentManager().beginTransaction();
                 fr.replace(R.id.fragment_container, new SixtyFragment());
                 fr.addToBackStack(null);
@@ -107,25 +120,69 @@ public class FifthFragment extends Fragment {
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
 
                 DatePickerDialog dialog = new DatePickerDialog(getContext(), android.R.style.Theme_DeviceDefault_Dialog, dateSetListener, year, month, day);
-
+//                disable past date
+//                dialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+//                disable future date
+                dialog.getDatePicker().setMaxDate(System.currentTimeMillis());
                 dialog.show();
+
             }
         });
 
         dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                month = month + 1;
                 String data = day + "/" + month + "/" + year;
                 date.setText(data);
             }
         };
 
-        String child = parity.getText().toString();
-        String abort = abortions.getText().toString();
+        child = parity.getText().toString();
+        abort = abortions.getText().toString();
 
 
         return view;
     }
 
+    private void saveData(){
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString(PREGNANT, value);
+        editor.putString(DATS, date.getText().toString());
+        editor.putString(PARITY, parity.getText().toString());
+        editor.putString(ABORTION, abortions.getText().toString());
+
+        editor.apply();
+        Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
+    }
+
+    public void loadData(){
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        value = sharedPreferences.getString(PREGNANT, "");
+        time = sharedPreferences.getString(DATS, "");
+        child = sharedPreferences.getString(PARITY, "");
+        abort = sharedPreferences.getString(ABORTION, "");
+
+    }
+
+    public void updateViews(){
+        date.setText(time);
+        parity.setText(child);
+        abortions.setText(abort);
+        if (value.equals("Yes")) {
+            radioButton1.setChecked(true);
+        } else if (value.equals("No")) {
+            radioButton2.setChecked(true);
+        } else if (value.equals("Not Sure")) {
+            radioButton3.setChecked(true);
+        } else {
+            radioButton1.setChecked(false);
+            radioButton2.setChecked(false);
+            radioButton3.setChecked(false);
+        }
+
+    }
 
 }

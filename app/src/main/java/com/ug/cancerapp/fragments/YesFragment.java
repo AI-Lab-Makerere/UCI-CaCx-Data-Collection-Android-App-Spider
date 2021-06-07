@@ -79,7 +79,7 @@ public class YesFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentTransaction fr = getFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_container, new FirstFragment());
+                fr.replace(R.id.fragment_container, new SecondFragment());
                 fr.commit();
             }
         });

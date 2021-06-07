@@ -60,6 +60,7 @@
 
                         <RadioGroup
                             android:layout_marginTop="5dp"
+                            android:id="@+id/radioGroup"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
 
@@ -67,12 +68,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Positive"
+                                android:id="@+id/positive"
                                 android:buttonTint="@color/colorPrimary"/>
 
                             <RadioButton
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Negative"
+                                android:id="@+id/negative"
                                 android:buttonTint="@color/colorPrimary"/>
 
                         </RadioGroup>
@@ -86,6 +89,7 @@
                             android:textColor="@color/colorTextPrimary"/>
 
                         <EditText
+                            android:id="@+id/notes"
                             android:layout_width="match_parent"
                             android:layout_height="150dp"
                             android:layout_marginTop="10dp"
@@ -99,6 +103,7 @@
 
 
                         <Button
+                            android:id="@+id/save"
                             android:layout_marginTop="20dp"
                             android:layout_marginLeft="60dp"
                             android:layout_marginRight="60dp"
@@ -130,6 +135,7 @@
         android:layout_alignParentBottom="true">
 
         <Button
+            android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/primary_btn"

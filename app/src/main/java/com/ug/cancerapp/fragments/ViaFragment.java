@@ -1,66 +1,128 @@
 package com.ug.cancerapp.fragments;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.ug.cancerapp.R;
+import com.ug.cancerapp.activities.DashBoardActivity;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ViaFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ViaFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    View view;
+    RadioGroup radioGroup;
+    RadioButton radioButton1, radioButton2;
+    Button back, send;
+    EditText message;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private static final int POSITIVE = 0;
+    private static final int NEGATIVE = 1;
 
-    public ViaFragment() {
-        // Required empty public constructor
-    }
+    String via, notes;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ViaFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ViaFragment newInstance(String param1, String param2) {
-        ViaFragment fragment = new ViaFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String VIA = "via";
+    public static final String NOTES = "notes";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_via, container, false);
+        view  =  inflater.inflate(R.layout.fragment_via, container, false);
+
+        back = view.findViewById(R.id.back);
+        message = view.findViewById(R.id.notes);
+        send = view.findViewById(R.id.save);
+        radioGroup = view.findViewById(R.id.radioGroup);
+        radioButton1 = view.findViewById(R.id.positive);
+        radioButton2 = view.findViewById(R.id.negative);
+
+        loadData();
+        updateViews();
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                View radioButton = radioGroup.findViewById(checkedId);
+                int index = radioGroup.indexOfChild(radioButton);
+
+                switch (index){
+                    case POSITIVE:
+                        Toast.makeText(getActivity(), "Positive", Toast.LENGTH_SHORT).show();
+                        via = "Positive";
+                        break;
+                    case NEGATIVE:
+                        Toast.makeText(getActivity(), "Negative", Toast.LENGTH_SHORT).show();
+                        via = "Negative";
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveData();
+                startActivity(new Intent(getActivity(), DashBoardActivity.class));
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction fr = getFragmentManager().beginTransaction();
+                fr.replace(R.id.fragment_container, new FirstFragment());
+                fr.commit();
+            }
+        });
+
+        return view;
+    }
+
+    private void saveData() {
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString(VIA, via);
+        editor.putString(NOTES, message.getText().toString());
+
+        editor.apply();
+        Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
+    }
+
+    public void loadData(){
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        via = sharedPreferences.getString(VIA, "");
+        notes = sharedPreferences.getString(NOTES, "");
+
+    }
+
+    public void updateViews(){
+        if (via.equals("Positive")){
+            radioButton1.setChecked(true);
+        }else if (via.equals("Negative")){
+            radioButton2.setChecked(true);
+        }else {
+            radioButton1.setChecked(false);
+            radioButton2.setChecked(false);
+        }
+
+        message.setText(notes);
+
     }
 }

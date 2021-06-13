@@ -17,6 +17,17 @@ import android.widget.Toast;
 
 import com.ug.cancerapp.R;
 
+import static com.ug.cancerapp.fragments.Haart2Fragment.YEARS;
+import static com.ug.cancerapp.fragments.HaartFragment.CHOICE2;
+import static com.ug.cancerapp.fragments.OtherFragment.OTHER;
+import static com.ug.cancerapp.fragments.ScreenFragment.CHECKSA1;
+import static com.ug.cancerapp.fragments.ScreenFragment.CHECKSA2;
+import static com.ug.cancerapp.fragments.ScreenFragment.CHECKSA3;
+import static com.ug.cancerapp.fragments.ScreenFragment.CHOICE;
+import static com.ug.cancerapp.fragments.ScreenFragment.DATEPICKER;
+import static com.ug.cancerapp.fragments.ScreenFragment.TREATMENT;
+import static com.ug.cancerapp.fragments.SecondFragment.TEXT;
+
 public class FourthFragment extends Fragment {
 
     View view;
@@ -27,7 +38,7 @@ public class FourthFragment extends Fragment {
     private static final int POSITIVE = 1;
     private static final int UNKNOWN = 2;
 
-    String value3;
+    String value3, text;
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String TEXT3 = "text3";
 
@@ -71,6 +82,7 @@ public class FourthFragment extends Fragment {
 
         loadData();
         updateViews();
+        getData();
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,11 +94,15 @@ public class FourthFragment extends Fragment {
                     fr.addToBackStack(null);
                     fr.commit();
 
-                } else {
+                } else if (value3.equals("Negative")) {
+                    deleteSharedPreferences();
                     FragmentTransaction fr = getFragmentManager().beginTransaction();
                     fr.replace(R.id.fragment_container, new FifthFragment());
                     fr.addToBackStack(null);
                     fr.commit();
+
+                } else {
+                    Toast.makeText(getActivity(), "Select on option", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -95,9 +111,16 @@ public class FourthFragment extends Fragment {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction fr = getFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_container, new ThirdFragment());
-                fr.commit();
+                if (text.isEmpty()){
+                    FragmentTransaction fr = getFragmentManager().beginTransaction();
+                    fr.replace(R.id.fragment_container, new ThirdFragment());
+                    fr.commit();
+                }else {
+                    FragmentTransaction fr = getFragmentManager().beginTransaction();
+                    fr.replace(R.id.fragment_container, new ScreenFragment());
+                    fr.commit();
+                }
+
             }
         });
 
@@ -132,6 +155,21 @@ public class FourthFragment extends Fragment {
             radioButton2.setChecked(false);
             radioButton3.setChecked(false);
         }
+
+    }
+
+    private void getData() {
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        text = sharedPreferences.getString(DATEPICKER, "");
+
+    }
+
+    private void deleteSharedPreferences() {
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(CHOICE2);
+        editor.remove(YEARS);
+        editor.apply();
 
     }
 }

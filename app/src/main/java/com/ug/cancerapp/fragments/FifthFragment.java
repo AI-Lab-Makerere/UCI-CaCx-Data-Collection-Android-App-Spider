@@ -25,6 +25,10 @@ import com.ug.cancerapp.R;
 import java.text.DateFormat;
 import java.util.Calendar;
 
+import static com.ug.cancerapp.fragments.FourthFragment.TEXT3;
+import static com.ug.cancerapp.fragments.Haart2Fragment.YEARS;
+import static com.ug.cancerapp.fragments.ScreenFragment.DATEPICKER;
+
 
 public class FifthFragment extends Fragment {
 
@@ -39,7 +43,7 @@ public class FifthFragment extends Fragment {
     private static final int NOT_SURE = 2;
     DatePickerDialog.OnDateSetListener dateSetListener;
 
-    String value, time, child, abort;
+    String value, time, child, abort, fouthText, haart2Text;
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String PREGNANT = "pregnant";
     public static final String DATS = "date";
@@ -65,6 +69,7 @@ public class FifthFragment extends Fragment {
 
         loadData();
         updateViews();
+        getData();
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -94,20 +99,48 @@ public class FifthFragment extends Fragment {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveData();
-                FragmentTransaction fr = getFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_container, new SixtyFragment());
-                fr.addToBackStack(null);
-                fr.commit();
+
+                child = parity.getText().toString();
+                abort = abortions.getText().toString();
+
+                int part = Integer.parseInt(child);
+                int abo = Integer.parseInt(abort);
+
+                if (value.isEmpty() && time.equals("No Date Selected") && child.isEmpty() && abort.isEmpty()){
+                    Toast.makeText(getActivity(), "Fill in all the fields", Toast.LENGTH_SHORT).show();
+                }else if(part > 20){
+                    Toast.makeText(getActivity(), "The maximum number of children is 20", Toast.LENGTH_SHORT).show();
+                }else if(abo >= part){
+                    Toast.makeText(getActivity(), "The maximum number of abortions should not be greater than maximum number of children", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    saveData();
+                    FragmentTransaction fr = getFragmentManager().beginTransaction();
+                    fr.replace(R.id.fragment_container, new YesOrNoFragment());
+                    fr.addToBackStack(null);
+                    fr.commit();
+                }
+
             }
         });
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction fr = getFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_container, new FourthFragment());
-                fr.commit();
+                if (!fouthText.equals("Positive")){
+                    FragmentTransaction fr = getFragmentManager().beginTransaction();
+                    fr.replace(R.id.fragment_container, new FourthFragment());
+                    fr.commit();
+                }else if (haart2Text.isEmpty()){
+                    FragmentTransaction fr = getFragmentManager().beginTransaction();
+                    fr.replace(R.id.fragment_container, new HaartFragment());
+                    fr.commit();
+                }else{
+                    FragmentTransaction fr = getFragmentManager().beginTransaction();
+                    fr.replace(R.id.fragment_container, new Haart2Fragment());
+                    fr.commit();
+                }
+
             }
         });
 
@@ -182,6 +215,13 @@ public class FifthFragment extends Fragment {
             radioButton2.setChecked(false);
             radioButton3.setChecked(false);
         }
+
+    }
+
+    private void getData() {
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        fouthText = sharedPreferences.getString(TEXT3, "");
+        haart2Text = sharedPreferences.getString(YEARS, "");
 
     }
 

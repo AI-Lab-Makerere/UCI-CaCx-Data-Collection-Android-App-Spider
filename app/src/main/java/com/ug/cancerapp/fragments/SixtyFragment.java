@@ -21,7 +21,9 @@ public class SixtyFragment extends Fragment {
 
     View view;
     Button back, next;
-    CheckBox pill, inj, imp, others, none, cds, iud;
+    CheckBox pill, inj, imp, cds, iud;
+    String value;
+    String s = "";
 
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String CHECK1 = "check1";
@@ -29,8 +31,8 @@ public class SixtyFragment extends Fragment {
     public static final String CHECK3 = "check3";
     public static final String CHECK4 = "check4";
     public static final String CHECK5 = "check5";
-    public static final String CHECK6 = "check6";
-    public static final String CHECK7 = "check7";
+    public static final String CHECKS = "checks";
+    public static final String S4 = "s4";
 
 
     Boolean check1, check2, check3, check4, check5, check6, check7;
@@ -46,8 +48,6 @@ public class SixtyFragment extends Fragment {
         pill = view.findViewById(R.id.pills);
         inj = view.findViewById(R.id.inj);
         imp = view.findViewById(R.id.imp);
-        others = view.findViewById(R.id.oth);
-        none = view.findViewById(R.id.none);
         cds = view.findViewById(R.id.cds);
         iud = view.findViewById(R.id.iud);
 
@@ -67,7 +67,7 @@ public class SixtyFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentTransaction fr = getFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_container, new FifthFragment());
+                fr.replace(R.id.fragment_container, new YesOrNoFragment());
                 fr.commit();
             }
         });
@@ -79,8 +79,8 @@ public class SixtyFragment extends Fragment {
     }
 
     private void checkedlist() {
-        saveData();
-        String s = "";
+
+
         if(pill.isChecked()){
             s += "Pills, ";
         }
@@ -96,31 +96,21 @@ public class SixtyFragment extends Fragment {
         if(cds.isChecked()){
             s += "Condoms, ";
         }
-        if(others.isChecked()){
-            s = "Others";
-        }
-        if(none.isChecked()){
-            s = "None";
-        }
 
-        Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
-
-        if (s.contains("Others")){
-            FragmentTransaction fr = getFragmentManager().beginTransaction();
-            fr.replace(R.id.fragment_container, new Other2Fragment());
-            fr.addToBackStack(null);
-            fr.commit();
-
+        if (s.isEmpty()){
+            Toast.makeText(getActivity(), "Choose at least on option", Toast.LENGTH_SHORT).show();
         }else {
+            saveData(s);
             FragmentTransaction fr = getFragmentManager().beginTransaction();
             fr.replace(R.id.fragment_container, new Camera1Fragment());
             fr.addToBackStack(null);
             fr.commit();
         }
 
+
     }
 
-    private void saveData() {
+    private void saveData(String s) {
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -129,8 +119,8 @@ public class SixtyFragment extends Fragment {
         editor.putBoolean(CHECK3, iud.isChecked());
         editor.putBoolean(CHECK4, cds.isChecked());
         editor.putBoolean(CHECK5, imp.isChecked());
-        editor.putBoolean(CHECK6, others.isChecked());
-        editor.putBoolean(CHECK7, none.isChecked());
+        editor.putString(CHECKS, "available");
+        editor.putString(S4, s);
 
         editor.apply();
         Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
@@ -145,8 +135,7 @@ public class SixtyFragment extends Fragment {
         check3 = sharedPreferences.getBoolean(CHECK3, false);
         check4 = sharedPreferences.getBoolean(CHECK4, false);
         check5 = sharedPreferences.getBoolean(CHECK5, false);
-        check6 = sharedPreferences.getBoolean(CHECK6, false);
-        check7 = sharedPreferences.getBoolean(CHECK7, false);
+        value = sharedPreferences.getString(CHECKS, "");
     }
 
     private void updateViews(){
@@ -156,7 +145,5 @@ public class SixtyFragment extends Fragment {
         iud.setChecked(check3);
         cds.setChecked(check4);
         imp.setChecked(check5);
-        others.setChecked(check6);
-        none.setChecked(check7);
     }
 }

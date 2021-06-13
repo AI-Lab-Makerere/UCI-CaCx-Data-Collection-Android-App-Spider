@@ -86,7 +86,6 @@ public class FirstFragment extends Fragment {
                 study = etstudy.getText().toString().trim();
                 initial = etinitial.getText().toString().trim();
                 age = etage.getText().toString().trim();
-
                 district = etdistrict.getText().toString().trim();
                 county = etcounty.getText().toString().trim();
                 zone = etzone.getText().toString().trim();
@@ -108,7 +107,6 @@ public class FirstFragment extends Fragment {
                 else {
 
                     saveData();
-
 //                    Form form = new Form();
 //
 //                    form.setStudyID(study);
@@ -125,7 +123,6 @@ public class FirstFragment extends Fragment {
 //
 //
 //                    Toast.makeText(getActivity(), "The ID is: " + rowId, Toast.LENGTH_SHORT).show();
-
 
                 }
 

@@ -20,22 +20,25 @@ import android.widget.Toast;
 import com.ug.cancerapp.R;
 import com.ug.cancerapp.activities.DashBoardActivity;
 
+import static com.ug.cancerapp.fragments.FirstFragment.STUDY;
+
 public class ViaFragment extends Fragment {
 
     View view;
     RadioGroup radioGroup;
     RadioButton radioButton1, radioButton2;
     Button back, send;
-    EditText message;
+    EditText message, lesion;
 
     private static final int POSITIVE = 0;
     private static final int NEGATIVE = 1;
 
-    String via, notes;
+    String via, notes, location;
 
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String VIA = "via";
     public static final String NOTES = "notes";
+    public static final String LESION = "lesion";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,6 +48,7 @@ public class ViaFragment extends Fragment {
 
         back = view.findViewById(R.id.back);
         message = view.findViewById(R.id.notes);
+        lesion = view.findViewById(R.id.lesion);
         send = view.findViewById(R.id.save);
         radioGroup = view.findViewById(R.id.radioGroup);
         radioButton1 = view.findViewById(R.id.positive);
@@ -52,6 +56,7 @@ public class ViaFragment extends Fragment {
 
         loadData();
         updateViews();
+        getData();
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -77,8 +82,16 @@ public class ViaFragment extends Fragment {
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveData();
-                startActivity(new Intent(getActivity(), DashBoardActivity.class));
+                notes = message.getText().toString();
+                location = lesion.getText().toString();
+
+                if (via.isEmpty() && notes.isEmpty() && location.isEmpty()){
+                    Toast.makeText(getActivity(), "Fill in all fields", Toast.LENGTH_SHORT).show();
+                }else {
+                    saveData();
+                    startActivity(new Intent(getActivity(), DashBoardActivity.class));
+                }
+
             }
         });
 
@@ -86,7 +99,7 @@ public class ViaFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentTransaction fr = getFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_container, new FirstFragment());
+                fr.replace(R.id.fragment_container, new Camera4Fragment());
                 fr.commit();
             }
         });
@@ -94,12 +107,14 @@ public class ViaFragment extends Fragment {
         return view;
     }
 
+
     private void saveData() {
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putString(VIA, via);
         editor.putString(NOTES, message.getText().toString());
+        editor.putString(LESION, lesion.getText().toString());
 
         editor.apply();
         Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
@@ -109,6 +124,7 @@ public class ViaFragment extends Fragment {
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         via = sharedPreferences.getString(VIA, "");
         notes = sharedPreferences.getString(NOTES, "");
+        location = sharedPreferences.getString(LESION, "");
 
     }
 
@@ -123,6 +139,14 @@ public class ViaFragment extends Fragment {
         }
 
         message.setText(notes);
+        lesion.setText(location);
+
+    }
+
+    private void getData() {
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        String studyID = sharedPreferences.getString(STUDY, "");
+        Toast.makeText(getActivity(), studyID, Toast.LENGTH_LONG).show();
 
     }
 }

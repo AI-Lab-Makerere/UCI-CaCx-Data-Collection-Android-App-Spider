@@ -31,6 +31,10 @@ import com.ug.cancerapp.R;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import static com.ug.cancerapp.fragments.FourthFragment.TEXT3;
+import static com.ug.cancerapp.fragments.Haart2Fragment.YEARS;
+import static com.ug.cancerapp.fragments.SixtyFragment.CHECKS;
+
 
 public class Camera1Fragment extends Fragment {
 
@@ -38,11 +42,12 @@ public class Camera1Fragment extends Fragment {
     Button back, next, camera, gallery;
     ImageView imageView;
     Uri uri;
+    Bitmap bitmap;
 
     private static final int IMAGE_PICKER_CODE = 1000;
     private static final int PERMISSIONS_CODE = 1001;
 
-    String sImage;
+    String sImage, value;
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String IMAGE = "image";
 
@@ -66,24 +71,37 @@ public class Camera1Fragment extends Fragment {
 
         loadData();
         updateViews();
+        getData();
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveData();
-                FragmentTransaction fr = getFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_container, new Camera2Fragment());
-                fr.addToBackStack(null);
-                fr.commit();
+                if (sImage.isEmpty()){
+                    Toast.makeText(getActivity(), "Take a picture or load one from gallery", Toast.LENGTH_SHORT).show();
+                }else {
+                    saveData();
+                    FragmentTransaction fr = getFragmentManager().beginTransaction();
+                    fr.replace(R.id.fragment_container, new Camera2Fragment());
+                    fr.addToBackStack(null);
+                    fr.commit();
+                }
+
             }
         });
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction fr = getFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_container, new SixtyFragment());
-                fr.commit();
+                if (value.isEmpty()){
+                    FragmentTransaction fr = getFragmentManager().beginTransaction();
+                    fr.replace(R.id.fragment_container, new YesOrNoFragment());
+                    fr.commit();
+                }else {
+                    FragmentTransaction fr = getFragmentManager().beginTransaction();
+                    fr.replace(R.id.fragment_container, new SixtyFragment());
+                    fr.commit();
+                }
+
             }
         });
 
@@ -137,12 +155,12 @@ public class Camera1Fragment extends Fragment {
 //        super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 100){
 
-            Bitmap captureImage = (Bitmap) data.getExtras().get("data");
+            bitmap = (Bitmap) data.getExtras().get("data");
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            captureImage.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
             byte[] bytes = stream.toByteArray();
             sImage = Base64.encodeToString(bytes, Base64.DEFAULT);
-            imageView.setImageBitmap(captureImage);
+            imageView.setImageBitmap(bitmap);
 
         }
         if (requestCode == IMAGE_PICKER_CODE && resultCode == -1 && data != null){
@@ -150,7 +168,7 @@ public class Camera1Fragment extends Fragment {
 
             try {
 
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
                 byte[] bytes = stream.toByteArray();
@@ -184,6 +202,12 @@ public class Camera1Fragment extends Fragment {
         byte[] bytes = Base64.decode(sImage, Base64.DEFAULT);
         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         imageView.setImageBitmap(bitmap);
+    }
+
+    private void getData() {
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        value = sharedPreferences.getString(CHECKS, "");
+
     }
 
 }

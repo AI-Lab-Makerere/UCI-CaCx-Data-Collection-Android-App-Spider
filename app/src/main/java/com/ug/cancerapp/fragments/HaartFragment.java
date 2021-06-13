@@ -1,5 +1,7 @@
 package com.ug.cancerapp.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -20,11 +22,13 @@ public class HaartFragment extends Fragment {
     View view;
     Button back, next;
     RadioGroup radioGroup;
-    RadioButton radioButton;
+    RadioButton radioButton1, radioButton2;
     private static final int YES = 0;
     private static final int NO = 1;
 
-    String value = "";
+    String value;
+    public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String CHOICE2 = "choice2";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,6 +39,11 @@ public class HaartFragment extends Fragment {
         back = view.findViewById(R.id.back);
         next = view.findViewById(R.id.next);
         radioGroup = view.findViewById(R.id.radioGroup);
+        radioButton1 = view.findViewById(R.id.yes);
+        radioButton2 = view.findViewById(R.id.no);
+
+        loadData();
+        updateViews();
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -61,17 +70,23 @@ public class HaartFragment extends Fragment {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (value.equals("Yes")) {
+                    saveData();
                     FragmentTransaction fr = getFragmentManager().beginTransaction();
                     fr.replace(R.id.fragment_container, new Haart2Fragment());
                     fr.addToBackStack(null);
                     fr.commit();
 
-                } else {
+                } else if (value.equals("No")){
+                    saveData();
                     FragmentTransaction fr = getFragmentManager().beginTransaction();
                     fr.replace(R.id.fragment_container, new FifthFragment());
                     fr.addToBackStack(null);
                     fr.commit();
+
+                } else {
+                    Toast.makeText(getActivity(), "Select one option", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -88,5 +103,33 @@ public class HaartFragment extends Fragment {
 
 
         return view;
+    }
+
+    private void saveData() {
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString(CHOICE2, value);
+
+        editor.apply();
+        Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
+    }
+
+    public void loadData() {
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        value = sharedPreferences.getString(CHOICE2, "");
+
+    }
+
+    public void updateViews() {
+        if (value.equals("Yes")) {
+            radioButton1.setChecked(true);
+        } else if (value.equals("No")) {
+            radioButton2.setChecked(true);
+        } else {
+            radioButton1.setChecked(false);
+            radioButton2.setChecked(false);
+        }
+
     }
 }

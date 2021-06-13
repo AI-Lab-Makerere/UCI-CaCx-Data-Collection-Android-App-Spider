@@ -70,11 +70,15 @@ public class Camera4Fragment extends Fragment {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveData();
-                FragmentTransaction fr = getFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_container, new ViaFragment());
-                fr.addToBackStack(null);
-                fr.commit();
+                if (sImage.isEmpty()){
+                    Toast.makeText(getActivity(), "Take a picture or load one from gallery", Toast.LENGTH_SHORT).show();
+                }else {
+                    saveData();
+                    FragmentTransaction fr = getFragmentManager().beginTransaction();
+                    fr.replace(R.id.fragment_container, new ViaFragment());
+                    fr.addToBackStack(null);
+                    fr.commit();
+                }
             }
         });
 

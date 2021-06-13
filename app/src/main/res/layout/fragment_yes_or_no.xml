@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
-    tools:context=".fragments.FifthFragment">
+    tools:context=".fragments.YesOrNoFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -24,63 +23,47 @@
                 android:layout_margin="10dp"
                 android:orientation="vertical">
 
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:text="Contraceptives used"
+                    android:text="Contraceptives"
                     android:textColor="@color/colorPrimary"
                     android:textSize="20sp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="What contraceptives does the patient use?"
+                    android:layout_marginTop="5dp"
+                    android:text="Does the patient use contraceptives"
                     android:textColor="@color/colorTextPrimary"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
 
-                <CheckBox
-                    android:id="@+id/pills"
+
+                <RadioGroup
+                    android:id="@+id/radioGroup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16sp"
-                    android:text="Pills" />
+                    android:layout_marginTop="10dp">
 
-                <CheckBox
-                    android:id="@+id/inj"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16sp"
-                    android:text="Injectaplan" />
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/colorPrimary"
+                        android:text="Yes"
+                        android:id="@+id/yes"
+                        android:textSize="18sp" />
 
-                <CheckBox
-                    android:id="@+id/iud"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16sp"
-                    android:text="IUD" />
+                    <RadioButton
+                        android:layout_marginTop="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="@color/colorPrimary"
+                        android:text="No"
+                        android:id="@+id/no"
+                        android:textSize="18sp" />
 
-                <CheckBox
-                    android:id="@+id/cds"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16sp"
-                    android:text="Condoms" />
-
-                <CheckBox
-                    android:id="@+id/imp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16sp"
-                    android:text="Implant" />
-
+                </RadioGroup>
 
 
             </LinearLayout>
@@ -112,7 +95,7 @@
             android:layout_margin="10dp"
             android:background="@drawable/primary_btn"
             android:text="next"
-            android:textColor="@color/colorBackground" />
+            android:textColor="@color/colorBackground"/>
 
     </RelativeLayout>
 

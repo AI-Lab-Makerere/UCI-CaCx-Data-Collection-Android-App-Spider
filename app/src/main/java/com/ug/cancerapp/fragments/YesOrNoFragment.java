@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -20,13 +18,20 @@ import android.widget.Toast;
 import com.ug.cancerapp.R;
 
 import static com.ug.cancerapp.fragments.OtherFragment.OTHER;
+import static com.ug.cancerapp.fragments.SixtyFragment.CHECK1;
+import static com.ug.cancerapp.fragments.SixtyFragment.CHECK2;
+import static com.ug.cancerapp.fragments.SixtyFragment.CHECK3;
+import static com.ug.cancerapp.fragments.SixtyFragment.CHECK4;
+import static com.ug.cancerapp.fragments.SixtyFragment.CHECK5;
+import static com.ug.cancerapp.fragments.SixtyFragment.CHECKS;
 import static com.ug.cancerapp.fragments.YesFragment.CHECKS1;
 import static com.ug.cancerapp.fragments.YesFragment.CHECKS2;
 import static com.ug.cancerapp.fragments.YesFragment.CHECKS3;
 import static com.ug.cancerapp.fragments.YesFragment.CHECKS4;
 import static com.ug.cancerapp.fragments.YesFragment.CHECKS5;
 
-public class SecondFragment extends Fragment {
+
+public class YesOrNoFragment extends Fragment {
 
     View view;
     Button back, next;
@@ -35,16 +40,15 @@ public class SecondFragment extends Fragment {
     private static final int YES = 0;
     private static final int NO = 1;
     String value;
-    FragmentTransaction fr;
 
     public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String TEXT = "text";
+    public static final String CHOICES = "choices";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view =  inflater.inflate(R.layout.fragment_second, container, false);
+        view = inflater.inflate(R.layout.fragment_yes_or_no, container, false);
 
         back = view.findViewById(R.id.back);
         next = view.findViewById(R.id.next);
@@ -76,30 +80,22 @@ public class SecondFragment extends Fragment {
             }
         });
 
-
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                saveData();
                 if (value.equals("Yes")){
-                    saveData();
-                    fr = getFragmentManager().beginTransaction();
-                    fr.replace(R.id.fragment_container, new YesFragment());
-                    fr.addToBackStack(null);
+                    FragmentTransaction fr = getFragmentManager().beginTransaction();
+                    fr.replace(R.id.fragment_container, new SixtyFragment());
                     fr.commit();
-
-                }else if (value.equals("No")){
+                }else if(value.equals("No")) {
                     deleteSharedPreferences();
-                    saveData();
-                    fr = getFragmentManager().beginTransaction();
-                    fr.replace(R.id.fragment_container, new ThirdFragment());
-                    fr.addToBackStack(null);
+                    FragmentTransaction fr = getFragmentManager().beginTransaction();
+                    fr.replace(R.id.fragment_container, new Camera1Fragment());
                     fr.commit();
-
                 }else {
-                    Toast.makeText(getActivity(), "Choose one option", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Choose on option", Toast.LENGTH_SHORT).show();
                 }
-
 
             }
         });
@@ -108,33 +104,19 @@ public class SecondFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentTransaction fr = getFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_container, new FirstFragment());
+                fr.replace(R.id.fragment_container, new FifthFragment());
                 fr.commit();
             }
         });
 
         return view;
-
-    }
-
-    private void deleteSharedPreferences() {
-        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.remove(CHECKS1);
-        editor.remove(CHECKS2);
-        editor.remove(CHECKS3);
-        editor.remove(CHECKS4);
-        editor.remove(CHECKS5);
-        editor.remove(OTHER);
-        editor.apply();
-
     }
 
     private void saveData() {
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        editor.putString(TEXT, value);
+        editor.putString(CHOICES, value);
 
         editor.apply();
         Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
@@ -142,7 +124,7 @@ public class SecondFragment extends Fragment {
 
     public void loadData(){
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        value = sharedPreferences.getString(TEXT, "");
+        value = sharedPreferences.getString(CHOICES, "");
 
     }
 
@@ -158,4 +140,16 @@ public class SecondFragment extends Fragment {
 
     }
 
+    private void deleteSharedPreferences() {
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(CHECK1);
+        editor.remove(CHECK2);
+        editor.remove(CHECK3);
+        editor.remove(CHECK4);
+        editor.remove(CHECK5);
+        editor.remove(CHECKS);
+        editor.apply();
+
+    }
 }

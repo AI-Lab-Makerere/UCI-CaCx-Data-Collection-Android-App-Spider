@@ -17,6 +17,21 @@ import android.widget.Toast;
 
 import com.ug.cancerapp.R;
 
+import static com.ug.cancerapp.fragments.FirstFragment.STUDY;
+import static com.ug.cancerapp.fragments.OtherFragment.OTHER;
+import static com.ug.cancerapp.fragments.ScreenFragment.CHECKSA1;
+import static com.ug.cancerapp.fragments.ScreenFragment.CHECKSA2;
+import static com.ug.cancerapp.fragments.ScreenFragment.CHECKSA3;
+import static com.ug.cancerapp.fragments.ScreenFragment.CHOICE;
+import static com.ug.cancerapp.fragments.ScreenFragment.DATEPICKER;
+import static com.ug.cancerapp.fragments.ScreenFragment.TREATMENT;
+import static com.ug.cancerapp.fragments.SecondFragment.TEXT;
+import static com.ug.cancerapp.fragments.YesFragment.CHECKS1;
+import static com.ug.cancerapp.fragments.YesFragment.CHECKS2;
+import static com.ug.cancerapp.fragments.YesFragment.CHECKS3;
+import static com.ug.cancerapp.fragments.YesFragment.CHECKS4;
+import static com.ug.cancerapp.fragments.YesFragment.CHECKS5;
+
 
 public class ThirdFragment extends Fragment {
 
@@ -30,6 +45,8 @@ public class ThirdFragment extends Fragment {
 
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String TEXT2 = "text2";
+
+    String text, other;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,6 +62,7 @@ public class ThirdFragment extends Fragment {
 
         loadData();
         updateViews();
+        getData();
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -70,16 +88,17 @@ public class ThirdFragment extends Fragment {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveData();
-                if (value2.equals("Yes")){
 
+                if (value2.equals("Yes")){
+                    saveData();
                     FragmentTransaction fr = getFragmentManager().beginTransaction();
                     fr.replace(R.id.fragment_container, new ScreenFragment());
                     fr.addToBackStack(null);
                     fr.commit();
 
                 }else if (value2.equals("No")){
-
+                    deleteSharedPreferences();
+                    saveData();
                     FragmentTransaction fr = getFragmentManager().beginTransaction();
                     fr.replace(R.id.fragment_container, new FourthFragment());
                     fr.addToBackStack(null);
@@ -94,13 +113,37 @@ public class ThirdFragment extends Fragment {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction fr = getFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_container, new SecondFragment());
-                fr.commit();
+                if (text.equals("No")){
+                    FragmentTransaction fr = getFragmentManager().beginTransaction();
+                    fr.replace(R.id.fragment_container, new SecondFragment());
+                    fr.commit();
+                }else if (other.isEmpty()){
+                    FragmentTransaction fr = getFragmentManager().beginTransaction();
+                    fr.replace(R.id.fragment_container, new YesFragment());
+                    fr.commit();
+                }else {
+                    FragmentTransaction fr = getFragmentManager().beginTransaction();
+                    fr.replace(R.id.fragment_container, new OtherFragment());
+                    fr.commit();
+                }
+
             }
         });
 
         return view;
+    }
+
+    private void deleteSharedPreferences() {
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(CHECKSA1);
+        editor.remove(CHECKSA2);
+        editor.remove(CHECKSA3);
+        editor.remove(DATEPICKER);
+        editor.remove(TREATMENT);
+        editor.remove(CHOICE);
+        editor.apply();
+
     }
 
     private void saveData() {
@@ -128,6 +171,13 @@ public class ThirdFragment extends Fragment {
             radioButton1.setChecked(false);
             radioButton2.setChecked(false);
         }
+
+    }
+
+    private void getData() {
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        text = sharedPreferences.getString(TEXT, "");
+        other = sharedPreferences.getString(OTHER, "");
 
     }
 }

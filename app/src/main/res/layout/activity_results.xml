@@ -23,6 +23,15 @@
             android:orientation="vertical"
             android:layout_margin="5dp">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Gynecologists' Feedback"
+                android:textColor="@color/colorBackground"
+                android:layout_margin="10dp"
+                android:textSize="18sp"
+                android:layout_gravity="center_horizontal"/>
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -70,6 +79,91 @@
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
                         android:text="Gynecologist's VIA Results: Positive"
+                        android:textColor="#FBE449"/>
+
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="10"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="6"
+                            android:text="Read Additional Notes"
+                            android:textAllCaps="false"
+                            android:layout_marginRight="5dp"
+                            android:layout_gravity="center_horizontal"
+                            android:textColor="@color/colorBackground"
+                            android:background="@drawable/primary_btn"/>
+
+                        <Button
+                            android:layout_width="0dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="4"
+                            android:layout_marginLeft="5dp"
+                            android:text="View Images"
+                            android:textAllCaps="false"
+                            android:layout_gravity="center_horizontal"
+                            android:textColor="@color/colorBackground"
+                            android:background="@drawable/primary_btn"/>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:contentPadding="10dp"
+                app:cardElevation="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                app:cardBackgroundColor="#0670B1"
+                app:cardCornerRadius="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="StudyID: UC001"
+                        android:textColor="@color/colorBackground"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Initials: MC"
+                        android:textColor="@color/colorBackground"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="My VIA Results: Positive"
+                        android:textColor="@color/colorGold"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="Model VIA Results: Positive"
+                        android:textColor="@color/colorRed"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="Gynecologist's VIA Results: Negative"
                         android:textColor="#FBE449"/>
 
                     <LinearLayout

@@ -13,8 +13,8 @@ import java.util.List;
 @Dao
 public interface FormDAO {
 
-    @Query("SELECT * FROM Cervix_Screening")
-    LiveData<List<Form>> getAllForms();
+    @Query("SELECT * FROM Cervix_Screening ORDER BY `key` DESC")
+    List<Form> getAllForms();
 
 //    @Query("SELECT * FROM Cervix_Screening WHERE `key` = (SELECT MAX(`key`) FROM Cervix_Screening)")
 //    Form filterdata(Form form);

@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.ug.cancerapp.R;
 import com.ug.cancerapp.activities.DashBoardActivity;
+import com.ug.cancerapp.activities.DataActivity;
 
 import static com.ug.cancerapp.fragments.FirstFragment.STUDY;
 
@@ -89,7 +90,7 @@ public class ViaFragment extends Fragment {
                     Toast.makeText(getActivity(), "Fill in all fields", Toast.LENGTH_SHORT).show();
                 }else {
                     saveData();
-                    startActivity(new Intent(getActivity(), DashBoardActivity.class));
+                    startActivity(new Intent(getActivity(), DataActivity.class));
                 }
 
             }

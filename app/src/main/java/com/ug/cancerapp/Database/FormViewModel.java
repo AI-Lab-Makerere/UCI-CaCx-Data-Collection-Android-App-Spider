@@ -11,18 +11,20 @@ import java.util.List;
 public class FormViewModel extends AndroidViewModel {
 
     private FormRepository repository;
-    private LiveData<List<Form>> allForms;
-    long rowId;
+//    private LiveData<List<Form>> allForms;
 
     public FormViewModel(@NonNull Application application) {
         super(application);
         repository = new FormRepository(application);
-//        allForms = repository.getAllNotes();
+//        allForms = repository.getAllForms();
     }
 
-    public long insert(Form form)
+    public void insert(Form form)
     {
         repository.insert(form);
-        return rowId;
     }
+
+//    public LiveData<List<Form>> getAllForms() {
+//        return allForms;
+//    }
 }

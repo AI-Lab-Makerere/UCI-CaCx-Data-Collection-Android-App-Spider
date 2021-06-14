@@ -1,14 +1,23 @@
 package com.ug.cancerapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ug.cancerapp.Database.Form;
+import com.ug.cancerapp.Database.FormViewModel;
 import com.ug.cancerapp.R;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static com.ug.cancerapp.fragments.Camera1Fragment.IMAGE;
 import static com.ug.cancerapp.fragments.Camera2Fragment.IMAGE2;
@@ -33,6 +42,7 @@ import static com.ug.cancerapp.fragments.ScreenFragment.DATEPICKER;
 import static com.ug.cancerapp.fragments.ScreenFragment.SSS;
 import static com.ug.cancerapp.fragments.ScreenFragment.TREATMENT;
 import static com.ug.cancerapp.fragments.SecondFragment.TEXT;
+import static com.ug.cancerapp.fragments.SixtyFragment.CHECK1;
 import static com.ug.cancerapp.fragments.SixtyFragment.S4;
 import static com.ug.cancerapp.fragments.ThirdFragment.TEXT2;
 import static com.ug.cancerapp.fragments.ViaFragment.LESION;
@@ -45,6 +55,10 @@ public class DataActivity extends AppCompatActivity {
 
     TextView textView;
     String s = "";
+    Button save;
+    int num2 = 0;
+
+    private FormViewModel formViewModel;
 
     public static final String SHARED_PREFS = "sharedPrefs";
 
@@ -54,51 +68,123 @@ public class DataActivity extends AppCompatActivity {
         setContentView(R.layout.activity_data);
 
         textView = findViewById(R.id.text);
+        save = findViewById(R.id.save);
+
+        formViewModel = ViewModelProviders.of(this).get(FormViewModel.class);
 
         getData();
+
+//        String studyID = sharedPreferences.getString(STUDY, "");
+//        String initial = sharedPreferences.getString(INITIAL, "");
+//        String age = sharedPreferences.getString(AGE, "");
+//        int number = Integer.parseInt(age);
+//        String district = sharedPreferences.getString(DISTRICT, "");
+//        String county = sharedPreferences.getString(COUNTY, "");
+//        String zone = sharedPreferences.getString(ZONE, "");
+//        String text = sharedPreferences.getString(TEXT, "");
+//        String ss = sharedPreferences.getString(SS, "");
+//        String symptom = sharedPreferences.getString(OTHER, "");
+//        String text2 = sharedPreferences.getString(TEXT2, "");
+//        String past = sharedPreferences.getString(CHOICE, "");
+//        String sss = sharedPreferences.getString(SSS, "");
+//        String datey = sharedPreferences.getString(DATEPICKER, "");
+//        String treat = sharedPreferences.getString(TREATMENT, "");
+//        String value3 = sharedPreferences.getString(TEXT3, "");
+//        String valuex = sharedPreferences.getString(CHOICE2, "");
+//        String year = sharedPreferences.getString(YEARS, "");
+//
+//        if (year.isEmpty()){
+//            num2 = 0;
+//        }else {
+//            num2 = Integer.parseInt(year);
+//        }
+//
+//        String value = sharedPreferences.getString(PREGNANT, "");
+//        String time = sharedPreferences.getString(DATS, "");
+//        String child = sharedPreferences.getString(PARITY, "");
+//        int children = Integer.parseInt(child);
+//        String abort = sharedPreferences.getString(ABORTION, "");
+//        int abortion = Integer.parseInt(abort);
+//        String choice = sharedPreferences.getString(CHOICES, "");
+//        String s4 = sharedPreferences.getString(S4, "");
+//        String sImage = sharedPreferences.getString(IMAGE, "");
+//        String sImage2 = sharedPreferences.getString(IMAGE2, "");
+//        String sImage3 = sharedPreferences.getString(IMAGE3, "");
+//        String sImage4 = sharedPreferences.getString(IMAGE4, "");
+//        String via = sharedPreferences.getString(VIA, "");
+//        String notes = sharedPreferences.getString(NOTES, "");
+//        String location = sharedPreferences.getString(LESION, "");
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+        String format = simpleDateFormat.format(new Date());
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.apply();
+
+//                Form form = new Form();
+
+//                form.setDate(format);
+//                form.setStudyID(studyID);
+//                form.setInitials(initial);
+//                form.setAge(number);
+//                form.setDistrict(district);
+//                form.setCounty(county);
+//                form.setVillage(zone);
+//                form.setHave_symptoms(text);
+//                form.setSymptoms(ss);
+//                form.setOther_symptoms(symptom);
+//                form.setScreened_for_cancer(text2);
+//                form.setLast_screened(datey);
+//                form.setTreatment(treat);
+//                form.setScreening_process(sss);
+//                form.setScreening_results(past);
+//                form.setHiv_status(value3);
+//                form.setOn_haart(valuex);
+//                form.setYears_on_haart(num2);
+//                form.setPregnant(value);
+//                form.setLast_menstrual(time);
+//                form.setParity(children);
+//                form.setAbortion(abortion);
+//                form.setOn_contraceptives(choice);
+//                form.setContraceptives(s4);
+//                form.setImage1(sImage);
+//                form.setImage2(sImage2);
+//                form.setImage3(sImage3);
+//                form.setImage4(sImage4);
+//                form.setVia(via);
+//                form.setLocation(location);
+//                form.setNotes(notes);
+
+//                formViewModel.insert(form);
+
+                Toast.makeText(DataActivity.this, "successful", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(DataActivity.this, DashBoardActivity.class));
+                finish();
+            }
+        });
     }
 
     private void getData() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        String studyID = sharedPreferences.getString(STUDY, "");
-        String initial = sharedPreferences.getString(INITIAL, "");
-        String age = sharedPreferences.getString(AGE, "");
-        String district = sharedPreferences.getString(DISTRICT, "");
-        String county = sharedPreferences.getString(COUNTY, "");
-        String zone = sharedPreferences.getString(ZONE, "");
-        String text = sharedPreferences.getString(TEXT, "");
-        String ss = sharedPreferences.getString(SS, "");
-        String symptom = sharedPreferences.getString(OTHER, "");
-        String text2 = sharedPreferences.getString(TEXT2, "");
-        String past = sharedPreferences.getString(CHOICE, "");
-        String sss = sharedPreferences.getString(SSS, "");
-        String datey = sharedPreferences.getString(DATEPICKER, "");
-        String treat = sharedPreferences.getString(TREATMENT, "");
-        String value3 = sharedPreferences.getString(TEXT3, "");
-        String valuex = sharedPreferences.getString(CHOICE2, "");
-        String year = sharedPreferences.getString(YEARS, "");
-        String value = sharedPreferences.getString(PREGNANT, "");
-        String time = sharedPreferences.getString(DATS, "");
-        String child = sharedPreferences.getString(PARITY, "");
-        String abort = sharedPreferences.getString(ABORTION, "");
-        String choice = sharedPreferences.getString(CHOICES, "");
-        String s4 = sharedPreferences.getString(S4, "");
-        String sImage = sharedPreferences.getString(IMAGE, "");
-        String sImage2 = sharedPreferences.getString(IMAGE2, "");
-        String sImage3 = sharedPreferences.getString(IMAGE3, "");
-        String sImage4 = sharedPreferences.getString(IMAGE4, "");
-        String via = sharedPreferences.getString(VIA, "");
-        String notes = sharedPreferences.getString(NOTES, "");
-        String location = sharedPreferences.getString(LESION, "");
 
-        s = studyID + "\n" + initial + "\n" + age + "\n" + district + "\n" + county + "\n" + zone +
-                "\n" + text + "\n" + ss + "\n" + symptom + "\n" + text2 + "\n" + past + "\n" + sss +
-                "\n" + datey + "\n" + treat + "\n" + value3 + "\n" + valuex + "\n" + year + "\n" +
-                value + "\n" + time + "\n" + child + "\n" + abort + "\n" + choice + "\n" + s4 + "\n" +
-                sImage + "\n" + sImage2 + "\n" + sImage3 + "\n" + sImage4 + "\n" + via + "\n" + notes +
-                "\n" + location + "\n" + "location";
 
-        textView.setText(s);
+//        s = studyID + "\n" + initial + "\n" + age + "\n" + district + "\n" + county + "\n" + zone +
+//                "\n" + text + "\n" + ss + "\n" + symptom + "\n" + text2 + "\n" + past + "\n" + sss +
+//                "\n" + datey + "\n" + treat + "\n" + value3 + "\n" + valuex + "\n" + year + "\n" +
+//                value + "\n" + time + "\n" + child + "\n" + abort + "\n" + choice + "\n" + s4 + "\n" +
+//                sImage + "\n" + sImage2 + "\n" + sImage3 + "\n" + sImage4 + "\n" + via + "\n" + notes +
+//                "\n" + location + "\n" + "location";
+//
+//        textView.setText(s);
+
+
+//        form.setDate(format);
+
 
         
     }

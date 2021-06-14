@@ -10,20 +10,21 @@ import java.util.List;
 public class FormRepository {
 
     private FormDAO formDAO;
-    private LiveData<List<Form>> allForms;
-    long rowId;
+//    private LiveData<List<Form>> allForms;
 
     public FormRepository(Application application){
         FormDatabase database = FormDatabase.getInstance(application);
         formDAO = database.formDAO();
-        allForms = formDAO.getAllForms();
+//        allForms = formDAO.getAllForms();
     }
 
-    public long insert(Form form){
+    public void insert(Form form){
         new InsertFormAsyncTask(formDAO).execute(form);
-        rowId = form.getKey();
-        return rowId;
     }
+
+//    public LiveData<List<Form>> getAllForms() {
+//        return allForms;
+//    }
 
     private static class InsertFormAsyncTask extends AsyncTask<Form, Void, Void>{
 
@@ -38,5 +39,10 @@ public class FormRepository {
             formDAO.insertForm(forms[0]);
             return null;
         }
+    }
+
+    public List<Form> getAllForms(){
+        List<Form> formList = formDAO.getAllForms();
+        return formList;
     }
 }

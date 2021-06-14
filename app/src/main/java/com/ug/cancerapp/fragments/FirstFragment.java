@@ -115,9 +115,9 @@ public class FirstFragment extends Fragment {
 //                    form.setDistrict(district);
 //                    form.setCounty(county);
 //                    form.setVillage(zone);
-////                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
-////                    String format = simpleDateFormat.format(new Date());
-////                    form.setDate(format);
+//                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+//                    String format = simpleDateFormat.format(new Date());
+//                    form.setDate(format);
 //
 //                    rowId = formViewModel.insert(form);
 //

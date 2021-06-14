@@ -23,10 +23,6 @@ public abstract class FormDatabase extends RoomDatabase {
 
     public abstract FormDAO formDAO();
 
-    private static volatile FormDatabase INSTANCE;
-    public static final int NUMBER_OF_THREADS = 4;
-    static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
-
     public static synchronized FormDatabase getInstance(Context context){
         if (formDatabase == null){
             formDatabase = Room.databaseBuilder(
@@ -34,7 +30,6 @@ public abstract class FormDatabase extends RoomDatabase {
                     FormDatabase.class,
                     "form19b2"
             )
-                    .fallbackToDestructiveMigration()
                     .build();
         }
         return formDatabase;

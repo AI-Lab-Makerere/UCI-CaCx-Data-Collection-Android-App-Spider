@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="10dp"
+    app:cardBackgroundColor="#0670B1"
+    app:cardCornerRadius="10dp"
+    app:contentPadding="5dp"
+    app:cardElevation="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/study"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="StudyID: UC001"
+            android:textSize="16sp"
+            android:textColor="@color/colorBackground"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/initials"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Initials: MC"
+                android:textSize="16sp"
+                android:textColor="@color/colorBackground"/>
+
+            <TextView
+                android:id="@+id/age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="Age: 27"
+                android:textSize="16sp"
+                android:textColor="@color/colorBackground"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/results"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="VIA Results: Positive"
+            android:textSize="18sp"
+            android:textColor="@color/colorGold"/>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="10"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/images"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="3"
+                android:text="View Images"
+                android:textAllCaps="false"
+                android:layout_marginRight="5dp"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/colorBackground"
+                android:background="@drawable/primary_btn"/>
+
+            <Button
+                android:id="@+id/load"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="3"
+                android:text="Load Profile"
+                android:textAllCaps="false"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/colorBackground"
+                android:background="@drawable/primary_btn"/>
+
+            <Button
+                android:id="@+id/consult"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="4"
+                android:layout_marginLeft="5dp"
+                android:text="Consult"
+                android:textAllCaps="false"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/colorBackground"
+                android:background="@drawable/primary_btn"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

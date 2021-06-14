@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
                         Toast.makeText(LoginActivity.this, "Fill in your username", Toast.LENGTH_SHORT).show();
                     }
                     else{
-                        startActivity(new Intent(LoginActivity.this, GynecologistActivity.class));
+                        startActivity(new Intent(LoginActivity.this, GynaecologistActivity.class));
                     }
                 }else {
                     if(user.isEmpty()){

@@ -13,7 +13,10 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Base64;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.ug.cancerapp.Adapter.FormAdapter;
@@ -26,13 +29,14 @@ import java.util.List;
 
 public class RecordsActivity extends AppCompatActivity {
 
-    ArrayList<Form> formList;
+    ArrayList<Form> formList, formList_search;
     FormAdapter formAdapter;
     RecyclerView recyclerView;
     Dialog dialog;
     ImageView imageView1, imageView2, imageView3, imageView4;
     Uri uri;
     Bitmap bitmap1, bitmap2, bitmap3, bitmap4;
+    EditText etSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +49,31 @@ public class RecordsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        etSearch = findViewById(R.id.search);
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         new LoadDataTask().execute();
+
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String text = s.toString();
+                Filter(text);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
     }
 
@@ -69,9 +92,11 @@ public class RecordsActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
             formList1 = formRepository.getAllForms();
             formList = new ArrayList<>();
+            formList_search = new ArrayList<>();
 
             for (int i = 0; i < formList1.size(); i++){
                 formList.add(formList1.get(i));
+                formList_search.add(formList1.get(i));
             }
 
             return null;
@@ -130,5 +155,24 @@ public class RecordsActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+//    filter method
+    public void Filter(String charText){
+
+        formList.clear();
+        if (charText.length() == 0){
+//            load all the data
+            formList.addAll(formList_search);
+        }else {
+//            filter
+            for (Form form:formList_search){
+                if (form.getStudyID().contains(charText) || form.getVia().contains(charText)  || String.valueOf(form.getAge()).contains(charText)){
+                    formList.add(form);
+                }
+            }
+
+        }
+        formAdapter.notifyDataSetChanged();
     }
 }

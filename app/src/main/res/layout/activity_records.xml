@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".activities.DiagnosisActivity">
+    tools:context=".activities.RecordsActivity">
 
     <include layout="@layout/toolbar"
         android:id="@+id/toolbar"/>

@@ -26,7 +26,7 @@
             android:name=".activities.ResultsActivity"
             android:parentActivityName=".activities.DashBoardActivity" />
         <activity
-            android:name=".activities.DiagnosisActivity"
+            android:name=".activities.RecordsActivity"
             android:parentActivityName=".activities.DashBoardActivity" />
         <activity android:name=".activities.DashBoardActivity" >
             <intent-filter>

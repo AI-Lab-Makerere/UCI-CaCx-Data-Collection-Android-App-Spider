@@ -36,7 +36,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="Is the patient on HAART"
+                    android:text="Is the patient on HAART?"
                     android:textColor="@color/colorTextPrimary"
                     android:textSize="18sp" />
 

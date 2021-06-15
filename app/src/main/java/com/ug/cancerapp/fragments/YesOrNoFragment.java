@@ -94,7 +94,7 @@ public class YesOrNoFragment extends Fragment {
                     fr.replace(R.id.fragment_container, new Camera1Fragment());
                     fr.commit();
                 }else {
-                    Toast.makeText(getActivity(), "Choose on option", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Select one option", Toast.LENGTH_SHORT).show();
                 }
 
             }

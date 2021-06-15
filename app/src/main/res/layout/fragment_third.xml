@@ -36,7 +36,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="Has the patient screened for cervical cancer in the past"
+                    android:text="Has the patient screened for cervical cancer in the past?"
                     android:textColor="@color/colorTextPrimary"
                     android:textSize="18sp" />
 

@@ -37,7 +37,7 @@ public class DashBoardActivity extends AppCompatActivity {
     }
 
     public void diagnosis(View view) {
-        startActivity(new Intent(DashBoardActivity.this, DiagnosisActivity.class));
+        startActivity(new Intent(DashBoardActivity.this, RecordsActivity.class));
     }
 
     private void setUpStatus() {
@@ -64,5 +64,11 @@ public class DashBoardActivity extends AppCompatActivity {
             winParams.flags &= ~bits;
         }
         win.setAttributes(winParams);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
     }
 }

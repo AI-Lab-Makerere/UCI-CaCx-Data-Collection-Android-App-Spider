@@ -94,7 +94,7 @@ public class FourthFragment extends Fragment {
                     fr.addToBackStack(null);
                     fr.commit();
 
-                } else if (value3.equals("Negative")) {
+                } else if (value3.equals("Negative") || value3.equals("UnKnown")) {
                     deleteSharedPreferences();
                     FragmentTransaction fr = getFragmentManager().beginTransaction();
                     fr.replace(R.id.fragment_container, new FifthFragment());
@@ -102,7 +102,7 @@ public class FourthFragment extends Fragment {
                     fr.commit();
 
                 } else {
-                    Toast.makeText(getActivity(), "Select on option", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Select one option", Toast.LENGTH_SHORT).show();
                 }
 
             }

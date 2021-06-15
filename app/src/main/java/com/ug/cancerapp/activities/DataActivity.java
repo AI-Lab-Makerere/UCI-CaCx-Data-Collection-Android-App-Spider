@@ -74,49 +74,7 @@ public class DataActivity extends AppCompatActivity {
 
         getData();
 
-//        String studyID = sharedPreferences.getString(STUDY, "");
-//        String initial = sharedPreferences.getString(INITIAL, "");
-//        String age = sharedPreferences.getString(AGE, "");
-//        int number = Integer.parseInt(age);
-//        String district = sharedPreferences.getString(DISTRICT, "");
-//        String county = sharedPreferences.getString(COUNTY, "");
-//        String zone = sharedPreferences.getString(ZONE, "");
-//        String text = sharedPreferences.getString(TEXT, "");
-//        String ss = sharedPreferences.getString(SS, "");
-//        String symptom = sharedPreferences.getString(OTHER, "");
-//        String text2 = sharedPreferences.getString(TEXT2, "");
-//        String past = sharedPreferences.getString(CHOICE, "");
-//        String sss = sharedPreferences.getString(SSS, "");
-//        String datey = sharedPreferences.getString(DATEPICKER, "");
-//        String treat = sharedPreferences.getString(TREATMENT, "");
-//        String value3 = sharedPreferences.getString(TEXT3, "");
-//        String valuex = sharedPreferences.getString(CHOICE2, "");
-//        String year = sharedPreferences.getString(YEARS, "");
-//
-//        if (year.isEmpty()){
-//            num2 = 0;
-//        }else {
-//            num2 = Integer.parseInt(year);
-//        }
-//
-//        String value = sharedPreferences.getString(PREGNANT, "");
-//        String time = sharedPreferences.getString(DATS, "");
-//        String child = sharedPreferences.getString(PARITY, "");
-//        int children = Integer.parseInt(child);
-//        String abort = sharedPreferences.getString(ABORTION, "");
-//        int abortion = Integer.parseInt(abort);
-//        String choice = sharedPreferences.getString(CHOICES, "");
-//        String s4 = sharedPreferences.getString(S4, "");
-//        String sImage = sharedPreferences.getString(IMAGE, "");
-//        String sImage2 = sharedPreferences.getString(IMAGE2, "");
-//        String sImage3 = sharedPreferences.getString(IMAGE3, "");
-//        String sImage4 = sharedPreferences.getString(IMAGE4, "");
-//        String via = sharedPreferences.getString(VIA, "");
-//        String notes = sharedPreferences.getString(NOTES, "");
-//        String location = sharedPreferences.getString(LESION, "");
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
-        String format = simpleDateFormat.format(new Date());
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override

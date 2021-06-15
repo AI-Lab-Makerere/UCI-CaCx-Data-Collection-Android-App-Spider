@@ -115,7 +115,7 @@ public class ScreenFragment extends Fragment {
                     s += "Others, ";
                 }
 
-                if (s.isEmpty() && past.isEmpty() && datey.equals("No Date Selected") && treat.isEmpty()){
+                if (s.isEmpty() || past.isEmpty() || datey.equals("No Date Selected") || treat.isEmpty()){
                     Toast.makeText(getActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }else{
                     saveData(s);

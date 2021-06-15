@@ -28,7 +28,7 @@ public class ViaFragment extends Fragment {
     View view;
     RadioGroup radioGroup;
     RadioButton radioButton1, radioButton2;
-    Button back, send;
+    Button back, next;
     EditText message, lesion;
 
     private static final int POSITIVE = 0;
@@ -50,14 +50,13 @@ public class ViaFragment extends Fragment {
         back = view.findViewById(R.id.back);
         message = view.findViewById(R.id.notes);
         lesion = view.findViewById(R.id.lesion);
-        send = view.findViewById(R.id.save);
+        next = view.findViewById(R.id.next);
         radioGroup = view.findViewById(R.id.radioGroup);
         radioButton1 = view.findViewById(R.id.positive);
         radioButton2 = view.findViewById(R.id.negative);
 
         loadData();
         updateViews();
-        getData();
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -80,17 +79,19 @@ public class ViaFragment extends Fragment {
             }
         });
 
-        send.setOnClickListener(new View.OnClickListener() {
+        next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 notes = message.getText().toString();
                 location = lesion.getText().toString();
 
-                if (via.isEmpty() && notes.isEmpty() && location.isEmpty()){
+                if (via.isEmpty() || notes.isEmpty() || location.isEmpty()){
                     Toast.makeText(getActivity(), "Fill in all fields", Toast.LENGTH_SHORT).show();
                 }else {
                     saveData();
-                    startActivity(new Intent(getActivity(), DataActivity.class));
+                    FragmentTransaction fr = getFragmentManager().beginTransaction();
+                    fr.replace(R.id.fragment_container, new Other2Fragment());
+                    fr.commit();
                 }
 
             }
@@ -141,13 +142,6 @@ public class ViaFragment extends Fragment {
 
         message.setText(notes);
         lesion.setText(location);
-
-    }
-
-    private void getData() {
-        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        String studyID = sharedPreferences.getString(STUDY, "");
-        Toast.makeText(getActivity(), studyID, Toast.LENGTH_LONG).show();
 
     }
 }

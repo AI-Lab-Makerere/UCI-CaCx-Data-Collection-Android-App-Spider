@@ -90,7 +90,7 @@ public class FirstFragment extends Fragment {
                 county = etcounty.getText().toString().trim();
                 zone = etzone.getText().toString().trim();
 
-                if(study.isEmpty() && initial.isEmpty() && age.isEmpty() && district.isEmpty() && county.isEmpty() && zone.isEmpty()){
+                if(study.isEmpty() || initial.isEmpty() || age.isEmpty() || district.isEmpty() || county.isEmpty() || zone.isEmpty()){
 
                     Toast.makeText(getActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
 
@@ -172,5 +172,5 @@ public class FirstFragment extends Fragment {
         etzone.setText(zone);
 
     }
-    
+
 }

@@ -97,28 +97,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
                     android:background="@drawable/text_bg"
                     android:gravity="top"
                     android:hint="Provide some brief notes to support your previous decision"
                     android:inputType="textMultiLine"
                     android:padding="10dp"
                     android:textSize="14sp" />
-
-
-                <Button
-                    android:id="@+id/save"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="60dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginRight="60dp"
-                    android:background="@drawable/primary_btn"
-                    android:text="Save Data"
-                    android:textAllCaps="false"
-                    android:textColor="@color/colorBackground"
-                    android:textSize="20sp" />
 
 
             </LinearLayout>
@@ -142,7 +127,18 @@
             android:text="Back"
             android:textColor="@color/colorBackground" />
 
+        <Button
+            android:id="@+id/next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp"
+            android:background="@drawable/primary_btn"
+            android:text="next"
+            android:textColor="@color/colorBackground"/>
 
     </RelativeLayout>
+
+
 
 </RelativeLayout>

@@ -37,7 +37,7 @@
                             android:layout_marginTop="5dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="What is the patient's HIV status"
+                            android:text="What is the patient's HIV status?"
                             android:textSize="18sp"
                             android:textColor="@color/colorTextPrimary"/>
 

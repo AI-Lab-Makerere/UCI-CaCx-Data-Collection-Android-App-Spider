@@ -105,7 +105,7 @@ public class ThirdFragment extends Fragment {
                     fr.commit();
 
                 }else {
-                    Toast.makeText(getActivity(), "Choose oe option", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Choose one option", Toast.LENGTH_SHORT).show();
                 }
             }
         });

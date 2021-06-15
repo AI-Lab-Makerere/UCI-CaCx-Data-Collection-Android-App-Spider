@@ -25,47 +25,46 @@ public class Form {
     String via, location, notes;
     String diagnosis;
 
-//    public Form(long key, String date, String studyID, String initials, String district, String county,
-//                String village, int age, String have_symptoms, String symptoms, String other_symptoms,
-//                String screened_for_cancer, String last_screened, String screening_process, String treatment,
-//                String screening_results, String hiv_status, String on_haart, int years_on_haart, String pregnant,
-//                String last_menstrual, int parity, int abortion, String on_contraceptives, String contraceptives,
-//                String image1, String image2, String image3, String image4, String via, String location,
-//                String notes, String diagnosis) {
-//        this.key = key;
-//        this.date = date;
-//        this.studyID = studyID;
-//        this.initials = initials;
-//        this.district = district;
-//        this.county = county;
-//        this.village = village;
-//        this.age = age;
-//        this.have_symptoms = have_symptoms;
-//        this.symptoms = symptoms;
-//        this.other_symptoms = other_symptoms;
-//        this.screened_for_cancer = screened_for_cancer;
-//        this.last_screened = last_screened;
-//        this.screening_process = screening_process;
-//        this.treatment = treatment;
-//        this.screening_results = screening_results;
-//        this.hiv_status = hiv_status;
-//        this.on_haart = on_haart;
-//        this.years_on_haart = years_on_haart;
-//        this.pregnant = pregnant;
-//        this.last_menstrual = last_menstrual;
-//        this.parity = parity;
-//        this.abortion = abortion;
-//        this.on_contraceptives = on_contraceptives;
-//        this.contraceptives = contraceptives;
-//        this.image1 = image1;
-//        this.image2 = image2;
-//        this.image3 = image3;
-//        this.image4 = image4;
-//        this.via = via;
-//        this.location = location;
-//        this.notes = notes;
-//        this.diagnosis = diagnosis;
-//    }
+    public Form(String date, String studyID, String initials, String district, String county,
+                String village, int age, String have_symptoms, String symptoms, String other_symptoms,
+                String screened_for_cancer, String last_screened, String screening_process, String treatment,
+                String screening_results, String hiv_status, String on_haart, int years_on_haart, String pregnant,
+                String last_menstrual, int parity, int abortion, String on_contraceptives, String contraceptives,
+                String image1, String image2, String image3, String image4, String via, String location,
+                String notes, String diagnosis) {
+        this.date = date;
+        this.studyID = studyID;
+        this.initials = initials;
+        this.district = district;
+        this.county = county;
+        this.village = village;
+        this.age = age;
+        this.have_symptoms = have_symptoms;
+        this.symptoms = symptoms;
+        this.other_symptoms = other_symptoms;
+        this.screened_for_cancer = screened_for_cancer;
+        this.last_screened = last_screened;
+        this.screening_process = screening_process;
+        this.treatment = treatment;
+        this.screening_results = screening_results;
+        this.hiv_status = hiv_status;
+        this.on_haart = on_haart;
+        this.years_on_haart = years_on_haart;
+        this.pregnant = pregnant;
+        this.last_menstrual = last_menstrual;
+        this.parity = parity;
+        this.abortion = abortion;
+        this.on_contraceptives = on_contraceptives;
+        this.contraceptives = contraceptives;
+        this.image1 = image1;
+        this.image2 = image2;
+        this.image3 = image3;
+        this.image4 = image4;
+        this.via = via;
+        this.location = location;
+        this.notes = notes;
+        this.diagnosis = diagnosis;
+    }
 
     public String getStudyID() {
         return studyID;

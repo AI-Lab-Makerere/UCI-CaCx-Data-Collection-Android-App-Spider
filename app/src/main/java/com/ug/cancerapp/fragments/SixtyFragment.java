@@ -98,7 +98,7 @@ public class SixtyFragment extends Fragment {
         }
 
         if (s.isEmpty()){
-            Toast.makeText(getActivity(), "Choose at least on option", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Choose at least one option", Toast.LENGTH_SHORT).show();
         }else {
             saveData(s);
             FragmentTransaction fr = getFragmentManager().beginTransaction();

@@ -2,8 +2,6 @@ package com.ug.cancerapp.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,20 +15,16 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.ug.cancerapp.Adapter.FormAdapter;
 import com.ug.cancerapp.Database.Form;
-import com.ug.cancerapp.Database.FormDAO;
-import com.ug.cancerapp.Database.FormDatabase;
 import com.ug.cancerapp.Database.FormRepository;
-import com.ug.cancerapp.Database.FormViewModel;
 import com.ug.cancerapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DiagnosisActivity extends AppCompatActivity {
+public class RecordsActivity extends AppCompatActivity {
 
     ArrayList<Form> formList;
     FormAdapter formAdapter;
@@ -43,7 +37,7 @@ public class DiagnosisActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_diagnosis);
+        setContentView(R.layout.activity_records);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -87,7 +81,7 @@ public class DiagnosisActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            formAdapter = new FormAdapter(formList, DiagnosisActivity.this);
+            formAdapter = new FormAdapter(formList, RecordsActivity.this);
             recyclerView.setAdapter(formAdapter);
 
             formAdapter.setOnItemClickListener(new FormAdapter.OnItemClickListener() {
@@ -103,7 +97,7 @@ public class DiagnosisActivity extends AppCompatActivity {
                     String image3 = formList.get(position).getImage3();
                     String image4 = formList.get(position).getImage4();
 
-                    dialog = new Dialog(DiagnosisActivity.this);
+                    dialog = new Dialog(RecordsActivity.this);
                     dialog.setContentView(R.layout.viewing_images);
                     dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 

@@ -81,7 +81,7 @@ public class YesFragment extends Fragment {
                     fr.commit();
 
                 }else if (s.isEmpty()){
-                    Toast.makeText(getActivity(), "Select on option", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Select at least one option", Toast.LENGTH_SHORT).show();
 
                 }else {
                     saveData(s);

@@ -103,22 +103,25 @@ public class FifthFragment extends Fragment {
                 child = parity.getText().toString();
                 abort = abortions.getText().toString();
 
-                int part = Integer.parseInt(child);
-                int abo = Integer.parseInt(abort);
-
-                if (value.isEmpty() && time.equals("No Date Selected") && child.isEmpty() && abort.isEmpty()){
+                if (value.isEmpty() || time.equals("No Date Selected") || child.isEmpty() || abort.isEmpty()) {
                     Toast.makeText(getActivity(), "Fill in all the fields", Toast.LENGTH_SHORT).show();
-                }else if(part > 20){
-                    Toast.makeText(getActivity(), "The maximum number of children is 20", Toast.LENGTH_SHORT).show();
-                }else if(abo >= part){
-                    Toast.makeText(getActivity(), "The maximum number of abortions should not be greater than maximum number of children", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    saveData();
-                    FragmentTransaction fr = getFragmentManager().beginTransaction();
-                    fr.replace(R.id.fragment_container, new YesOrNoFragment());
-                    fr.addToBackStack(null);
-                    fr.commit();
+                } else {
+                    int part = Integer.parseInt(child);
+                    int abo = Integer.parseInt(abort);
+
+                    if (part > 20) {
+                        parity.setError("Should be less than 21");
+                        Toast.makeText(getActivity(), "The maximum number of children is 20", Toast.LENGTH_SHORT).show();
+                    } else if (abo >= part) {
+                        abortions.setError("should be less than " + part);
+                        Toast.makeText(getActivity(), "The maximum number of abortions should not be greater than maximum number of children", Toast.LENGTH_SHORT).show();
+                    } else {
+                        saveData();
+                        FragmentTransaction fr = getFragmentManager().beginTransaction();
+                        fr.replace(R.id.fragment_container, new YesOrNoFragment());
+                        fr.addToBackStack(null);
+                        fr.commit();
+                    }
                 }
 
             }
@@ -127,15 +130,15 @@ public class FifthFragment extends Fragment {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!fouthText.equals("Positive")){
+                if (!fouthText.equals("Positive")) {
                     FragmentTransaction fr = getFragmentManager().beginTransaction();
                     fr.replace(R.id.fragment_container, new FourthFragment());
                     fr.commit();
-                }else if (haart2Text.isEmpty()){
+                } else if (haart2Text.isEmpty()) {
                     FragmentTransaction fr = getFragmentManager().beginTransaction();
                     fr.replace(R.id.fragment_container, new HaartFragment());
                     fr.commit();
-                }else{
+                } else {
                     FragmentTransaction fr = getFragmentManager().beginTransaction();
                     fr.replace(R.id.fragment_container, new Haart2Fragment());
                     fr.commit();
@@ -178,7 +181,7 @@ public class FifthFragment extends Fragment {
         return view;
     }
 
-    private void saveData(){
+    private void saveData() {
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -191,7 +194,7 @@ public class FifthFragment extends Fragment {
         Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
     }
 
-    public void loadData(){
+    public void loadData() {
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         value = sharedPreferences.getString(PREGNANT, "");
         time = sharedPreferences.getString(DATS, "");
@@ -200,7 +203,7 @@ public class FifthFragment extends Fragment {
 
     }
 
-    public void updateViews(){
+    public void updateViews() {
         date.setText(time);
         parity.setText(child);
         abortions.setText(abort);

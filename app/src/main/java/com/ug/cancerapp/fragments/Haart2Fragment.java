@@ -50,22 +50,29 @@ public class Haart2Fragment extends Fragment {
             public void onClick(View v) {
 
                 value = years.getText().toString();
-                int age = Integer.parseInt(text);
-                int year = Integer.parseInt(value);
+
 
                 if (value.isEmpty()){
                     Toast.makeText(getActivity(), "Fill in this field", Toast.LENGTH_SHORT).show();
 
-                }else if (year >= age){
-                    Toast.makeText(getActivity(), "This value should not be greater or equal to the patient's age", Toast.LENGTH_SHORT).show();
+                }else {
+                    int age = Integer.parseInt(text);
+                    int year = Integer.parseInt(value);
+
+                    if (year >= age){
+                        Toast.makeText(getActivity(), "This value should not be greater or equal to the patient's age " + age, Toast.LENGTH_SHORT).show();
+                    }else {
+                        saveData();
+                        FragmentTransaction fr = getFragmentManager().beginTransaction();
+                        fr.replace(R.id.fragment_container, new FifthFragment());
+                        fr.addToBackStack(null);
+                        fr.commit();
+                    }
+
                 }
-                else {
-                    saveData();
-                    FragmentTransaction fr = getFragmentManager().beginTransaction();
-                    fr.replace(R.id.fragment_container, new FifthFragment());
-                    fr.addToBackStack(null);
-                    fr.commit();
-                }
+
+
+
 
 
             }

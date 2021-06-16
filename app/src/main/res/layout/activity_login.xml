@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
-    tools:context=".activities.LoginActivity">
+    tools:context=".Activities.LoginActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,22 +26,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Username"
+            android:text="Email"
             android:textSize="16dp"
             android:textColor="@color/colorTextSecondary"/>
 
         <EditText
             android:id="@+id/username"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="45dp"
             android:layout_marginTop="10dp"
             android:saveEnabled="false"
+            android:inputType="textEmailAddress"
             android:background="@drawable/text_bg"
             android:padding="5dp" />
 
         <LinearLayout
             android:id="@+id/area"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -50,38 +51,53 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Area Code"
+                android:text="Password"
                 android:textSize="16dp"
                 android:textColor="@color/colorTextSecondary"/>
 
-            <LinearLayout
+            <EditText
+                android:id="@+id/password"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/style_spinner"
-                android:orientation="vertical">
-
-                <Spinner
-                    android:id="@+id/information"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"/>
-
-            </LinearLayout>
+                android:saveEnabled="false"
+                android:inputType="textPassword"
+                android:background="@drawable/text_bg"
+                android:padding="5dp" />
 
         </LinearLayout>
 
-
-
-        <Button
-            android:id="@+id/login"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/primary_btn"
-            android:text="Log in"
-            android:textAllCaps="false"
-            android:textColor="@color/colorBackground"
-            android:textSize="18sp"/>
+            android:layout_marginTop="30dp">
+
+            <Button
+                android:id="@+id/verify_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/primary_btn"
+                android:text="Log In"
+                android:textSize="18sp"
+                android:textAllCaps="false"
+                android:textColor="@color/colorBackground"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ProgressBar
+                android:id="@+id/otp_progress_bar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="16dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/verify_btn"
+                app:layout_constraintEnd_toEndOf="@+id/verify_btn"
+                app:layout_constraintTop_toTopOf="@+id/verify_btn" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 

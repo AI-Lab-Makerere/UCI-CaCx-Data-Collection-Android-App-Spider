@@ -92,6 +92,18 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormHolder> {
                     }
                 }
             });
+
+            consult.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null){
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION){
+                            listener.onConsultClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 }

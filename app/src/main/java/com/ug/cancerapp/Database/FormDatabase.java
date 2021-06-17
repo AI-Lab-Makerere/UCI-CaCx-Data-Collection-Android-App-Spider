@@ -30,21 +30,9 @@ public abstract class FormDatabase extends RoomDatabase {
                     FormDatabase.class,
                     "form19b2"
             )
+                    .allowMainThreadQueries()
                     .build();
         }
         return formDatabase;
     }
-
-//    static FormDatabase getDatabase(final Context context){
-//        if (INSTANCE == null){
-//            synchronized (FormDatabase.class){
-//                if (INSTANCE == null){
-//                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-//                            FormDatabase.class, "form19b2")
-//                            .build();
-//                }
-//            }
-//        }
-//        return INSTANCE;
-//    }
 }

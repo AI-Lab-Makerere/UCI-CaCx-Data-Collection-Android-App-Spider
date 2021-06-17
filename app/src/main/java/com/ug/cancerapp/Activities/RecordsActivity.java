@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.app.Dialog;
 import android.content.SharedPreferences;
@@ -19,14 +20,19 @@ import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ug.cancerapp.Adapter.FormAdapter;
 import com.ug.cancerapp.Apis.ApiClient;
 import com.ug.cancerapp.Apis.JsonPlaceHolder;
 import com.ug.cancerapp.Database.Form;
+import com.ug.cancerapp.Database.FormDAO;
+import com.ug.cancerapp.Database.FormDatabase;
 import com.ug.cancerapp.Database.FormRepository;
 import com.ug.cancerapp.Models.Capture;
 import com.ug.cancerapp.R;
@@ -137,7 +143,14 @@ public class RecordsActivity extends AppCompatActivity {
             formAdapter.setOnItemClickListener(new FormAdapter.OnItemClickListener() {
                 @Override
                 public void onLoadClick(int position) {
+                    dialog = new Dialog(RecordsActivity.this);
+                    dialog.setContentView(R.layout.load_data);
 
+                    loadData(dialog, position);
+
+                    dialog.show();
+                    Window window = dialog.getWindow();
+                    window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
                 }
 
                 @Override
@@ -182,6 +195,7 @@ public class RecordsActivity extends AppCompatActivity {
             });
         }
     }
+
 
     //    filter method
     public void Filter(String charText){
@@ -247,7 +261,12 @@ public class RecordsActivity extends AppCompatActivity {
         String notes = formList.get(position).getNotes();
         String location = formList.get(position).getLocation();
         String date = formList.get(position).getDate();
+        long key = formList.get(position).getKey();
         Log.v("TAG", "data");
+
+        FormDAO formDAO = FormDatabase.getInstance(RecordsActivity.this).formDAO();
+        formDAO.UpdateConsult(true, key);
+        Log.v("TAG", "" + key);
 
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_API, MODE_PRIVATE);
         token = sharedPreferences.getString(TOKEN, "");
@@ -293,6 +312,7 @@ public class RecordsActivity extends AppCompatActivity {
                 String message = response.body();
                 Toast.makeText(RecordsActivity.this, message, Toast.LENGTH_SHORT).show();
                 Log.v("TAG", message);
+
             }
 
             @Override
@@ -301,6 +321,55 @@ public class RecordsActivity extends AppCompatActivity {
                 Log.v("TAG", "Something went wrong: " + t.getMessage());
             }
         });
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void loadData(Dialog dialog, int position) {
+
+        TextView study = dialog.findViewById(R.id.studyId);
+        study.setText("StudyID: " + formList.get(position).getStudyID());
+        TextView initial = dialog.findViewById(R.id.initials);
+        initial.setText("Initials: " + formList.get(position).getInitials() + "    Age: " + formList.get(position).getAge());
+        TextView address = dialog.findViewById(R.id.address);
+        address.setText("Address: " + formList.get(position).getVillage() + ", " + formList.get(position).getCounty() + ", " + formList.get(position).getDistrict());
+        TextView hav_symptoms = dialog.findViewById(R.id.signs);
+        hav_symptoms.setText("Symptoms for Cancer: " + formList.get(position).getHave_symptoms());
+        TextView symptoms = dialog.findViewById(R.id.symptoms);
+        symptoms.setText("Symptoms: " + formList.get(position).getSymptoms());
+        TextView other_symptoms = dialog.findViewById(R.id.other_symptoms);
+        other_symptoms.setText("Other Symptoms: " + formList.get(position).getOther_symptoms());
+        TextView screened = dialog.findViewById(R.id.screened);
+        screened.setText("Ever Screened for Cancer: " + formList.get(position).getScreened_for_cancer());
+        TextView screened_date = dialog.findViewById(R.id.date);
+        screened_date.setText("Screening Date: " + formList.get(position).getLast_screened());
+        TextView vr = dialog.findViewById(R.id.results);
+        vr.setText("VIA Results: " + formList.get(position).getScreening_results());
+        TextView screened_pr = dialog.findViewById(R.id.screened);
+        screened_pr.setText("Screening Process: " + formList.get(position).getScreening_process());
+        TextView treatement = dialog.findViewById(R.id.treatment);
+        treatement.setText("Treatment Provided: " + formList.get(position).getTreatment());
+        TextView hiv = dialog.findViewById(R.id.hiv);
+        hiv.setText("HIV Status: " + formList.get(position).getHiv_status());
+        TextView on_haart = dialog.findViewById(R.id.onHaart);
+        on_haart.setText("On Haart: " + formList.get(position).getOn_haart());
+        TextView years = dialog.findViewById(R.id.years);
+        years.setText("Years on Haart: " + formList.get(position).getYears_on_haart());
+        TextView preg = dialog.findViewById(R.id.pregnant);
+        preg.setText("Patient Pregnant: " + formList.get(position).getPregnant());
+        TextView last = dialog.findViewById(R.id.last);
+        last.setText("Last Menstrual period: " + formList.get(position).getLast_menstrual());
+        TextView par = dialog.findViewById(R.id.parity);
+        par.setText("Parity: " + formList.get(position).getParity() + "    Abortions: " + formList.get(position).getAbortion());
+        TextView oncon = dialog.findViewById(R.id.on_con);
+        oncon.setText("On Contraceptives: " + formList.get(position).getOn_contraceptives());
+        TextView con = dialog.findViewById(R.id.contra);
+        con.setText("Contraceptives Used: " + formList.get(position).getContraceptives());
+        TextView via = dialog.findViewById(R.id.via);
+        via.setText("My Via Results: " + formList.get(position).getVia());
+        TextView loc = dialog.findViewById(R.id.lesion);
+        loc.setText("Location of the Lesion: " + formList.get(position).getLocation());
+        TextView notes = dialog.findViewById(R.id.notes);
+        notes.setText("My Notes: " + formList.get(position).getNotes());
     }
 
 

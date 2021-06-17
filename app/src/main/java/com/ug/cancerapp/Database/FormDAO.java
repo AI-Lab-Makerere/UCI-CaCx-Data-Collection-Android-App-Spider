@@ -20,10 +20,14 @@ public interface FormDAO {
 //    Form filterdata(Form form);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    long insertForm(Form form);
+    void insertForm(Form form);
 
     @Update
     void updateForm(Form form);
+
+    @Query("UPDATE Cervix_Screening SET consult = :text WHERE `key` = :id")
+    void UpdateConsult (Boolean text, long id);
+
 
     @Delete
     void deleteForm(Form form);

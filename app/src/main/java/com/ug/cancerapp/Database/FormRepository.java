@@ -4,6 +4,7 @@ import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -22,9 +23,6 @@ public class FormRepository {
         new InsertFormAsyncTask(formDAO).execute(form);
     }
 
-//    public LiveData<List<Form>> getAllForms() {
-//        return allForms;
-//    }
 
     private static class InsertFormAsyncTask extends AsyncTask<Form, Void, Void>{
 
@@ -41,8 +39,12 @@ public class FormRepository {
         }
     }
 
+
+
     public List<Form> getAllForms(){
         List<Form> formList = formDAO.getAllForms();
         return formList;
     }
+
+
 }

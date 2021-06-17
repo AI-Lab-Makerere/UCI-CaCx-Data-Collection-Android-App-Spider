@@ -124,13 +124,14 @@ public class Other2Fragment extends Fragment {
                 String notes = sharedPreferences.getString(NOTES, "");
                 String location = sharedPreferences.getString(LESION, "");
                 String diagnosis = "";
+                Boolean consult = false;
 
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
                 String format = simpleDateFormat.format(new Date());
 
                 Form form = new Form(format, studyID, initial, district, county, zone, number, text, ss, symptom,
                         text2, datey, sss, treat, past, value3, valuex, num2, value, time, children, abortion, choice,
-                        s4, sImage, sImage2, sImage3, sImage4, via, location, notes, diagnosis);
+                        s4, sImage, sImage2, sImage3, sImage4, via, location, notes, diagnosis, consult);
 
                 formViewModel.insert(form);
                 editor.clear();

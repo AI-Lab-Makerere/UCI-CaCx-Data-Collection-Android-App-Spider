@@ -24,14 +24,15 @@ public class Form {
     String image1, image2, image3, image4;
     String via, location, notes;
     String diagnosis;
+    Boolean consult;
 
     public Form(String date, String studyID, String initials, String district, String county,
                 String village, int age, String have_symptoms, String symptoms, String other_symptoms,
                 String screened_for_cancer, String last_screened, String screening_process, String treatment,
-                String screening_results, String hiv_status, String on_haart, int years_on_haart, String pregnant,
-                String last_menstrual, int parity, int abortion, String on_contraceptives, String contraceptives,
-                String image1, String image2, String image3, String image4, String via, String location,
-                String notes, String diagnosis) {
+                String screening_results, String hiv_status, String on_haart, int years_on_haart,
+                String pregnant, String last_menstrual, int parity, int abortion, String on_contraceptives,
+                String contraceptives, String image1, String image2, String image3, String image4,
+                String via, String location, String notes, String diagnosis, Boolean consult) {
         this.date = date;
         this.studyID = studyID;
         this.initials = initials;
@@ -64,6 +65,7 @@ public class Form {
         this.location = location;
         this.notes = notes;
         this.diagnosis = diagnosis;
+        this.consult = consult;
     }
 
     public String getStudyID() {
@@ -328,5 +330,13 @@ public class Form {
 
     public void setScreening_results(String screening_results) {
         this.screening_results = screening_results;
+    }
+
+    public Boolean getConsult() {
+        return consult;
+    }
+
+    public void setConsult(Boolean consult) {
+        this.consult = consult;
     }
 }

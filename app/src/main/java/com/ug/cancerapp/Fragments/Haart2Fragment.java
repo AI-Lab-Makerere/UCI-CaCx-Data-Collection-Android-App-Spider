@@ -57,7 +57,7 @@ public class Haart2Fragment extends Fragment {
                     int age = Integer.parseInt(text);
                     int year = Integer.parseInt(value);
 
-                    if (year >= age){
+                    if (year > age){
                         Toast.makeText(getActivity(), "This value should not be greater or equal to the patient's age " + age, Toast.LENGTH_SHORT).show();
                     }else {
                         saveData();

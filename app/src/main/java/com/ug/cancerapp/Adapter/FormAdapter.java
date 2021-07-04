@@ -54,9 +54,9 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormHolder> {
         holder.age.setText("Age: " + String.valueOf(formList.get(position).getAge()));
         holder.via.setText("VIA Results: " + formList.get(position).getVia());
 
-//        if (formList.get(position).getVia().equals("Negative")){
-//            holder.via.setTextColor(Color.RED);
-//        }
+        if (formList.get(position).getVia().equals("Negative")){
+            holder.via.setTextColor(Color.RED);
+        }
     }
 
     @Override

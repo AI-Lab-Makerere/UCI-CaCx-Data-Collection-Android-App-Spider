@@ -9,11 +9,8 @@
 
     <string-array name="information">
         <item>Select One</item>
-        <item>Kampala</item>
-        <item>Jinja</item>
-        <item>Arua</item>
-        <item>Gulu</item>
-        <item>Mbarara</item>
+        <item>Positive</item>
+        <item>Negative</item>
     </string-array>
 
 </resources>

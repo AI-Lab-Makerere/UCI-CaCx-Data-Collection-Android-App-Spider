@@ -52,6 +52,7 @@ public class DashBoardActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("UDA");
 
+
 //        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
 //        String contra = "Apple, Oranges, Mangoes,";
 //

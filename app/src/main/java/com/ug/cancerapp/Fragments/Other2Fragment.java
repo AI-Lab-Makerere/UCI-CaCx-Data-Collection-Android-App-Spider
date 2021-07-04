@@ -22,11 +22,24 @@ import com.ug.cancerapp.Activities.DashBoardActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
+import static com.ug.cancerapp.Fragments.Camera1Fragment.FLON;
+import static com.ug.cancerapp.Fragments.Camera1Fragment.FLOP;
 import static com.ug.cancerapp.Fragments.Camera1Fragment.IMAGE;
+import static com.ug.cancerapp.Fragments.Camera1Fragment.VR;
+import static com.ug.cancerapp.Fragments.Camera2Fragment.FLON2;
+import static com.ug.cancerapp.Fragments.Camera2Fragment.FLOP2;
 import static com.ug.cancerapp.Fragments.Camera2Fragment.IMAGE2;
+import static com.ug.cancerapp.Fragments.Camera2Fragment.VR2;
+import static com.ug.cancerapp.Fragments.Camera3Fragment.FLON3;
+import static com.ug.cancerapp.Fragments.Camera3Fragment.FLOP3;
 import static com.ug.cancerapp.Fragments.Camera3Fragment.IMAGE3;
+import static com.ug.cancerapp.Fragments.Camera3Fragment.VR3;
+import static com.ug.cancerapp.Fragments.Camera4Fragment.FLON4;
+import static com.ug.cancerapp.Fragments.Camera4Fragment.FLOP4;
 import static com.ug.cancerapp.Fragments.Camera4Fragment.IMAGE4;
+import static com.ug.cancerapp.Fragments.Camera4Fragment.VR4;
 import static com.ug.cancerapp.Fragments.FifthFragment.ABORTION;
 import static com.ug.cancerapp.Fragments.FifthFragment.DATS;
 import static com.ug.cancerapp.Fragments.FifthFragment.PARITY;
@@ -65,6 +78,7 @@ public class Other2Fragment extends Fragment {
     private FormViewModel formViewModel;
 
     public static final String SHARED_PREFS = "sharedPrefs";
+    public static String uniqueID;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -123,19 +137,47 @@ public class Other2Fragment extends Fragment {
                 String via = sharedPreferences.getString(VIA, "");
                 String notes = sharedPreferences.getString(NOTES, "");
                 String location = sharedPreferences.getString(LESION, "");
+
+                String negative = sharedPreferences.getString(FLON, "");
+                float neg = Float.parseFloat(negative);
+                String positive = sharedPreferences.getString(FLOP, "");
+                float pos = Float.parseFloat(positive);
+                String viar = sharedPreferences.getString(VR, "");
+
+                String negative2 = sharedPreferences.getString(FLON2, "");
+                float neg2 = Float.parseFloat(negative2);
+                String positive2 = sharedPreferences.getString(FLOP2, "");
+                float pos2 = Float.parseFloat(positive2);
+                String viar2 = sharedPreferences.getString(VR2, "");
+
+                String negative3 = sharedPreferences.getString(FLON3, "");
+                float neg3 = Float.parseFloat(negative3);
+                String positive3 = sharedPreferences.getString(FLOP3, "");
+                float pos3 = Float.parseFloat(positive3);
+                String viar3 = sharedPreferences.getString(VR3, "");
+
+                String negative4 = sharedPreferences.getString(FLON4, "");
+                float neg4 = Float.parseFloat(negative4);
+                String positive4 = sharedPreferences.getString(FLOP4, "");
+                float pos4 = Float.parseFloat(positive4);
+                String viar4 = sharedPreferences.getString(VR4, "");
+
+
                 String diagnosis = "";
                 Boolean consult = false;
+                uniqueID = UUID.randomUUID().toString();
 
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
                 String format = simpleDateFormat.format(new Date());
 
                 Form form = new Form(format, studyID, initial, district, county, zone, number, text, ss, symptom,
                         text2, datey, sss, treat, past, value3, valuex, num2, value, time, children, abortion, choice,
-                        s4, sImage, sImage2, sImage3, sImage4, via, location, notes, diagnosis, consult);
+                        s4, sImage, sImage2, sImage3, sImage4, via, location, notes, diagnosis, consult,
+                        neg, pos, viar, neg2, pos2, viar2, neg3, pos3, viar3, neg4, pos4, viar4, uniqueID);
 
                 formViewModel.insert(form);
-                editor.clear();
-                editor.apply();
+//                editor.clear();
+//                editor.apply();
                 Toast.makeText(getActivity(), "Task Successful", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getActivity(), DashBoardActivity.class));
 

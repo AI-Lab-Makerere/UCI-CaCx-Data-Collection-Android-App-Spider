@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -35,6 +36,7 @@ import com.ug.cancerapp.Database.FormDAO;
 import com.ug.cancerapp.Database.FormDatabase;
 import com.ug.cancerapp.Database.FormRepository;
 import com.ug.cancerapp.Models.Capture;
+import com.ug.cancerapp.Models.Picture;
 import com.ug.cancerapp.R;
 
 import java.text.ParseException;
@@ -48,6 +50,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.ug.cancerapp.Activities.LoginActivity.EMAIL;
+import static com.ug.cancerapp.Activities.LoginActivity.FACID;
 import static com.ug.cancerapp.Activities.LoginActivity.FACNAME;
 import static com.ug.cancerapp.Activities.LoginActivity.TOKEN;
 
@@ -66,6 +69,7 @@ public class RecordsActivity extends AppCompatActivity {
     String username, token, facility;
 
     JsonPlaceHolder jsonPlaceHolder;
+    ProgressDialog progressDialog;
 
     Date date1, date2, date3;
 
@@ -85,6 +89,8 @@ public class RecordsActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        progressDialog = new ProgressDialog(this);
 
         new LoadDataTask().execute();
 
@@ -160,6 +166,8 @@ public class RecordsActivity extends AppCompatActivity {
                     String image3 = formList.get(position).getImage3();
                     String image4 = formList.get(position).getImage4();
 
+//                    Toast.makeText(RecordsActivity.this, image1, Toast.LENGTH_SHORT).show();
+
                     dialog = new Dialog(RecordsActivity.this);
                     dialog.setContentView(R.layout.viewing_images);
                     dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
@@ -190,6 +198,8 @@ public class RecordsActivity extends AppCompatActivity {
                 @Override
                 public void onConsultClick(int position) {
                     Log.v("TAG", "clicked");
+                    progressDialog.setMessage("Uploading Data");
+                    progressDialog.show();
                     handleData(position);
                 }
             });
@@ -233,11 +243,9 @@ public class RecordsActivity extends AppCompatActivity {
         String symptom = formList.get(position).getOther_symptoms();
         String text2 = formList.get(position).getScreened_for_cancer();
         String past = formList.get(position).getScreening_results();
-        String sss = formList.get(position).getScreening_process();
-        if(sss.endsWith(","))
-        {
-            sss = sss.substring(0,sss.length() - 1);
-        }
+//        String sss = formList.get(position).getScreening_process();
+//        ss = ss.replaceAll(", $", "");
+        String sss = "HPV";
         String datey = formList.get(position).getLast_screened();
         String treat = formList.get(position).getTreatment();
         String value3 = formList.get(position).getHiv_status();
@@ -249,10 +257,7 @@ public class RecordsActivity extends AppCompatActivity {
         int abort = formList.get(position).getAbortion();
         String choice = formList.get(position).getOn_contraceptives();
         String s4 = formList.get(position).getContraceptives();
-        if(s4.endsWith(","))
-        {
-            s4 = s4.substring(0,ss.length() - 1);
-        }
+        s4 = s4.replaceAll(", $", "");
         String sImage = formList.get(position).getImage1();
         String sImage2 = formList.get(position).getImage2();
         String sImage3 = formList.get(position).getImage3();
@@ -261,6 +266,21 @@ public class RecordsActivity extends AppCompatActivity {
         String notes = formList.get(position).getNotes();
         String location = formList.get(position).getLocation();
         String date = formList.get(position).getDate();
+
+        String instanceID = formList.get(position).getInstanceID();
+        float neg = formList.get(position).getPicture1_nc();
+        float pos = formList.get(position).getPicture1_pc();
+        String var = formList.get(position).getPicture1_via();
+        float neg2 = formList.get(position).getPicture2_nc();
+        float pos2 = formList.get(position).getPicture2_pc();
+        String var2 = formList.get(position).getPicture2_via();
+        float neg3 = formList.get(position).getPicture3_nc();
+        float pos3 = formList.get(position).getPicture3_pc();
+        String var3 = formList.get(position).getPicture3_via();
+        float neg4 = formList.get(position).getPicture4_nc();
+        float pos4 = formList.get(position).getPicture4_pc();
+        String var4 = formList.get(position).getPicture4_via();
+
         long key = formList.get(position).getKey();
         Log.v("TAG", "data");
 
@@ -271,7 +291,8 @@ public class RecordsActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_API, MODE_PRIVATE);
         token = sharedPreferences.getString(TOKEN, "");
         username = sharedPreferences.getString(EMAIL, "");
-        facility = sharedPreferences.getString(FACNAME, "");
+        facility = sharedPreferences.getString(FACID, "");
+        int fac_id = Integer.parseInt(facility);
         Log.v("TAG", "data2");
 
         try {
@@ -285,10 +306,15 @@ public class RecordsActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        Capture capture = new Capture(date1, username, facility, studyID, initial,
+        Picture picture1 = new Picture(neg, pos, var, sImage);
+        Picture picture2 = new Picture(neg2, pos2, var2, sImage2);
+        Picture picture3 = new Picture(neg3, pos3, var3, sImage3);
+        Picture picture4 = new Picture(neg4, pos4, var4, sImage4);
+
+        Capture capture = new Capture(instanceID, date1, username, fac_id, studyID, initial,
                 district, county, zone, age, text, ss, symptom, text2, sss, past, treat, date2,
-                value3, valuex, year, value, date3, child, abort, s4, choice, sImage,
-                sImage2, sImage3, sImage4, location, via, notes);
+                value3, valuex, year, value, date3, child, abort, s4, choice, location, via, notes,
+                true, picture1, picture2, picture3, picture4);
 
         Log.v("TAG", "data3");
 
@@ -307,11 +333,13 @@ public class RecordsActivity extends AppCompatActivity {
                 if (!response.isSuccessful()){
                     Toast.makeText(RecordsActivity.this, "Connection Issue: " + response.code() + " error", Toast.LENGTH_SHORT).show();
                     Log.v("TAG", ""+response.code());
+                    progressDialog.dismiss();
                     return;
                 }
                 String message = response.body();
                 Toast.makeText(RecordsActivity.this, message, Toast.LENGTH_SHORT).show();
                 Log.v("TAG", message);
+                progressDialog.dismiss();
 
             }
 
@@ -319,6 +347,7 @@ public class RecordsActivity extends AppCompatActivity {
             public void onFailure(Call<String> call, Throwable t) {
                 Toast.makeText(RecordsActivity.this, "Something went wrong: " + t.getMessage() , Toast.LENGTH_SHORT).show();
                 Log.v("TAG", "Something went wrong: " + t.getMessage());
+                progressDialog.dismiss();
             }
         });
     }
@@ -335,7 +364,9 @@ public class RecordsActivity extends AppCompatActivity {
         TextView hav_symptoms = dialog.findViewById(R.id.signs);
         hav_symptoms.setText("Symptoms for Cancer: " + formList.get(position).getHave_symptoms());
         TextView symptoms = dialog.findViewById(R.id.symptoms);
-        symptoms.setText("Symptoms: " + formList.get(position).getSymptoms());
+        String str = formList.get(position).getSymptoms();
+        str = str.replaceAll(", $", "");
+        symptoms.setText("Symptoms: " + str);
         TextView other_symptoms = dialog.findViewById(R.id.other_symptoms);
         other_symptoms.setText("Other Symptoms: " + formList.get(position).getOther_symptoms());
         TextView screened = dialog.findViewById(R.id.screened);
@@ -344,8 +375,12 @@ public class RecordsActivity extends AppCompatActivity {
         screened_date.setText("Screening Date: " + formList.get(position).getLast_screened());
         TextView vr = dialog.findViewById(R.id.results);
         vr.setText("VIA Results: " + formList.get(position).getScreening_results());
-        TextView screened_pr = dialog.findViewById(R.id.screened);
-        screened_pr.setText("Screening Process: " + formList.get(position).getScreening_process());
+        TextView screened_pr = dialog.findViewById(R.id.process);
+        String s4 = formList.get(position).getScreening_process();
+
+        s4 = s4.replaceAll(", $", "");
+
+        screened_pr.setText("Screening Process: " + s4);
         TextView treatement = dialog.findViewById(R.id.treatment);
         treatement.setText("Treatment Provided: " + formList.get(position).getTreatment());
         TextView hiv = dialog.findViewById(R.id.hiv);

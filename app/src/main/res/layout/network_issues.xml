@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/colorPrimary"
+    android:visibility="invisible"
+    android:id="@+id/empty"
+    tools:context=".Activities.GynaecologistActivity">
+
+    <ImageView
+        android:src="@drawable/ic_wifi_off"
+        android:id="@+id/wifi"
+        android:layout_width="70dp"
+        android:layout_height="70dp"/>
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Poor Connection"
+        android:textColor="@color/colorBackground"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_margin="10dp"
+        android:id="@+id/message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Please check your connection and try again."
+        android:textColor="@color/colorBackground"
+        android:textSize="16sp"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/swip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Swipe down to refresh"
+        android:textColor="@color/colorBackground"
+        android:layout_marginTop="-10dp"
+        android:gravity="center"/>
+
+</LinearLayout>

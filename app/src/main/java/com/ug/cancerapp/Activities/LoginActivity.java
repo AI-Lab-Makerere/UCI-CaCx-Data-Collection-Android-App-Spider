@@ -66,13 +66,8 @@ public class LoginActivity extends AppCompatActivity {
         username.setText("nurse@styxtechgroup.com");
         password.setText("Admin123");
 
-//        category = getIntent().getStringExtra("category");
+        category = getIntent().getStringExtra("category");
 
-//        if (category.equals("gynecologist")) {
-////            area.setVisibility(View.GONE);
-//        } else {
-////            area.setVisibility(View.VISIBLE);
-//        }
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,23 +75,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 String userN = username.getText().toString();
                 String pass = password.getText().toString();
-//                if (area.getVisibility() == View.GONE){
-//                    if(user.isEmpty()){
-//                        Toast.makeText(LoginActivity.this, "Fill in your username", Toast.LENGTH_SHORT).show();
-//                    }
-//                    else{
-//                        startActivity(new Intent(LoginActivity.this, GynaecologistActivity.class));
-//                    }
-//                }else {
-//                    if(user.isEmpty()){
-//                        Toast.makeText(LoginActivity.this, "Fill in your username", Toast.LENGTH_SHORT).show();
-//                    }else if(text.equals("Select One")){
-//                        Toast.makeText(LoginActivity.this, "Select your region", Toast.LENGTH_SHORT).show();
-//                    }
-//                    else{
-//                        startActivity(new Intent(LoginActivity.this, DashBoardActivity.class));
-//                    }
-//                }
+
                 if (userN.length() == 0) {
                     Toast.makeText(LoginActivity.this, "Fill in your username", Toast.LENGTH_SHORT).show();
                 } else if (pass.length() == 0) {
@@ -189,8 +168,15 @@ public class LoginActivity extends AppCompatActivity {
         editor.apply();
         progressBar.setVisibility(View.INVISIBLE);
         submit.setEnabled(true);
-        startActivity(new Intent(LoginActivity.this, DashBoardActivity.class));
-        finish();
+
+        if (category.equals("gynecologist")) {
+            startActivity(new Intent(LoginActivity.this, GynaecologistActivity.class));
+            finish();
+        } else {
+            startActivity(new Intent(LoginActivity.this, DashBoardActivity.class));
+            finish();
+        }
+
     }
 
 
@@ -249,6 +235,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
         finish();
     }
 }

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    tools:context=".Activities.FeedbackActivity">
+
+    <include layout="@layout/toolbar"
+        android:id="@+id/toolbar"/>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_margin="20dp"
+        android:gravity="center_horizontal"
+        android:textColor="@color/colorTextPrimary"
+        android:textSize="16sp"
+        android:text="Provide your Feedback basing on what you observed in the data provided"/>
+
+    <LinearLayout
+        android:id="@+id/vnc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_below="@id/title"
+        android:background="@drawable/style_spinner"
+        android:orientation="vertical">
+
+        <Spinner
+            android:id="@+id/via"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"/>
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/notes"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_margin = "20dp"
+        android:background="@drawable/text_bg"
+        android:gravity="top"
+        android:hint="Please provide some brief notes to support your VIA Results"
+        android:inputType="textMultiLine"
+        android:padding="10dp"
+        android:textSize="16sp"
+        android:layout_below="@id/vnc"/>
+
+    <Button
+        android:id="@+id/save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit Feedback"
+        android:layout_margin="20dp"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/colorBackground"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:layout_below="@id/notes"
+        android:background="@drawable/primary_btn"/>
+
+</RelativeLayout>

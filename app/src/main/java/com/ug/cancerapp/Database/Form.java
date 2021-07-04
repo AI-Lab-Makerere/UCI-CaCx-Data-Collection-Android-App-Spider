@@ -25,14 +25,21 @@ public class Form {
     String via, location, notes;
     String diagnosis;
     Boolean consult;
+    float picture1_nc;
+    float picture1_pc;
+    String picture1_via;
+    float picture2_nc;
+    float picture2_pc;
+    String picture2_via;
+    float picture3_nc;
+    float picture3_pc;
+    String picture3_via;
+    float picture4_nc;
+    float picture4_pc;
+    String picture4_via;
+    String instanceID;
 
-    public Form(String date, String studyID, String initials, String district, String county,
-                String village, int age, String have_symptoms, String symptoms, String other_symptoms,
-                String screened_for_cancer, String last_screened, String screening_process, String treatment,
-                String screening_results, String hiv_status, String on_haart, int years_on_haart,
-                String pregnant, String last_menstrual, int parity, int abortion, String on_contraceptives,
-                String contraceptives, String image1, String image2, String image3, String image4,
-                String via, String location, String notes, String diagnosis, Boolean consult) {
+    public Form(String date, String studyID, String initials, String district, String county, String village, int age, String have_symptoms, String symptoms, String other_symptoms, String screened_for_cancer, String last_screened, String screening_process, String treatment, String screening_results, String hiv_status, String on_haart, int years_on_haart, String pregnant, String last_menstrual, int parity, int abortion, String on_contraceptives, String contraceptives, String image1, String image2, String image3, String image4, String via, String location, String notes, String diagnosis, Boolean consult, float picture1_nc, float picture1_pc, String picture1_via, float picture2_nc, float picture2_pc, String picture2_via, float picture3_nc, float picture3_pc, String picture3_via, float picture4_nc, float picture4_pc, String picture4_via, String instanceID) {
         this.date = date;
         this.studyID = studyID;
         this.initials = initials;
@@ -66,6 +73,33 @@ public class Form {
         this.notes = notes;
         this.diagnosis = diagnosis;
         this.consult = consult;
+        this.picture1_nc = picture1_nc;
+        this.picture1_pc = picture1_pc;
+        this.picture1_via = picture1_via;
+        this.picture2_nc = picture2_nc;
+        this.picture2_pc = picture2_pc;
+        this.picture2_via = picture2_via;
+        this.picture3_nc = picture3_nc;
+        this.picture3_pc = picture3_pc;
+        this.picture3_via = picture3_via;
+        this.picture4_nc = picture4_nc;
+        this.picture4_pc = picture4_pc;
+        this.picture4_via = picture4_via;
+        this.instanceID = instanceID;
+    }
+
+    public long getKey() {
+        return key;
+    }
+
+
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getStudyID() {
@@ -82,14 +116,6 @@ public class Form {
 
     public void setInitials(String initials) {
         this.initials = initials;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
     }
 
     public String getDistrict() {
@@ -116,20 +142,12 @@ public class Form {
         this.village = village;
     }
 
-    public long getKey() {
-        return key;
+    public int getAge() {
+        return age;
     }
 
-    public void setKey(long key) {
-        this.key = key;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public String getHave_symptoms() {
@@ -186,6 +204,14 @@ public class Form {
 
     public void setTreatment(String treatment) {
         this.treatment = treatment;
+    }
+
+    public String getScreening_results() {
+        return screening_results;
+    }
+
+    public void setScreening_results(String screening_results) {
+        this.screening_results = screening_results;
     }
 
     public String getHiv_status() {
@@ -324,19 +350,115 @@ public class Form {
         this.diagnosis = diagnosis;
     }
 
-    public String getScreening_results() {
-        return screening_results;
-    }
-
-    public void setScreening_results(String screening_results) {
-        this.screening_results = screening_results;
-    }
-
     public Boolean getConsult() {
         return consult;
     }
 
     public void setConsult(Boolean consult) {
         this.consult = consult;
+    }
+
+    public float getPicture1_nc() {
+        return picture1_nc;
+    }
+
+    public void setPicture1_nc(float picture1_nc) {
+        this.picture1_nc = picture1_nc;
+    }
+
+    public float getPicture1_pc() {
+        return picture1_pc;
+    }
+
+    public void setPicture1_pc(float picture1_pc) {
+        this.picture1_pc = picture1_pc;
+    }
+
+    public String getPicture1_via() {
+        return picture1_via;
+    }
+
+    public void setPicture1_via(String picture1_via) {
+        this.picture1_via = picture1_via;
+    }
+
+    public float getPicture2_nc() {
+        return picture2_nc;
+    }
+
+    public void setPicture2_nc(float picture2_nc) {
+        this.picture2_nc = picture2_nc;
+    }
+
+    public float getPicture2_pc() {
+        return picture2_pc;
+    }
+
+    public void setPicture2_pc(float picture2_pc) {
+        this.picture2_pc = picture2_pc;
+    }
+
+    public String getPicture2_via() {
+        return picture2_via;
+    }
+
+    public void setPicture2_via(String picture2_via) {
+        this.picture2_via = picture2_via;
+    }
+
+    public float getPicture3_nc() {
+        return picture3_nc;
+    }
+
+    public void setPicture3_nc(float picture3_nc) {
+        this.picture3_nc = picture3_nc;
+    }
+
+    public float getPicture3_pc() {
+        return picture3_pc;
+    }
+
+    public void setPicture3_pc(float picture3_pc) {
+        this.picture3_pc = picture3_pc;
+    }
+
+    public String getPicture3_via() {
+        return picture3_via;
+    }
+
+    public void setPicture3_via(String picture3_via) {
+        this.picture3_via = picture3_via;
+    }
+
+    public float getPicture4_nc() {
+        return picture4_nc;
+    }
+
+    public void setPicture4_nc(float picture4_nc) {
+        this.picture4_nc = picture4_nc;
+    }
+
+    public float getPicture4_pc() {
+        return picture4_pc;
+    }
+
+    public void setPicture4_pc(float picture4_pc) {
+        this.picture4_pc = picture4_pc;
+    }
+
+    public String getPicture4_via() {
+        return picture4_via;
+    }
+
+    public void setPicture4_via(String picture4_via) {
+        this.picture4_via = picture4_via;
+    }
+
+    public String getInstanceID() {
+        return instanceID;
+    }
+
+    public void setInstanceID(String instanceID) {
+        this.instanceID = instanceID;
     }
 }

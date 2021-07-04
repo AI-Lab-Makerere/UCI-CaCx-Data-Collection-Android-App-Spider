@@ -109,7 +109,7 @@ public class FifthFragment extends Fragment {
                     if (part > 20) {
                         parity.setError("Should be less than 21");
                         Toast.makeText(getActivity(), "The maximum number of children is 20", Toast.LENGTH_SHORT).show();
-                    } else if (abo >= part) {
+                    } else if (abo > part) {
                         abortions.setError("should be less than " + part);
                         Toast.makeText(getActivity(), "The maximum number of abortions should not be greater than maximum number of children", Toast.LENGTH_SHORT).show();
                     } else {

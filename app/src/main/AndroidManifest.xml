@@ -17,9 +17,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.FeedbackActivity"
-            android:parentActivityName=".Activities.GynaecologistActivity"></activity>
-        <activity android:name=".Activities.DataActivity"
+        <activity android:name=".Activities.LoopActivity">
+
+        </activity>
+        <activity
+            android:name=".Activities.FeedbackActivity"
+            android:parentActivityName=".Activities.GynaecologistActivity" />
+        <activity
+            android:name=".Activities.DataActivity"
             android:parentActivityName=".Activities.DataActivity">
 
             <!-- <intent-filter> -->
@@ -29,7 +34,9 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".Activities.GynaecologistActivity" />
+        <activity android:name=".Activities.GynaecologistActivity">
+
+        </activity>
         <activity
             android:name=".Activities.ResultsActivity"
             android:parentActivityName=".Activities.DashBoardActivity" />
@@ -64,7 +71,7 @@
         </activity>
         <activity
             android:name=".Activities.CollectActivity"
-            android:parentActivityName=".Activities.DashBoardActivity"></activity>
+            android:parentActivityName=".Activities.DashBoardActivity" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />

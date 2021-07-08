@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_margin="10dp"
-        android:hint="Search By StudyID or VIA Results or Age"
+        android:hint="Search By StudyID or VIA Results or Initials"
         android:padding="10dp"
         android:textSize="16sp"
         android:inputType="textCapCharacters"

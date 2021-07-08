@@ -152,6 +152,8 @@ public class Camera4Fragment extends Fragment {
         if(requestCode == 100){
 
             bitmap = (Bitmap) data.getExtras().get("data");
+            bitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
+            runTensorflowModel(bitmap);
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
             byte[] bytes = stream.toByteArray();

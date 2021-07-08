@@ -1,5 +1,6 @@
 package com.ug.cancerapp.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -10,6 +11,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -72,7 +75,7 @@ public class GynaecologistActivity extends AppCompatActivity {
 
         jsonPlaceHolder = ApiClient.getClient().create(JsonPlaceHolder.class);
 
-        Sprite chasingDots = new ChasingDots();
+        Sprite chasingDots = new ThreeBounce();
         progressBar.setIndeterminateDrawable(chasingDots);
 
 //        recyclerView.setHasFixedSize(true);
@@ -145,7 +148,7 @@ public class GynaecologistActivity extends AppCompatActivity {
                     age += cas.getAge();
                     via += cas.getViaResults();
 
-                    Gynecologist gynecologist = new Gynecologist(instanceID, studyId, age, via);
+                    Gynecologist gynecologist = new Gynecologist(instanceID, studyId, age, via, "", "");
                     gynecologistList.add(gynecologist);
 
                 }
@@ -166,5 +169,30 @@ public class GynaecologistActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.logout_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_logout) {
+            //do something
+            SharedPreferences sharedPreferences = getSharedPreferences(SHARED_API, MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear();
+            editor.apply();
+            startActivity(new Intent(GynaecologistActivity.this, WelcomeActivity.class));
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }

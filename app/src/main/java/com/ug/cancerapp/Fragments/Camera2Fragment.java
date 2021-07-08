@@ -44,6 +44,7 @@ public class Camera2Fragment extends Fragment {
     Button back, next, camera, gallery;
     ImageView imageView;
     Uri uri;
+    Bitmap bitmap;
 
     private static final int IMAGE_PICKER_CODE = 1000;
     private static final int PERMISSIONS_CODE = 1001;
@@ -150,12 +151,14 @@ public class Camera2Fragment extends Fragment {
 //        super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 100){
 
-            Bitmap captureImage = (Bitmap) data.getExtras().get("data");
+            bitmap = (Bitmap) data.getExtras().get("data");
+            bitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
+            runTensorflowModel(bitmap);
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            captureImage.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
             byte[] bytes = stream.toByteArray();
             sImage = Base64.encodeToString(bytes, Base64.DEFAULT);
-            imageView.setImageBitmap(captureImage);
+            imageView.setImageBitmap(bitmap);
 
         }
         if (requestCode == IMAGE_PICKER_CODE && resultCode == -1 && data != null){
@@ -164,7 +167,7 @@ public class Camera2Fragment extends Fragment {
             try {
 
 //                Bitmap bitmap = SiliCompressor.with(getActivity()).getCompressBitmap(String.valueOf(uri));
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
                 bitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
                 runTensorflowModel(bitmap);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();

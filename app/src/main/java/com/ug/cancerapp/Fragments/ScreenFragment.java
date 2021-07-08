@@ -33,26 +33,26 @@ public class ScreenFragment extends Fragment {
    View view;
    Button back, next, datePick;
    TextView date;
-   CheckBox hpv, via, others;
+   RadioButton hpv, via, others;
     String s = "";
    EditText treatments;
-   RadioGroup radioGroup;
+   RadioGroup radioGroup, radioGroup2;
    RadioButton radioButton1, radioButton2;
 
     private static final int Negative = 0;
     private static final int Positive = 1;
 
+    private static final int Hpv = 0;
+    private static final int Via = 1;
+    private static final int Other = 2;
+
     public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String CHECKSA1 = "checksa1";
-    public static final String CHECKSA2 = "checksa2";
-    public static final String CHECKSA3 = "checksa3";
+    public static final String METHOD = "method";
     public static final String CHOICE= "choice";
     public static final String DATEPICKER = "datePicker";
     public static final String TREATMENT = "treatment";
-    public static final String SSS = "sss";
 
-    String datey, past, treat;
-    Boolean check1, check2, check3, check4, check5;
+    String datey, past, treat, method;
 
     DatePickerDialog.OnDateSetListener dateSetListener;
 
@@ -66,10 +66,11 @@ public class ScreenFragment extends Fragment {
         date = view.findViewById(R.id.date);
         treatments = view.findViewById(R.id.treatment);
         hpv = view.findViewById(R.id.hpv);
-        via = view.findViewById(R.id.via);
-        others = view.findViewById(R.id.other);
+        via = view.findViewById(R.id.vil);
+        others = view.findViewById(R.id.others);
         datePick = view.findViewById(R.id.datepicker);
         radioGroup = view.findViewById(R.id.radioGroup);
+        radioGroup2 = view.findViewById(R.id.radioGroup2);
         radioButton1 = view.findViewById(R.id.negative);
         radioButton2 = view.findViewById(R.id.positive);
 
@@ -101,6 +102,31 @@ public class ScreenFragment extends Fragment {
             }
         });
 
+        radioGroup2.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                View radioButton = radioGroup2.findViewById(checkedId);
+                int index = radioGroup2.indexOfChild(radioButton);
+
+                switch (index){
+                    case Hpv:
+                        Toast.makeText(getActivity(), "HPV", Toast.LENGTH_SHORT).show();
+                        method = "HPV";
+                        break;
+                    case Via:
+                        Toast.makeText(getActivity(), "VIA/VIL", Toast.LENGTH_SHORT).show();
+                        method = "VIA/VIL";
+                        break;
+                    case Other:
+                        Toast.makeText(getActivity(), "Others", Toast.LENGTH_SHORT).show();
+                        method = "Others";
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,20 +134,11 @@ public class ScreenFragment extends Fragment {
                 treat = treatments.getText().toString();
                 datey = date.getText().toString();
 
-                if(hpv.isChecked()){
-                    s += "HPV, ";
-                }
-                if(via.isChecked()){
-                    s += "VIA/VILI, ";
-                }
-                if(others.isChecked()){
-                    s += "Others, ";
-                }
 
-                if (s.isEmpty() || past.isEmpty() || datey.equals("No Date Selected") || treat.isEmpty()){
+                if (method.isEmpty() || past.isEmpty() || datey.equals("No Date Selected") || treat.isEmpty()){
                     Toast.makeText(getActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }else{
-                    saveData(s);
+                    saveData();
                     FragmentTransaction fr = getFragmentManager().beginTransaction();
                     fr.replace(R.id.fragment_container, new FourthFragment());
                     fr.addToBackStack(null);
@@ -168,15 +185,12 @@ public class ScreenFragment extends Fragment {
         return view;
     }
 
-    private void saveData(String s) {
+    private void saveData() {
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putString(DATEPICKER, date.getText().toString());
-        editor.putBoolean(CHECKSA1, hpv.isChecked());
-        editor.putBoolean(CHECKSA2, via.isChecked());
-        editor.putBoolean(CHECKSA3, others.isChecked());
-        editor.putString(SSS, s);
+        editor.putString(METHOD, method);
         editor.putString(CHOICE, past);
         editor.putString(TREATMENT, treatments.getText().toString());
 
@@ -188,9 +202,7 @@ public class ScreenFragment extends Fragment {
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
 
         past = sharedPreferences.getString(CHOICE, "");
-        check1 = sharedPreferences.getBoolean(CHECKSA1, false);
-        check2 = sharedPreferences.getBoolean(CHECKSA2, false);
-        check3 = sharedPreferences.getBoolean(CHECKSA3, false);
+        method = sharedPreferences.getString(METHOD, "");
         datey = sharedPreferences.getString(DATEPICKER, "");
         treat = sharedPreferences.getString(TREATMENT, "");
 
@@ -207,10 +219,14 @@ public class ScreenFragment extends Fragment {
         }
         date.setText(datey);
         treatments.setText(treat);
-        hpv.setChecked(check1);
-        via.setChecked(check2);
-        others.setChecked(check3);
 
+        if (method.equals("HPV")){
+            hpv.setChecked(true);
+        }else if (method.equals("VIA/VIL")){
+           via.setChecked(true);
+        }else if (method.equals("Others")){
+            others.setChecked(true);
+        }
     }
 
 }

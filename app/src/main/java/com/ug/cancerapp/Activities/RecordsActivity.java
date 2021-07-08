@@ -36,6 +36,7 @@ import com.ug.cancerapp.Database.FormDAO;
 import com.ug.cancerapp.Database.FormDatabase;
 import com.ug.cancerapp.Database.FormRepository;
 import com.ug.cancerapp.Models.Capture;
+import com.ug.cancerapp.Models.Capture2;
 import com.ug.cancerapp.Models.Picture;
 import com.ug.cancerapp.R;
 
@@ -44,6 +45,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -64,14 +66,17 @@ public class RecordsActivity extends AppCompatActivity {
     Uri uri;
     Bitmap bitmap1, bitmap2, bitmap3, bitmap4;
     EditText etSearch;
+    Date parsedDate3;
 
     public static final String SHARED_API = "sharedApi";
-    String username, token, facility;
+    String username, token, facility, text2;
 
     JsonPlaceHolder jsonPlaceHolder;
     ProgressDialog progressDialog;
 
     Date date1, date2, date3;
+
+    Call<String> call;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +88,8 @@ public class RecordsActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Records");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+//        https://stackoverflow.com/questions/20896245/how-to-delay-a-loop-in-android-without-using-thread-sleep
 
         etSearch = findViewById(R.id.search);
         recyclerView = findViewById(R.id.recycler_view);
@@ -217,7 +224,7 @@ public class RecordsActivity extends AppCompatActivity {
         }else {
 //            filter
             for (Form form:formList_search){
-                if (form.getStudyID().contains(charText) || form.getVia().contains(charText)  || String.valueOf(form.getAge()).contains(charText)){
+                if (form.getStudyID().contains(charText) || form.getVia().contains(charText) || form.getInitials().contains(charText)){
                     formList.add(form);
                 }
             }
@@ -226,6 +233,7 @@ public class RecordsActivity extends AppCompatActivity {
         formAdapter.notifyDataSetChanged();
     }
 
+    @SuppressLint("SimpleDateFormat")
     private void handleData(int position) {
         
         String studyID = formList.get(position).getStudyID();
@@ -236,16 +244,10 @@ public class RecordsActivity extends AppCompatActivity {
         String zone = formList.get(position).getVillage();
         String text = formList.get(position).getHave_symptoms();
         String ss = formList.get(position).getSymptoms();
-        if(ss.endsWith(","))
-        {
-            ss = ss.substring(0,ss.length() - 1);
-        }
         String symptom = formList.get(position).getOther_symptoms();
-        String text2 = formList.get(position).getScreened_for_cancer();
+        text2 = formList.get(position).getScreened_for_cancer();
         String past = formList.get(position).getScreening_results();
-//        String sss = formList.get(position).getScreening_process();
-//        ss = ss.replaceAll(", $", "");
-        String sss = "HPV";
+        String sss = formList.get(position).getScreening_process();
         String datey = formList.get(position).getLast_screened();
         String treat = formList.get(position).getTreatment();
         String value3 = formList.get(position).getHiv_status();
@@ -257,7 +259,6 @@ public class RecordsActivity extends AppCompatActivity {
         int abort = formList.get(position).getAbortion();
         String choice = formList.get(position).getOn_contraceptives();
         String s4 = formList.get(position).getContraceptives();
-        s4 = s4.replaceAll(", $", "");
         String sImage = formList.get(position).getImage1();
         String sImage2 = formList.get(position).getImage2();
         String sImage3 = formList.get(position).getImage3();
@@ -295,8 +296,32 @@ public class RecordsActivity extends AppCompatActivity {
         int fac_id = Integer.parseInt(facility);
         Log.v("TAG", "data2");
 
+////        String da = "02-12-2021-03-52-21";
+//        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss", Locale.ENGLISH);
+//        SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+//        try {
+//            Date parsedDate = sdf.parse(date);
+//            Date parsedDate2 = sdf2.parse(time);
+//            if (!datey.isEmpty()){
+//                parsedDate3 = sdf2.parse(datey);
+//            }
+//            SimpleDateFormat print = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+////            System.out.println();
+//            date1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse()
+//            Log.v("TAG", ""+print.format(parsedDate));
+//            Log.v("TAG", ""+print.format(parsedDate2));
+//            if (!datey.isEmpty()){
+//                Log.v("TAG", ""+print.format(parsedDate3));
+//            }
+////
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+
         try {
-            date2 = new SimpleDateFormat("dd/MM/yyyy").parse(datey);
+            if (!datey.isEmpty()){
+                date2 = new SimpleDateFormat("dd/MM/yyyy").parse(datey);
+            }
             date3 = new SimpleDateFormat("dd/MM/yyyy").parse(time);
             date1 = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss").parse(date);
             Log.v("TAG", ""+date1);
@@ -316,17 +341,27 @@ public class RecordsActivity extends AppCompatActivity {
                 value3, valuex, year, value, date3, child, abort, s4, choice, location, via, notes,
                 true, picture1, picture2, picture3, picture4);
 
+        Capture2 capture2 = new Capture2(instanceID, date1, username, fac_id, studyID, initial,
+                district, county, zone, age, text, ss, symptom, text2,
+                value3, valuex, year, value, date3, child, abort, s4, choice, location, via, notes,
+                true, picture1, picture2, picture3, picture4);
+
         Log.v("TAG", "data3");
 
-        sendOverNetwork(token, capture);
+        sendOverNetwork(token, capture, capture2);
 
     }
 
-    private void sendOverNetwork(String token, Capture capture) {
+    private void sendOverNetwork(String token, Capture capture, Capture2 capture2) {
         Log.v("TAG", "data4");
         jsonPlaceHolder = ApiClient.getClient().create(JsonPlaceHolder.class);
 
-        Call<String> call = jsonPlaceHolder.capture("Bearer " + token, capture);
+        if (text2.equals("No")){
+            call = jsonPlaceHolder.capture2("Bearer " + token, capture2);
+        }else {
+            call = jsonPlaceHolder.capture("Bearer " + token, capture);
+        }
+
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
@@ -358,15 +393,15 @@ public class RecordsActivity extends AppCompatActivity {
         TextView study = dialog.findViewById(R.id.studyId);
         study.setText("StudyID: " + formList.get(position).getStudyID());
         TextView initial = dialog.findViewById(R.id.initials);
-        initial.setText("Initials: " + formList.get(position).getInitials() + "    Age: " + formList.get(position).getAge());
+        initial.setText("Initials: " + formList.get(position).getInitials());
+        TextView age = dialog.findViewById(R.id.age);
+        age.setText("Age: " + formList.get(position).getAge());
         TextView address = dialog.findViewById(R.id.address);
-        address.setText("Address: " + formList.get(position).getVillage() + ", " + formList.get(position).getCounty() + ", " + formList.get(position).getDistrict());
+        address.setText("Address: " + formList.get(position).getVillage() + "-" + formList.get(position).getCounty() + " (" + formList.get(position).getDistrict() + ")");
         TextView hav_symptoms = dialog.findViewById(R.id.signs);
         hav_symptoms.setText("Symptoms for Cancer: " + formList.get(position).getHave_symptoms());
         TextView symptoms = dialog.findViewById(R.id.symptoms);
-        String str = formList.get(position).getSymptoms();
-        str = str.replaceAll(", $", "");
-        symptoms.setText("Symptoms: " + str);
+        symptoms.setText("Symptoms: " + formList.get(position).getSymptoms());
         TextView other_symptoms = dialog.findViewById(R.id.other_symptoms);
         other_symptoms.setText("Other Symptoms: " + formList.get(position).getOther_symptoms());
         TextView screened = dialog.findViewById(R.id.screened);
@@ -376,11 +411,7 @@ public class RecordsActivity extends AppCompatActivity {
         TextView vr = dialog.findViewById(R.id.results);
         vr.setText("VIA Results: " + formList.get(position).getScreening_results());
         TextView screened_pr = dialog.findViewById(R.id.process);
-        String s4 = formList.get(position).getScreening_process();
-
-        s4 = s4.replaceAll(", $", "");
-
-        screened_pr.setText("Screening Process: " + s4);
+        screened_pr.setText("Screening Process: " + formList.get(position).getScreening_process());
         TextView treatement = dialog.findViewById(R.id.treatment);
         treatement.setText("Treatment Provided: " + formList.get(position).getTreatment());
         TextView hiv = dialog.findViewById(R.id.hiv);
@@ -394,7 +425,9 @@ public class RecordsActivity extends AppCompatActivity {
         TextView last = dialog.findViewById(R.id.last);
         last.setText("Last Menstrual period: " + formList.get(position).getLast_menstrual());
         TextView par = dialog.findViewById(R.id.parity);
-        par.setText("Parity: " + formList.get(position).getParity() + "    Abortions: " + formList.get(position).getAbortion());
+        par.setText("Parity: " + formList.get(position).getParity());
+        TextView abo = dialog.findViewById(R.id.abortion);
+        abo.setText("Abortions: " + formList.get(position).getAbortion());
         TextView oncon = dialog.findViewById(R.id.on_con);
         oncon.setText("On Contraceptives: " + formList.get(position).getOn_contraceptives());
         TextView con = dialog.findViewById(R.id.contra);

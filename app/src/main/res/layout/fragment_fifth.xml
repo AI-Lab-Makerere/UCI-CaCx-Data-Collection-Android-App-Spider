@@ -117,7 +117,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="How many pregnancies has the patient ever had?"
+                    android:text="How many times has the patient been pregnant?"
                     android:textColor="@color/colorTextSecondary" />
 
                 <EditText

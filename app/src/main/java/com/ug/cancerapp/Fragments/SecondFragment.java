@@ -23,6 +23,7 @@ import static com.ug.cancerapp.Fragments.YesFragment.CHECKS2;
 import static com.ug.cancerapp.Fragments.YesFragment.CHECKS3;
 import static com.ug.cancerapp.Fragments.YesFragment.CHECKS4;
 import static com.ug.cancerapp.Fragments.YesFragment.CHECKS5;
+import static com.ug.cancerapp.Fragments.YesFragment.SS;
 
 public class SecondFragment extends Fragment {
 
@@ -123,6 +124,7 @@ public class SecondFragment extends Fragment {
         editor.remove(CHECKS3);
         editor.remove(CHECKS4);
         editor.remove(CHECKS5);
+        editor.remove(SS);
         editor.remove(OTHER);
         editor.apply();
 

@@ -72,6 +72,8 @@ public class YesFragment extends Fragment {
                     s = "Other";
                 }
 
+                s = s.replaceAll(", $", "");
+
                 if (s.contains("Other")){
                     saveData(s);
                     Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();

@@ -65,7 +65,7 @@ public class FourthFragment extends Fragment {
                         break;
                     case UNKNOWN:
                         Toast.makeText(getActivity(), "Unknown", Toast.LENGTH_SHORT).show();
-                        value3 = "UnKnown";
+                        value3 = "Unknown";
                         break;
                     default:
                         break;
@@ -87,7 +87,7 @@ public class FourthFragment extends Fragment {
                     fr.addToBackStack(null);
                     fr.commit();
 
-                } else if (value3.equals("Negative") || value3.equals("UnKnown")) {
+                } else if (value3.equals("Negative") || value3.equals("Unknown")) {
                     deleteSharedPreferences();
                     FragmentTransaction fr = getFragmentManager().beginTransaction();
                     fr.replace(R.id.fragment_container, new FifthFragment());
@@ -141,7 +141,7 @@ public class FourthFragment extends Fragment {
             radioButton1.setChecked(true);
         } else if (value3.equals("Positive")) {
             radioButton2.setChecked(true);
-        } else if (value3.equals("UnKnown")) {
+        } else if (value3.equals("Unknown")) {
             radioButton3.setChecked(true);
         } else {
             radioButton1.setChecked(false);

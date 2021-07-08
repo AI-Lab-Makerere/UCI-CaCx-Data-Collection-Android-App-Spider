@@ -96,7 +96,7 @@ public class SixtyFragment extends Fragment {
         if(cds.isChecked()){
             s += "Condoms, ";
         }
-
+        s = s.replaceAll(", $", "");
         if (s.isEmpty()){
             Toast.makeText(getActivity(), "Choose at least one option", Toast.LENGTH_SHORT).show();
         }else {

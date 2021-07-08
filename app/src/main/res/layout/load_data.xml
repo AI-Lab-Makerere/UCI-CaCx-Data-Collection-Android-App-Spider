@@ -11,10 +11,11 @@
             android:fadeScrollbars="true"
             android:scrollbars="none">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp">
+                android:layout_margin="10dp"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/head"
@@ -28,251 +29,300 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
 
-                <TextView
-                    android:id="@+id/studyId"
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Study ID: UC008"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/colorTextPrimary"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/head"/>
+                    app:contentPadding="10dp"
+                    app:cardElevation="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="20dp"
+                    app:cardBackgroundColor="@color/colorBackground"
+                    app:cardCornerRadius="10dp">
 
-                <TextView
-                    android:id="@+id/initials"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Inititals: UC        Age: 25"
-                    android:textColor="@color/colorTextPrimary"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/studyId"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/address"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Address: Zana, Makindye, Wakiso"
-                    android:textColor="@color/colorTextPrimary"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/initials"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Identification"
+                            android:layout_marginTop="10dp"
+                            android:textStyle="italic"/>
 
-                <TextView
-                    android:id="@+id/signs"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Symptoms for Cancer: Yes"
-                    android:textColor="@color/colorTextPrimary"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/address"/>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@color/colorGrey"/>
 
-                <TextView
-                    android:id="@+id/symptoms"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Symptoms: Yes"
-                    android:textColor="@color/colorTextPrimary"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/signs"/>
+                        <TextView
+                            android:id="@+id/studyId"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Study ID: UC008"
+                            android:layout_marginTop="10dp"
+                            android:textColor="@color/colorTextPrimary"/>
 
-                <TextView
-                    android:id="@+id/other_symptoms"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Other Symptoms: Yes"
-                    android:textColor="@color/colorTextPrimary"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/symptoms"/>
+                        <TextView
+                            android:id="@+id/initials"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Initials: TY"
+                            android:textColor="@color/colorTextPrimary"/>
 
-                <TextView
-                    android:id="@+id/screened"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Screened for cancer: Yes"
-                    android:textColor="@color/colorTextPrimary"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/other_symptoms"/>
+                        <TextView
+                            android:id="@+id/age"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Age: 25"
+                            android:textColor="@color/colorTextPrimary"/>
 
-                <TextView
-                    android:id="@+id/date"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Screening Date: 10/10/2021"
-                    android:textColor="@color/colorTextPrimary"
-                    app:layout_constraintHorizontal_bias="-0"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/screened"/>
+                        <TextView
+                            android:id="@+id/address"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Address: oraba-Koboko (Arua)"
+                            android:textColor="@color/colorTextPrimary"/>
 
-                <TextView
-                    android:id="@+id/results"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="VIA Results: Positive"
-                    android:textColor="@color/colorTextPrimary"
-                    app:layout_constraintHorizontal_bias="1"
-                    app:layout_constraintLeft_toRightOf="@id/date"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/screened"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Cancer Symptoms"
+                            android:layout_marginTop="10dp"
+                            android:textStyle="italic"/>
 
-                <TextView
-                    android:id="@+id/process"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Screening Process: HPV"
-                    android:textColor="@color/colorTextPrimary"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/date"/>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@color/colorGrey"/>
 
-                <TextView
-                    android:id="@+id/treatment"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Treatment provide: none"
-                    android:textColor="@color/colorTextPrimary"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/process"/>
+                        <TextView
+                            android:id="@+id/signs"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Presence of symptoms: Yes"
+                            android:textColor="@color/colorTextPrimary"/>
 
-                <TextView
-                    android:id="@+id/hiv"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="HIV status: Positive"
-                    android:textColor="@color/colorTextPrimary"
-                    app:layout_constraintHorizontal_bias="-0"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/treatment"/>
+                        <TextView
+                            android:id="@+id/symptoms"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Symptoms:"
+                            android:textColor="@color/colorTextPrimary"/>
 
-                <TextView
-                    android:id="@+id/onHaart"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="On Haart: Positive"
-                    android:textColor="@color/colorTextPrimary"
-                    app:layout_constraintHorizontal_bias="1"
-                    app:layout_constraintLeft_toRightOf="@id/hiv"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/treatment"/>
+                        <TextView
+                            android:id="@+id/other_symptoms"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Other Symptoms: Yes"
+                            android:textColor="@color/colorTextPrimary"/>
 
-                <TextView
-                    android:id="@+id/years"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Years on Haart: Positive"
-                    android:textColor="@color/colorTextPrimary"
-                    app:layout_constraintHorizontal_bias="1"
-                    app:layout_constraintLeft_toRightOf="@id/hiv"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/onHaart"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Previous Cancer Screening"
+                            android:layout_marginTop="10dp"
+                            android:textStyle="italic"/>
 
-                <TextView
-                    android:id="@+id/pregnant"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Patient pregnant: Yes"
-                    android:textColor="@color/colorTextPrimary"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/years"/>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@color/colorGrey"/>
 
-                <TextView
-                    android:id="@+id/last"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Last Menstrual peroid: 10/20/2021"
-                    android:textColor="@color/colorTextPrimary"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/pregnant"/>
+                        <TextView
+                            android:id="@+id/screened"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Patient ever for cancer: Yes"
+                            android:textColor="@color/colorTextPrimary"/>
 
-                <TextView
-                    android:id="@+id/parity"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Parity: 20    Abortions: 2"
-                    android:textColor="@color/colorTextPrimary"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/last"/>
+                        <TextView
+                            android:id="@+id/date"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Screening Date: 10/10/2021"
+                            android:textColor="@color/colorTextPrimary"/>
 
-                <TextView
-                    android:id="@+id/on_con"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="On Contraceptives: Yes"
-                    android:textColor="@color/colorTextPrimary"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/parity"/>
+                        <TextView
+                            android:id="@+id/results"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="VIA Results: Positive"
+                            android:textColor="@color/colorTextPrimary"/>
 
-                <TextView
-                    android:id="@+id/contra"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Contraceptives Used: Yes"
-                    android:textColor="@color/colorTextPrimary"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/on_con"/>
+                        <TextView
+                            android:id="@+id/process"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Screening Process: HPV"
+                            android:textColor="@color/colorTextPrimary"/>
 
-                <TextView
-                    android:id="@+id/via"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="My VIA Results: Positive"
-                    android:textColor="@color/colorTextPrimary"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/contra"/>
+                        <TextView
+                            android:id="@+id/treatment"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Treatment provided: none"
+                            android:textColor="@color/colorTextPrimary"/>
 
-                <TextView
-                    android:id="@+id/lesion"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Location of the lesion: "
-                    android:textColor="@color/colorTextPrimary"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/via"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="HIV Status"
+                            android:layout_marginTop="10dp"
+                            android:textStyle="italic"/>
 
-                <TextView
-                    android:id="@+id/notes"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Notes: Yes"
-                    android:textColor="@color/colorTextPrimary"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/lesion"/>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@color/colorGrey"/>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                        <TextView
+                            android:id="@+id/hiv"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="HIV status: Positive"
+                            android:textColor="@color/colorTextPrimary"/>
+
+                        <TextView
+                            android:id="@+id/onHaart"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Patient On Haart: Positive"
+                            android:textColor="@color/colorTextPrimary"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/years"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="Years on Haart: Positive"
+                            android:textColor="@color/colorTextPrimary"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Pregnancy History"
+                            android:layout_marginTop="10dp"
+                            android:textStyle="italic"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@color/colorGrey"/>
+
+                        <TextView
+                            android:id="@+id/pregnant"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Patient pregnant: Yes"
+                            android:textColor="@color/colorTextPrimary"/>
+
+                        <TextView
+                            android:id="@+id/last"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Last Menstrual peroid: 10/20/2021"
+                            android:textColor="@color/colorTextPrimary"/>
+
+                        <TextView
+                            android:id="@+id/parity"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Parity: 20"
+                            android:textColor="@color/colorTextPrimary"/>
+
+                        <TextView
+                            android:id="@+id/abortion"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Abortions: 20"
+                            android:textColor="@color/colorTextPrimary"/>
+
+                        <TextView
+                            android:id="@+id/on_con"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="On Contraceptives: Yes"
+                            android:textColor="@color/colorTextPrimary"/>
+
+                        <TextView
+                            android:id="@+id/contra"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Contraceptives Used: Yes"
+                            android:textColor="@color/colorTextPrimary"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Nurse's VIA Observation"
+                            android:layout_marginTop="10dp"
+                            android:textStyle="italic"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@color/colorGrey"/>
+
+                        <TextView
+                            android:id="@+id/via"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Nurse's VIA Results: Positive"
+                            android:textColor="@color/colorTextPrimary"/>
+
+                        <TextView
+                            android:id="@+id/lesion"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Lesion: Positive"
+                            android:textColor="@color/colorTextPrimary"/>
+
+                        <TextView
+                            android:id="@+id/notes"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Nurse's VIA Results: Positive"
+                            android:textColor="@color/colorTextPrimary"/>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+            </LinearLayout>
 
 
         </ScrollView>

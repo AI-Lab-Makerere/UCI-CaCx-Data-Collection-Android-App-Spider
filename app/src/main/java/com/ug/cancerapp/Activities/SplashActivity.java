@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import com.google.android.material.snackbar.Snackbar;
 import com.ug.cancerapp.R;
 
+import static com.ug.cancerapp.Activities.LoginActivity.FACID;
 import static com.ug.cancerapp.Activities.LoginActivity.TOKEN;
 import static com.ug.cancerapp.Fragments.FirstFragment.STUDY;
 
@@ -58,12 +59,19 @@ public class SplashActivity extends AppCompatActivity {
     private void goToHome() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_API, MODE_PRIVATE);
         String token = sharedPreferences.getString(TOKEN, "");
+        String fac_id = sharedPreferences.getString(FACID, "");
         if (token.length() == 0){
             startActivity(new Intent(SplashActivity.this, WelcomeActivity.class));
             finish();
         }else {
-            startActivity(new Intent(SplashActivity.this, DashBoardActivity.class));
-            finish();
+            if (fac_id.equals("0")){
+                startActivity(new Intent(SplashActivity.this, GynaecologistActivity.class));
+                finish();
+            }else {
+                startActivity(new Intent(SplashActivity.this, DashBoardActivity.class));
+                finish();
+            }
+
         }
 
     }

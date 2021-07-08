@@ -135,7 +135,7 @@ public class DashBoardActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.clear();
             editor.apply();
-            startActivity(new Intent(DashBoardActivity.this, LoginActivity.class));
+            startActivity(new Intent(DashBoardActivity.this, WelcomeActivity.class));
             finish();
         }
         return super.onOptionsItemSelected(item);

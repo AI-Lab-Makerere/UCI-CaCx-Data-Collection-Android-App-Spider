@@ -75,29 +75,34 @@
                     android:textColor="@color/colorTextPrimary"
                     android:textSize="16sp" />
 
-                <CheckBox
+                <RadioGroup
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="HPV"
-                    android:id="@+id/hpv"
-                    android:textSize="16sp"/>
+                    android:id="@+id/radioGroup2">
 
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="VIA/VILI"
-                    android:id="@+id/via"
-                    android:textSize="16sp"/>
+                    <RadioButton
+                        android:layout_marginTop="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="HPV"
+                        android:id="@+id/hpv"/>
 
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Other"
-                    android:id="@+id/other"
-                    android:textSize="16sp"/>
+                    <RadioButton
+                        android:layout_marginTop="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="VIA/VIL"
+                        android:id="@+id/vil"/>
+
+                    <RadioButton
+                        android:layout_marginTop="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Others"
+                        android:id="@+id/others"/>
+
+                </RadioGroup>
+
 
                 <TextView
                     android:layout_width="match_parent"

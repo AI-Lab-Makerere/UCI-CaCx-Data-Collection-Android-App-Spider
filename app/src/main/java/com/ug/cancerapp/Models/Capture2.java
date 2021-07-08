@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Capture {
+public class Capture2 {
 
     private String instanceID;
     private Date entry_date;
@@ -14,8 +14,7 @@ public class Capture {
     private String studyID, initials, district, county, zone;
     private int age;
     private String symptoms, more_symptoms, other_symptoms;
-    private String cancer_screening, screening_method, past_screening_results, treatment_given;
-    private Date last_screening_date;
+    private String cancer_screening;
     private String hiv_status, on_haart;
     private int years_on_haart;
     private String patient_pregnant;
@@ -37,15 +36,13 @@ public class Capture {
     @SerializedName("picture4_after")
     private Picture picture4_after;
 
-    public Capture(String instanceID, Date entry_date, String username, int health_facility_id,
-                   String studyID, String initials, String district, String county, String zone,
-                   int age, String symptoms, String more_symptoms, String other_symptoms, String cancer_screening,
-                   String screening_method, String past_screening_results, String treatment_given,
-                   Date last_screening_date, String hiv_status, String on_haart, int years_on_haart,
-                   String patient_pregnant, Date last_known_menstrual_period_date, int parity, int abortions,
-                   String contraceptives, String other_contraceptives, String lesionLocation, String via_results,
-                   String nurse_notes, Boolean require_clinician_review, Picture picture1_before, Picture picture2_before,
-                   Picture picture3_after, Picture picture4_after) {
+    public Capture2(String instanceID, Date entry_date, String username, int health_facility_id, String studyID,
+                    String initials, String district, String county, String zone, int age, String symptoms,
+                    String more_symptoms, String other_symptoms, String cancer_screening, String hiv_status,
+                    String on_haart, int years_on_haart, String patient_pregnant, Date last_known_menstrual_period_date,
+                    int parity, int abortions, String contraceptives, String other_contraceptives, String lesionLocation,
+                    String via_results, String nurse_notes, Boolean require_clinician_review, Picture picture1_before,
+                    Picture picture2_before, Picture picture3_after, Picture picture4_after) {
         this.instanceID = instanceID;
         this.entry_date = entry_date;
         this.username = username;
@@ -60,10 +57,6 @@ public class Capture {
         this.more_symptoms = more_symptoms;
         this.other_symptoms = other_symptoms;
         this.cancer_screening = cancer_screening;
-        this.screening_method = screening_method;
-        this.past_screening_results = past_screening_results;
-        this.treatment_given = treatment_given;
-        this.last_screening_date = last_screening_date;
         this.hiv_status = hiv_status;
         this.on_haart = on_haart;
         this.years_on_haart = years_on_haart;
@@ -82,6 +75,4 @@ public class Capture {
         this.picture3_after = picture3_after;
         this.picture4_after = picture4_after;
     }
-
-
 }

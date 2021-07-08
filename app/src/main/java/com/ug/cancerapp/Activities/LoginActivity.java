@@ -63,10 +63,16 @@ public class LoginActivity extends AppCompatActivity {
         submit = findViewById(R.id.verify_btn);
         progressBar = findViewById(R.id.otp_progress_bar);
 
-        username.setText("nurse@styxtechgroup.com");
-        password.setText("Admin123");
+
 
         category = getIntent().getStringExtra("category");
+        if (category.equals("gynecologist")) {
+            username.setText("clinician@styxtechgroup.com");
+            password.setText("Admin123");
+        } else {
+            username.setText("nurse@styxtechgroup.com");
+            password.setText("Admin123");
+        }
 
 
         submit.setOnClickListener(new View.OnClickListener() {

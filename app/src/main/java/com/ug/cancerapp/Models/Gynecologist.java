@@ -6,12 +6,16 @@ public class Gynecologist {
     String studyId;
     String age;
     String nurse;
+    String gyneNotes;
+    String gyneVia;
 
-    public Gynecologist(String instanceID, String studyId, String age, String nurse) {
+    public Gynecologist(String instanceID, String studyId, String age, String nurse, String gyneNotes, String gyneVia) {
         this.instanceID = instanceID;
         this.studyId = studyId;
         this.age = age;
         this.nurse = nurse;
+        this.gyneNotes = gyneNotes;
+        this.gyneVia = gyneVia;
     }
 
     public String getInstanceID() {
@@ -44,5 +48,13 @@ public class Gynecologist {
 
     public void setNurse(String nurse) {
         this.nurse = nurse;
+    }
+
+    public String getGyneNotes() {
+        return gyneNotes;
+    }
+
+    public String getGyneVia() {
+        return gyneVia;
     }
 }

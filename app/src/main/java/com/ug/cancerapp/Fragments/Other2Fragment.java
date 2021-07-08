@@ -56,7 +56,7 @@ import static com.ug.cancerapp.Fragments.HaartFragment.CHOICE2;
 import static com.ug.cancerapp.Fragments.OtherFragment.OTHER;
 import static com.ug.cancerapp.Fragments.ScreenFragment.CHOICE;
 import static com.ug.cancerapp.Fragments.ScreenFragment.DATEPICKER;
-import static com.ug.cancerapp.Fragments.ScreenFragment.SSS;
+import static com.ug.cancerapp.Fragments.ScreenFragment.METHOD;
 import static com.ug.cancerapp.Fragments.ScreenFragment.TREATMENT;
 import static com.ug.cancerapp.Fragments.SecondFragment.TEXT;
 import static com.ug.cancerapp.Fragments.SixtyFragment.S4;
@@ -106,22 +106,29 @@ public class Other2Fragment extends Fragment {
                 String zone = sharedPreferences.getString(ZONE, "");
                 String text = sharedPreferences.getString(TEXT, "");
                 String ss = sharedPreferences.getString(SS, "");
+                if (ss.equals("")){
+                    ss = "None";
+                }
                 String symptom = sharedPreferences.getString(OTHER, "");
+                if (symptom.equals("")){
+                    symptom = "None";
+                }
                 String text2 = sharedPreferences.getString(TEXT2, "");
                 String past = sharedPreferences.getString(CHOICE, "");
-                String sss = sharedPreferences.getString(SSS, "");
+                String method = sharedPreferences.getString(METHOD, "");
                 String datey = sharedPreferences.getString(DATEPICKER, "");
                 String treat = sharedPreferences.getString(TREATMENT, "");
                 String value3 = sharedPreferences.getString(TEXT3, "");
                 String valuex = sharedPreferences.getString(CHOICE2, "");
+                if (valuex.equals("")){
+                    valuex = "No";
+                }
                 String year = sharedPreferences.getString(YEARS, "");
-
                 if (year.isEmpty()){
                     num2 = 0;
                 }else {
                     num2 = Integer.parseInt(year);
                 }
-
                 String value = sharedPreferences.getString(PREGNANT, "");
                 String time = sharedPreferences.getString(DATS, "");
                 String child = sharedPreferences.getString(PARITY, "");
@@ -130,6 +137,9 @@ public class Other2Fragment extends Fragment {
                 int abortion = Integer.parseInt(abort);
                 String choice = sharedPreferences.getString(CHOICES, "");
                 String s4 = sharedPreferences.getString(S4, "");
+                if (s4.equals("")){
+                    s4 = "None";
+                }
                 String sImage = sharedPreferences.getString(IMAGE, "");
                 String sImage2 = sharedPreferences.getString(IMAGE2, "");
                 String sImage3 = sharedPreferences.getString(IMAGE3, "");
@@ -171,13 +181,13 @@ public class Other2Fragment extends Fragment {
                 String format = simpleDateFormat.format(new Date());
 
                 Form form = new Form(format, studyID, initial, district, county, zone, number, text, ss, symptom,
-                        text2, datey, sss, treat, past, value3, valuex, num2, value, time, children, abortion, choice,
+                        text2, datey, method, treat, past, value3, valuex, num2, value, time, children, abortion, choice,
                         s4, sImage, sImage2, sImage3, sImage4, via, location, notes, diagnosis, consult,
                         neg, pos, viar, neg2, pos2, viar2, neg3, pos3, viar3, neg4, pos4, viar4, uniqueID);
 
                 formViewModel.insert(form);
-//                editor.clear();
-//                editor.apply();
+                editor.clear();
+                editor.apply();
                 Toast.makeText(getActivity(), "Task Successful", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getActivity(), DashBoardActivity.class));
 

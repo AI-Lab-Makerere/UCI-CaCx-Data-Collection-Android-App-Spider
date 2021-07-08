@@ -17,9 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.LoopActivity">
-
-        </activity>
+        <activity android:name=".Activities.ModelActivity"></activity>
+        <activity android:name=".Activities.LoopActivity"></activity>
         <activity
             android:name=".Activities.FeedbackActivity"
             android:parentActivityName=".Activities.GynaecologistActivity" />
@@ -34,9 +33,7 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".Activities.GynaecologistActivity">
-
-        </activity>
+        <activity android:name=".Activities.GynaecologistActivity"></activity>
         <activity
             android:name=".Activities.ResultsActivity"
             android:parentActivityName=".Activities.DashBoardActivity" />

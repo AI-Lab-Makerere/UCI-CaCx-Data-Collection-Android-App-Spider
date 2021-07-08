@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    tools:context=".Activities.ModelActivity">
+
+    <include layout="@layout/toolbar"
+        android:id="@+id/toolbar"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:fadeScrollbars="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="MM Model VIA Results"
+                android:gravity="center"
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="16sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="10"
+                android:layout_marginTop="10dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:layout_marginRight="3dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Before acetic acid"
+                        android:gravity="center"/>
+
+                    <ImageView
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:scaleType="fitXY"
+                        android:id="@+id/image1"/>
+
+                    <ImageView
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:scaleType="fitXY"
+                        android:id="@+id/image2"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="VIA Results: "
+                        android:gravity="center"
+                        android:textColor="@color/colorTextPrimary"
+                        android:layout_marginTop="20dp"
+                        android:textSize="20sp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="My VIA Results: "
+                        android:gravity="center"
+                        android:textColor="@color/colorTextPrimary"
+                        android:layout_marginTop="5dp"
+                        android:textSize="18sp"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:layout_marginLeft="3dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="After acetic acid"
+                        android:gravity="center"/>
+
+                    <ImageView
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:scaleType="fitXY"
+                        android:id="@+id/image3"/>
+
+                    <ImageView
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:scaleType="fitXY"
+                        android:id="@+id/image4"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/mmvia"
+                        android:gravity="center"
+                        android:textColor="@color/colorTextPrimary"
+                        android:layout_marginTop="20dp"
+                        android:textStyle="bold"
+                        android:textSize="20sp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/nursevia"
+                        android:gravity="center"
+                        android:textColor="@color/colorTextPrimary"
+                        android:layout_marginTop="5dp"
+                        android:textStyle="bold"
+                        android:textSize="18sp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Me and the model are in"
+                android:layout_marginTop="20dp"
+                android:gravity="center"/>
+
+            <Button
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/agree"
+                android:textSize="18sp"
+                android:textColor="@color/colorBackground"
+                android:background="@drawable/primary_btn"/>
+
+
+            <Button
+                android:layout_marginTop="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Continue to the Dashboard"
+                android:id="@+id/cont"
+                android:textSize="14sp"
+                android:textColor="@color/colorTextPrimary"
+                android:background="@drawable/secondary_btn_bg"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+</RelativeLayout>

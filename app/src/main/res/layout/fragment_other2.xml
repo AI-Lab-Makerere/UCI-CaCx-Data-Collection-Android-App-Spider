@@ -30,14 +30,27 @@
                android:layout_height="wrap_content"
                android:gravity="center_horizontal"
                android:layout_marginTop="10dp"
+               android:layout_marginBottom="10dp"
                android:textColor="@color/colorTextPrimary"
                android:text="You won't be able to perform any changes if you continue from here. Check if the information provided is right and then continue"/>
+
+           <Button
+               android:id="@+id/model"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="View Diagnosis Results"
+               android:layout_margin="20dp"
+               android:layout_gravity="center_horizontal"
+               android:textColor="@color/colorTextPrimary"
+               android:textAllCaps="false"
+               android:textSize="16sp"
+               android:background="@drawable/secondary_btn_bg"/>
 
            <Button
                android:id="@+id/save"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               android:text="Perform Diagnosis"
+               android:text="Continue to the Dashboard"
                android:layout_margin="20dp"
                android:layout_gravity="center_horizontal"
                android:textColor="@color/colorBackground"

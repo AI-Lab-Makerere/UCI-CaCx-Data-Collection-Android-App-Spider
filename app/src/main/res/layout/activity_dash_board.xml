@@ -45,7 +45,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:gravity="center_horizontal"
-                        android:text="Welcome UDA"
+                        android:text="Welcome UCI Cacx"
                         android:textColor="@color/colorTextPrimary"
                         android:textSize="16sp" />
 

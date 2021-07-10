@@ -20,13 +20,13 @@ import com.ug.cancerapp.R;
 
 import java.util.List;
 
-public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormHolder> {
+public class FormAdapter2 extends RecyclerView.Adapter<FormAdapter2.FormHolder> {
 
     List<Form> formList;
     Context context;
     private OnItemClickListener mListener;
 
-    public FormAdapter(List<Form> formList, Context context) {
+    public FormAdapter2(List<Form> formList, Context context) {
         this.formList = formList;
         this.context = context;
     }
@@ -46,7 +46,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormHolder> {
     @NonNull
     @Override
     public FormHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.formxx, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.form, parent, false);
         FormHolder formHolder = new FormHolder(view, mListener);
         return formHolder;
     }
@@ -82,7 +82,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormHolder> {
             load = itemView.findViewById(R.id.load);
             images = itemView.findViewById(R.id.images);
 //            consult = itemView.findViewById(R.id.consult);
-            checkBox = itemView.findViewById(R.id.ok);
+//            checkBox = itemView.findViewById(R.id.ok);
 
             images.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -96,6 +96,18 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormHolder> {
                 }
             });
 
+//            consult.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if (listener != null){
+//                        int position = getAdapterPosition();
+//                        if (position != RecyclerView.NO_POSITION){
+//                            listener.onConsultClick(position);
+//                        }
+//                    }
+//                }
+//            });
+
             load.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -108,27 +120,27 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormHolder> {
                 }
             });
 
-            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (checkBox.isChecked()){
-                        if (listener != null){
-                            int position = getAdapterPosition();
-                            if (position != RecyclerView.NO_POSITION){
-                                listener.onCheckedClick(position);
-                            }
-                        }
-                    }
-                    else {
-                        if (listener != null){
-                            int position = getAdapterPosition();
-                            if (position != RecyclerView.NO_POSITION){
-                                listener.onNotCheckedClick(position);
-                            }
-                        }
-                    }
-                }
-            });
+//            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//                @Override
+//                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                    if (checkBox.isChecked()){
+//                        if (listener != null){
+//                            int position = getAdapterPosition();
+//                            if (position != RecyclerView.NO_POSITION){
+//                                listener.onCheckedClick(position);
+//                            }
+//                        }
+//                    }
+//                    else {
+//                        if (listener != null){
+//                            int position = getAdapterPosition();
+//                            if (position != RecyclerView.NO_POSITION){
+//                                listener.onNotCheckedClick(position);
+//                            }
+//                        }
+//                    }
+//                }
+//            });
         }
     }
 }

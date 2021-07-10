@@ -17,15 +17,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.CaseActivity"></activity>
+        <activity android:name=".Activities.SavedActivity"
+            android:parentActivityName=".Activities.DashBoardActivity"></activity>
+        <activity android:name=".Activities.CaseActivity" />
         <activity android:name=".Activities.HomeActivity" />
         <activity android:name=".Activities.ModelActivity" />
         <activity android:name=".Activities.LoopActivity" />
         <activity
             android:name=".Activities.FeedbackActivity"
             android:parentActivityName=".Activities.GynaecologistActivity" />
-        <activity
-            android:name=".Activities.DataActivity">
+        <activity android:name=".Activities.DataActivity">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->

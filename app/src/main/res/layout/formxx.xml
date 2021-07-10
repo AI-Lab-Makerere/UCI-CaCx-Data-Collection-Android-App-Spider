@@ -16,11 +16,19 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <CheckBox
+            android:id="@+id/ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_gravity="end"/>
+
         <TextView
             android:id="@+id/study"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="StudyID: UC001"
+            android:layout_marginTop="-30dp"
             android:textColor="@color/colorTextPrimary"/>
 
         <LinearLayout
@@ -59,7 +67,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:weightSum="10"
-            android:layout_marginBottom="5dp"
             android:orientation="horizontal">
 
             <Button
@@ -84,6 +91,18 @@
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/colorBackground"
                 android:background="@drawable/primary_btn"/>
+
+<!--            <Button-->
+<!--                android:id="@+id/consult"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:layout_weight="4"-->
+<!--                android:layout_marginLeft="5dp"-->
+<!--                android:text="Consult"-->
+<!--                android:textAllCaps="false"-->
+<!--                android:layout_gravity="center_horizontal"-->
+<!--                android:textColor="@color/colorBackground"-->
+<!--                android:background="@drawable/primary_btn"/>-->
 
         </LinearLayout>
 

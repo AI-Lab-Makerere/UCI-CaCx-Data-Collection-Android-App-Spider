@@ -254,6 +254,13 @@ public class Other2Fragment extends Fragment {
 
 
         diagnosis = mmv;
+
+        if (mmv.equals(via)){
+            consult = false;
+        }else {
+            consult = true;
+        }
+
         consult = false;
         uniqueID = UUID.randomUUID().toString();
 

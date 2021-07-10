@@ -13,8 +13,11 @@ import java.util.List;
 @Dao
 public interface FormDAO {
 
-    @Query("SELECT * FROM Cervix_Screening ORDER BY `key` DESC")
+    @Query("SELECT * FROM Cervix_Screening WHERE uploaded = 0 ORDER BY `key` DESC")
     List<Form> getAllForms();
+
+    @Query("SELECT * FROM Cervix_Screening WHERE uploaded = 1 ORDER BY `key` DESC")
+    List<Form> getAllFormsUploaded();
 
 //    @Query("SELECT * FROM Cervix_Screening WHERE `key` = (SELECT MAX(`key`) FROM Cervix_Screening)")
 //    Form filterdata(Form form);
@@ -27,6 +30,9 @@ public interface FormDAO {
 
     @Query("UPDATE Cervix_Screening SET consult = :text WHERE `key` = :id")
     void UpdateConsult (Boolean text, long id);
+
+    @Query("UPDATE Cervix_Screening SET uploaded = :text WHERE `key` = :id")
+    void UpdateUpload (Boolean text, long id);
 
     @Query("SELECT * FROM Cervix_Screening WHERE `key` = :id")
     Form getOne (long id);

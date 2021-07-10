@@ -23,7 +23,6 @@ public class FormRepository {
         new InsertFormAsyncTask(formDAO).execute(form);
     }
 
-
     private static class InsertFormAsyncTask extends AsyncTask<Form, Void, Void>{
 
         private FormDAO formDAO;
@@ -40,11 +39,13 @@ public class FormRepository {
     }
 
 
-
-
-
     public List<Form> getAllForms(){
         List<Form> formList = formDAO.getAllForms();
+        return formList;
+    }
+
+    public List<Form> getAllFormsUploaded(){
+        List<Form> formList = formDAO.getAllFormsUploaded();
         return formList;
     }
 

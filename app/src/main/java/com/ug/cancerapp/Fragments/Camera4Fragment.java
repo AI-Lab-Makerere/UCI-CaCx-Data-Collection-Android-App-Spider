@@ -1,6 +1,7 @@
 package com.ug.cancerapp.Fragments;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -56,6 +57,8 @@ public class Camera4Fragment extends Fragment {
     public static final String FLOP4 = "positive4";
     public static final String VR4 = "viaR4";
 
+    ProgressDialog progressDialog;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +77,8 @@ public class Camera4Fragment extends Fragment {
         gallery = view.findViewById(R.id.gallery);
         imageView = view.findViewById(R.id.image);
 
+        progressDialog = new ProgressDialog(getActivity());
+
         loadData();
         updateViews();
 
@@ -83,7 +88,13 @@ public class Camera4Fragment extends Fragment {
                 if (sImage.isEmpty()){
                     Toast.makeText(getActivity(), "Take a picture or load one from gallery", Toast.LENGTH_SHORT).show();
                 }else {
+                    progressDialog.setMessage("Saving Image...");
+                    progressDialog.show();
+                    byte[] bytes = Base64.decode(sImage, Base64.DEFAULT);
+                    Bitmap bitmap2 = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    runTensorflowModel(bitmap2);
                     saveData();
+                    progressDialog.dismiss();
                     FragmentTransaction fr = getFragmentManager().beginTransaction();
                     fr.replace(R.id.fragment_container, new ViaFragment());
                     fr.addToBackStack(null);
@@ -159,7 +170,7 @@ public class Camera4Fragment extends Fragment {
             byte[] bytes = stream.toByteArray();
             sImage = Base64.encodeToString(bytes, Base64.DEFAULT);
             imageView.setImageBitmap(bitmap);
-            runTensorflowModel(bitmap);
+//            runTensorflowModel(bitmap);
 
         }
         if (requestCode == IMAGE_PICKER_CODE && resultCode == -1 && data != null){
@@ -177,7 +188,7 @@ public class Camera4Fragment extends Fragment {
                 byte[] bytes = stream.toByteArray();
                 sImage = Base64.encodeToString(bytes, Base64.DEFAULT);
                 imageView.setImageURI(uri);
-                runTensorflowModel(bitmap);
+//                runTensorflowModel(bitmap);
 
             } catch (IOException e) {
                 e.printStackTrace();

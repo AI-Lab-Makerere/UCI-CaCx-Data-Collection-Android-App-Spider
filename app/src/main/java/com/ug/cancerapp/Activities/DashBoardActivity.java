@@ -120,4 +120,7 @@ public class DashBoardActivity extends AppCompatActivity {
     }
 
 
+    public void contactus(View view) {
+        startActivity(new Intent(DashBoardActivity.this, SavedActivity.class));
+    }
 }

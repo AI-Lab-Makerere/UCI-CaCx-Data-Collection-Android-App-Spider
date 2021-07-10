@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ug.cancerapp.Adapter.FormAdapter;
+import com.ug.cancerapp.Adapter.FormAdapter2;
 import com.ug.cancerapp.Apis.ApiClient;
 import com.ug.cancerapp.Apis.JsonPlaceHolder;
 import com.ug.cancerapp.Database.Form;
@@ -46,7 +47,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -54,13 +54,12 @@ import retrofit2.Response;
 
 import static com.ug.cancerapp.Activities.LoginActivity.EMAIL;
 import static com.ug.cancerapp.Activities.LoginActivity.FACID;
-import static com.ug.cancerapp.Activities.LoginActivity.FACNAME;
 import static com.ug.cancerapp.Activities.LoginActivity.TOKEN;
 
-public class RecordsActivity extends AppCompatActivity {
+public class SavedActivity extends AppCompatActivity {
 
     ArrayList<Form> formList, formList_search;
-    FormAdapter formAdapter;
+    FormAdapter2 formAdapter;
     RecyclerView recyclerView;
     Dialog dialog;
     Button submit;
@@ -72,7 +71,6 @@ public class RecordsActivity extends AppCompatActivity {
 
     FormRepository formRepository;
     Form form;
-    FormDAO formDAO;
 
     public static final String SHARED_API = "sharedApi";
     String username, token, facility, text2;
@@ -88,11 +86,11 @@ public class RecordsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_records);
+        setContentView(R.layout.activity_saved);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Records");
+        getSupportActionBar().setTitle("Uploaded Records");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -101,10 +99,9 @@ public class RecordsActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        submit = findViewById(R.id.submit);
+//        submit = findViewById(R.id.submit);
 
         progressDialog = new ProgressDialog(this);
-         formDAO = FormDatabase.getInstance(RecordsActivity.this).formDAO();
 
         arrayForm = new ArrayList<>();
 
@@ -128,25 +125,23 @@ public class RecordsActivity extends AppCompatActivity {
             }
         });
 
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (arrayForm.size() == 0){
-                    Toast.makeText(RecordsActivity.this, "Select the files to Upload", Toast.LENGTH_SHORT).show();
-                }else {
-
-                    new SendDataTask().execute();
-
-                }
-
-            }
-        });
-
+//        submit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+////                if (arrayForm.size() == 0){
+////                    Toast.makeText(RecordsActivity.this, "Select the files to Upload", Toast.LENGTH_SHORT).show();
+////                }else {
+////
+////                    new RecordsActivity.SendDataTask().execute();
+////
+////                }
+//
+//            }
+//        });
     }
 
-
-    class LoadDataTask extends AsyncTask<Void, Void, Void>{
+    class LoadDataTask extends AsyncTask<Void, Void, Void> {
 
         FormRepository formRepository;
         List<Form> formList1;
@@ -155,12 +150,11 @@ public class RecordsActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             formRepository = new FormRepository((Application) getApplicationContext());
-
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            formList1 = formRepository.getAllForms();
+            formList1 = formRepository.getAllFormsUploaded();
             formList = new ArrayList<>();
             formList_search = new ArrayList<>();
 
@@ -176,13 +170,13 @@ public class RecordsActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            formAdapter = new FormAdapter(formList, RecordsActivity.this);
+            formAdapter = new FormAdapter2(formList, SavedActivity.this);
             recyclerView.setAdapter(formAdapter);
 
-            formAdapter.setOnItemClickListener(new FormAdapter.OnItemClickListener() {
+            formAdapter.setOnItemClickListener(new FormAdapter2.OnItemClickListener() {
                 @Override
                 public void onLoadClick(int position) {
-                    dialog = new Dialog(RecordsActivity.this);
+                    dialog = new Dialog(SavedActivity.this);
                     dialog.setContentView(R.layout.load_data);
 
                     loadData(dialog, position);
@@ -201,7 +195,7 @@ public class RecordsActivity extends AppCompatActivity {
 
 //                    Toast.makeText(RecordsActivity.this, image1, Toast.LENGTH_SHORT).show();
 
-                    dialog = new Dialog(RecordsActivity.this);
+                    dialog = new Dialog(SavedActivity.this);
                     dialog.setContentView(R.layout.viewing_images);
                     dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
@@ -238,60 +232,19 @@ public class RecordsActivity extends AppCompatActivity {
 
                 @Override
                 public void onCheckedClick(int position) {
-                    long key = formList.get(position).getKey();
-                    arrayForm.add(key);
+//                    long key = formList.get(position).getKey();
+//                    arrayForm.add(key);
                 }
 
                 @Override
                 public void onNotCheckedClick(int position) {
-                    long key = formList.get(position).getKey();
-                    arrayForm.remove(key);
-//                    Toast.makeText(RecordsActivity.this, "bad", Toast.LENGTH_SHORT).show();
+//                    long key = formList.get(position).getKey();
+//                    arrayForm.remove(key);
+//                    Toast.makeText(SavedActivity.this, "bad", Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
-
-    class SendDataTask extends AsyncTask<Void, Void, Void>{
-
-//        FormRepository formRepository;
-//        Form form;
-//        String studyID;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            formRepository = new FormRepository((Application) getApplicationContext());
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-
-
-            for (i = 0; i < arrayForm.size(); i++){
-                form = formRepository.getOnlyOne(arrayForm.get((int) i));
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        progressDialog.setMessage("Sending Data, Please wait...");
-                        progressDialog.show();
-                    }
-                });
-                sendData();
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-
-//            Toast.makeText(RecordsActivity.this, studyID, Toast.LENGTH_SHORT).show();
-        }
-    }
-
 
     //    filter method
     public void Filter(String charText){
@@ -314,7 +267,7 @@ public class RecordsActivity extends AppCompatActivity {
 
     @SuppressLint("SimpleDateFormat")
     private void handleData(int position) {
-        
+
         String studyID = formList.get(position).getStudyID();
         String initial = formList.get(position).getInitials();
         int age = formList.get(position).getAge();
@@ -365,7 +318,7 @@ public class RecordsActivity extends AppCompatActivity {
         long key = formList.get(position).getKey();
         Log.v("TAG", "data");
 
-        FormDAO formDAO = FormDatabase.getInstance(RecordsActivity.this).formDAO();
+        FormDAO formDAO = FormDatabase.getInstance(SavedActivity.this).formDAO();
         formDAO.UpdateConsult(true, key);
         Log.v("TAG", "" + key);
 
@@ -428,7 +381,7 @@ public class RecordsActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(RecordsActivity.this, "Connection Issue: " + response.code() + " error", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SavedActivity.this, "Connection Issue: " + response.code() + " error", Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
                             Log.v("TAG", ""+response.code());
                         }
@@ -440,7 +393,7 @@ public class RecordsActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(RecordsActivity.this, "Form Uploaded Successfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SavedActivity.this, message, Toast.LENGTH_SHORT).show();
                         Log.v("TAG", message);
                         progressDialog.dismiss();
                     }
@@ -454,7 +407,7 @@ public class RecordsActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(RecordsActivity.this, "Something went wrong: " + t.getMessage() , Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SavedActivity.this, "Something went wrong: " + t.getMessage() , Toast.LENGTH_SHORT).show();
                         Log.v("TAG", "Something went wrong: " + t.getMessage());
                         progressDialog.dismiss();
                     }
@@ -527,106 +480,5 @@ public class RecordsActivity extends AppCompatActivity {
         }
 
     }
-
-
-    private void sendData() {
-
-        String studyID = form.getStudyID();
-        String initial = form.getInitials();
-        int age = form.getAge();
-        String district = form.getDistrict();
-        String county = form.getCounty();
-        String zone = form.getVillage();
-        String text = form.getHave_symptoms();
-        String ss = form.getSymptoms();
-        String symptom = form.getOther_symptoms();
-        text2 = form.getScreened_for_cancer();
-        String past = form.getScreening_results();
-        String sss = form.getScreening_process();
-        String datey = form.getLast_screened();
-        String treat = form.getTreatment();
-        String value3 = form.getHiv_status();
-        String valuex = form.getOn_haart();
-        int year = form.getYears_on_haart();
-        String value = form.getPregnant();
-        String time = form.getLast_menstrual();
-        int child = form.getParity();
-        int abort = form.getAbortion();
-        String choice = form.getOn_contraceptives();
-        String s4 = form.getContraceptives();
-        String sImage = form.getImage1();
-        String sImage2 = form.getImage2();
-        String sImage3 = form.getImage3();
-        String sImage4 = form.getImage4();
-        String via = form.getVia();
-        String notes = form.getNotes();
-        String location = form.getLocation();
-        String date = form.getDate();
-
-        String instanceID = form.getInstanceID();
-        float neg = form.getPicture1_nc();
-        float pos = form.getPicture1_pc();
-        String var = form.getPicture1_via();
-        float neg2 = form.getPicture2_nc();
-        float pos2 = form.getPicture2_pc();
-        String var2 = form.getPicture2_via();
-        float neg3 = form.getPicture3_nc();
-        float pos3 = form.getPicture3_pc();
-        String var3 = form.getPicture3_via();
-        float neg4 = form.getPicture4_nc();
-        float pos4 = form.getPicture4_pc();
-        String var4 = form.getPicture4_via();
-        String ml_result = form.getDiagnosis();
-        Boolean consult = form.getConsult();
-
-        long key = form.getKey();
-        Log.v("TAG", "data");
-
-//        FormDAO formDAO = FormDatabase.getInstance(RecordsActivity.this).formDAO();
-//        formDAO.UpdateConsult(true, key);
-        formDAO.UpdateUpload(true, key);
-        Log.v("TAG", "" + key);
-
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_API, MODE_PRIVATE);
-        token = sharedPreferences.getString(TOKEN, "");
-        username = sharedPreferences.getString(EMAIL, "");
-        facility = sharedPreferences.getString(FACID, "");
-        int fac_id = Integer.parseInt(facility);
-        Log.v("TAG", "data2");
-
-
-        try {
-            if (!datey.isEmpty()){
-                date2 = new SimpleDateFormat("dd/MM/yyyy").parse(datey);
-            }
-            date3 = new SimpleDateFormat("dd/MM/yyyy").parse(time);
-            date1 = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss").parse(date);
-            Log.v("TAG", ""+date1);
-            Log.v("TAG", ""+date2);
-            Log.v("TAG", ""+date3);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        Picture picture1 = new Picture(neg, pos, var, sImage, "");
-        Picture picture2 = new Picture(neg2, pos2, var2, sImage2, "");
-        Picture picture3 = new Picture(neg3, pos3, var3, sImage3, "");
-        Picture picture4 = new Picture(neg4, pos4, var4, sImage4, "");
-
-        Capture capture = new Capture(instanceID, date1, username, fac_id, studyID, initial,
-                district, county, zone, age, text, ss, symptom, text2, sss, past, treat, date2,
-                value3, valuex, year, value, date3, child, abort, s4, choice, location, via, notes,
-                ml_result, consult, picture1, picture2, picture3, picture4);
-
-        Capture2 capture2 = new Capture2(instanceID, date1, username, fac_id, studyID, initial,
-                district, county, zone, age, text, ss, symptom, text2,
-                value3, valuex, year, value, date3, child, abort, s4, choice, location, via, notes,
-                ml_result, consult, picture1, picture2, picture3, picture4);
-
-        Log.v("TAG", "data3");
-
-        sendOverNetwork(token, capture, capture2);
-    }
-
 
 }

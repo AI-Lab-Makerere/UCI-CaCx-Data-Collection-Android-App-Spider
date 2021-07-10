@@ -78,7 +78,7 @@ public class OtherFragment extends Fragment {
         editor.putString(OTHER, etOther.getText().toString());
 
         editor.apply();
-        Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
     }
 
     public void loadData(){

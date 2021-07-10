@@ -207,7 +207,7 @@ public class Camera4Fragment extends Fragment {
         editor.putString(FLOP4, positive);
 
         editor.apply();
-        Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
     }
 
     public void loadData(){
@@ -252,12 +252,12 @@ public class Camera4Fragment extends Fragment {
                 viar = "Negative";
                 negative = String.valueOf(viaNegative);
                 positive = String.valueOf(viaPositive);
-                Toast.makeText(getActivity(), viar, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), viar, Toast.LENGTH_SHORT).show();
             }else {
                 viar = "Positive";
                 negative = String.valueOf(viaNegative);
                 positive = String.valueOf(viaPositive);
-                Toast.makeText(getActivity(), viar, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), viar, Toast.LENGTH_SHORT).show();
 
             }
 

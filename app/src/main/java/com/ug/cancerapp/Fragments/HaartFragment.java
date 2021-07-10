@@ -53,11 +53,11 @@ public class HaartFragment extends Fragment {
 
                 switch (index) {
                     case YES:
-                        Toast.makeText(getActivity(), "Yes", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), "Yes", Toast.LENGTH_SHORT).show();
                         value = "Yes";
                         break;
                     case NO:
-                        Toast.makeText(getActivity(), "No", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), "No", Toast.LENGTH_SHORT).show();
                         value = "No";
                         break;
 
@@ -112,7 +112,7 @@ public class HaartFragment extends Fragment {
         editor.putString(CHOICE2, value);
 
         editor.apply();
-        Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
     }
 
     public void loadData() {

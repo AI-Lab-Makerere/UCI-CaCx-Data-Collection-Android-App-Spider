@@ -161,4 +161,10 @@ public class CaseActivity extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(CaseActivity.this, HomeActivity.class));
+    }
 }

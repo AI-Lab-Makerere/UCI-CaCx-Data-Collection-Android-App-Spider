@@ -61,11 +61,11 @@ public class ViaFragment extends Fragment {
 
                 switch (index){
                     case POSITIVE:
-                        Toast.makeText(getActivity(), "Positive", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), "Positive", Toast.LENGTH_SHORT).show();
                         via = "Positive";
                         break;
                     case NEGATIVE:
-                        Toast.makeText(getActivity(), "Negative", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), "Negative", Toast.LENGTH_SHORT).show();
                         via = "Negative";
                         break;
                     default:
@@ -114,7 +114,7 @@ public class ViaFragment extends Fragment {
         editor.putString(LESION, lesion.getText().toString());
 
         editor.apply();
-        Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
     }
 
     public void loadData(){

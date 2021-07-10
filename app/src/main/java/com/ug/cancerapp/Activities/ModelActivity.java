@@ -78,8 +78,8 @@ public class ModelActivity extends AppCompatActivity {
         btnCont.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                editor.clear();
-//                editor.apply();
+                editor.clear();
+                editor.apply();
                 Toast.makeText(ModelActivity.this, "Task Successful", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(ModelActivity.this, DashBoardActivity.class));
                 finish();

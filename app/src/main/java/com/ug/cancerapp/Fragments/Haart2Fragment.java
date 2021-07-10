@@ -95,7 +95,7 @@ public class Haart2Fragment extends Fragment {
         editor.putString(YEARS, years.getText().toString());
 
         editor.apply();
-        Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
     }
 
     public void loadData() {

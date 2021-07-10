@@ -153,9 +153,9 @@ public class Other2Fragment extends Fragment {
             public void onClick(View v) {
 
                 saveData();
-//                editor.clear();
-//                editor.apply();
-                Toast.makeText(getActivity(), "Task Successful", Toast.LENGTH_SHORT).show();
+                editor.clear();
+                editor.apply();
+                Toast.makeText(getActivity(), "Data saved Successful", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getActivity(), DashBoardActivity.class));
 
             }

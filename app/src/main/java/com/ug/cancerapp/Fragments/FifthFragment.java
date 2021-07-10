@@ -76,15 +76,15 @@ public class FifthFragment extends Fragment {
 
                 switch (index) {
                     case YES:
-                        Toast.makeText(getActivity(), "Yes", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), "Yes", Toast.LENGTH_SHORT).show();
                         value = "Yes";
                         break;
                     case NO:
-                        Toast.makeText(getActivity(), "NO", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), "NO", Toast.LENGTH_SHORT).show();
                         value = "No";
                         break;
                     case NOT_SURE:
-                        Toast.makeText(getActivity(), "Not Sure", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), "Not Sure", Toast.LENGTH_SHORT).show();
                         value = "Unknown";
                         break;
                     default:
@@ -188,7 +188,7 @@ public class FifthFragment extends Fragment {
         editor.putString(ABORTION, abortions.getText().toString());
 
         editor.apply();
-        Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
     }
 
     public void loadData() {

@@ -56,15 +56,15 @@ public class FourthFragment extends Fragment {
 
                 switch (index) {
                     case NEGATIVE:
-                        Toast.makeText(getActivity(), "Negative", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), "Negative", Toast.LENGTH_SHORT).show();
                         value3 = "Negative";
                         break;
                     case POSITIVE:
-                        Toast.makeText(getActivity(), "Positive", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), "Positive", Toast.LENGTH_SHORT).show();
                         value3 = "Positive";
                         break;
                     case UNKNOWN:
-                        Toast.makeText(getActivity(), "Unknown", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), "Unknown", Toast.LENGTH_SHORT).show();
                         value3 = "Unknown";
                         break;
                     default:
@@ -127,7 +127,7 @@ public class FourthFragment extends Fragment {
         editor.putString(TEXT3, value3);
 
         editor.apply();
-        Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
     }
 
     public void loadData() {

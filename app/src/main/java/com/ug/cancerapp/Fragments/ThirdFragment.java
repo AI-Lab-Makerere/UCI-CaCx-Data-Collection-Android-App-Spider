@@ -64,11 +64,11 @@ public class ThirdFragment extends Fragment {
 
                 switch (index){
                     case YES:
-                        Toast.makeText(getActivity(), "Yes", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), "Yes", Toast.LENGTH_SHORT).show();
                         value2 = "Yes";
                         break;
                     case NO:
-                        Toast.makeText(getActivity(), "No", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), "No", Toast.LENGTH_SHORT).show();
                         value2 = "No";
                         break;
                     default:
@@ -143,7 +143,7 @@ public class ThirdFragment extends Fragment {
         editor.putString(TEXT2, value2);
 
         editor.apply();
-        Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
     }
 
     public void loadData(){

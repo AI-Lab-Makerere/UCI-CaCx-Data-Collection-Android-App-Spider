@@ -270,12 +270,12 @@ public class Camera1Fragment extends Fragment {
                 viar = "Negative";
                 negative = String.valueOf(viaNegative);
                 positive = String.valueOf(viaPositive);
-                Toast.makeText(getActivity(), viar, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), viar, Toast.LENGTH_SHORT).show();
             }else {
                 viar = "Positive";
                 negative = String.valueOf(viaNegative);
                 positive = String.valueOf(viaPositive);
-                Toast.makeText(getActivity(), viar, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), viar, Toast.LENGTH_SHORT).show();
 
             }
 

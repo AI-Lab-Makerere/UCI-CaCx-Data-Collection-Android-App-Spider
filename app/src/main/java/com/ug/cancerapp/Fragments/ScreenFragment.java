@@ -89,11 +89,11 @@ public class ScreenFragment extends Fragment {
 
                 switch (index){
                     case Negative:
-                        Toast.makeText(getActivity(), "Negative", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), "Negative", Toast.LENGTH_SHORT).show();
                         past = "Negative";
                         break;
                     case Positive:
-                        Toast.makeText(getActivity(), "Positive", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), "Positive", Toast.LENGTH_SHORT).show();
                         past = "Positive";
                         break;
                     default:
@@ -110,15 +110,15 @@ public class ScreenFragment extends Fragment {
 
                 switch (index){
                     case Hpv:
-                        Toast.makeText(getActivity(), "HPV", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), "HPV", Toast.LENGTH_SHORT).show();
                         method = "HPV";
                         break;
                     case Via:
-                        Toast.makeText(getActivity(), "VIA/VIL", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), "VIA/VIL", Toast.LENGTH_SHORT).show();
                         method = "VIA/VIL";
                         break;
                     case Other:
-                        Toast.makeText(getActivity(), "Others", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(), "Others", Toast.LENGTH_SHORT).show();
                         method = "Others";
                         break;
                     default:
@@ -195,7 +195,7 @@ public class ScreenFragment extends Fragment {
         editor.putString(TREATMENT, treatments.getText().toString());
 
         editor.apply();
-        Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
     }
 
     public void loadData(){

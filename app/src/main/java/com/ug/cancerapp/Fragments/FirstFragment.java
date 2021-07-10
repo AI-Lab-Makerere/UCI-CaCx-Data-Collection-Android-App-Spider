@@ -99,23 +99,6 @@ public class FirstFragment extends Fragment {
                 else {
 
                     saveData();
-//                    Form form = new Form();
-//
-//                    form.setStudyID(study);
-//                    form.setInitials(initial);
-//                    form.setAge(number);
-//                    form.setDistrict(district);
-//                    form.setCounty(county);
-//                    form.setVillage(zone);
-//                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
-//                    String format = simpleDateFormat.format(new Date());
-//                    form.setDate(format);
-//
-//                    rowId = formViewModel.insert(form);
-//
-//
-//                    Toast.makeText(getActivity(), "The ID is: " + rowId, Toast.LENGTH_SHORT).show();
-
                 }
 
             }
@@ -136,7 +119,7 @@ public class FirstFragment extends Fragment {
         editor.putString(ZONE, etzone.getText().toString());
 
         editor.apply();
-        Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
         FragmentTransaction fr = getFragmentManager().beginTransaction();
         fr.replace(R.id.fragment_container, new SecondFragment());
         fr.addToBackStack(null);

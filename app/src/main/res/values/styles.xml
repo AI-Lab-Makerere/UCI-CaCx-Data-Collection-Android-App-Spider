@@ -5,6 +5,12 @@
         <item name="colorPrimary">@color/colorMainBlue</item>
         <item name="colorPrimaryDark">@color/colorMainBlue</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:itemBackground">@color/colorBackground</item>
+        <item name="android:itemTextAppearance">@style/CustomTextMenu</item>
+    </style>
+
+    <style name="CustomTextMenu" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
+        <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
     <style name="ToolBarStyle" parent="Theme.AppCompat">

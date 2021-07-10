@@ -177,4 +177,9 @@ public class GynaecologistActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(GynaecologistActivity.this, HomeActivity.class));
+    }
 }

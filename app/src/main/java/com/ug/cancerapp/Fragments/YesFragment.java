@@ -122,7 +122,7 @@ public class YesFragment extends Fragment {
         editor.putString(SS, s);
 
         editor.apply();
-        Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
     }
 
     private void loadData(){

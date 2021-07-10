@@ -8,14 +8,16 @@ public class Gynecologist {
     String nurse;
     String gyneNotes;
     String gyneVia;
+    String ml_via_result;
 
-    public Gynecologist(String instanceID, String studyId, String age, String nurse, String gyneNotes, String gyneVia) {
+    public Gynecologist(String instanceID, String studyId, String age, String nurse, String gyneNotes, String gyneVia, String ml_via_result) {
         this.instanceID = instanceID;
         this.studyId = studyId;
         this.age = age;
         this.nurse = nurse;
         this.gyneNotes = gyneNotes;
         this.gyneVia = gyneVia;
+        this.ml_via_result = ml_via_result;
     }
 
     public String getInstanceID() {
@@ -56,5 +58,9 @@ public class Gynecologist {
 
     public String getGyneVia() {
         return gyneVia;
+    }
+
+    public String getMl_via_result() {
+        return ml_via_result;
     }
 }

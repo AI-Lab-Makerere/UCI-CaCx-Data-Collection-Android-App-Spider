@@ -16,9 +16,17 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.ug.cancerapp.Apis.ApiClient;
+import com.ug.cancerapp.Apis.JsonPlaceHolder;
+import com.ug.cancerapp.Models.Settings;
 import com.ug.cancerapp.R;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.ug.cancerapp.Activities.LoginActivity.FACID;
 import static com.ug.cancerapp.Activities.LoginActivity.TOKEN;
@@ -31,15 +39,21 @@ public class SplashActivity extends AppCompatActivity {
     boolean InternetCheck = true;
 
     public static final String SHARED_API = "sharedApi";
+    public static final String THRESHOLD = "threshold";
+    SharedPreferences sharedPreferences;
+    String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+         sharedPreferences = getSharedPreferences(SHARED_API, MODE_PRIVATE);
+
         setUpStatus();
         root_layout = findViewById(R.id.root_layout);
         PostDelayedMethod();
+
     }
 
     private void PostDelayedMethod() {
@@ -57,19 +71,17 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void goToHome() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_API, MODE_PRIVATE);
-        String token = sharedPreferences.getString(TOKEN, "");
+        token = sharedPreferences.getString(TOKEN, "");
         String fac_id = sharedPreferences.getString(FACID, "");
         if (token.length() == 0){
             startActivity(new Intent(SplashActivity.this, WelcomeActivity.class));
             finish();
         }else {
             if (fac_id.equals("0")){
-                startActivity(new Intent(SplashActivity.this, GynaecologistActivity.class));
+                startActivity(new Intent(SplashActivity.this, HomeActivity.class));
                 finish();
             }else {
-                startActivity(new Intent(SplashActivity.this, DashBoardActivity.class));
-                finish();
+                saveThreshold();
             }
 
         }
@@ -135,5 +147,31 @@ public class SplashActivity extends AppCompatActivity {
             winParams.flags &= ~bits;
         }
         win.setAttributes(winParams);
+    }
+
+    private void saveThreshold() {
+
+        JsonPlaceHolder jsonPlaceHolder = ApiClient.getClient().create(JsonPlaceHolder.class);
+        Call<Settings> call = jsonPlaceHolder.setting("Bearer " + token);
+        call.enqueue(new Callback<Settings>() {
+            @Override
+            public void onResponse(Call<Settings> call, Response<Settings> response) {
+                if (!response.isSuccessful()){
+                    Toast.makeText(SplashActivity.this, "There is a connection issue, Please check your internet connection", Toast.LENGTH_SHORT).show();
+                }
+
+                String thres = String.valueOf(response.body().getPositive_analysis_threshold());
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(THRESHOLD, thres);
+                editor.apply();
+                startActivity(new Intent(SplashActivity.this, DashBoardActivity.class));
+                finish();
+            }
+
+            @Override
+            public void onFailure(Call<Settings> call, Throwable t) {
+                Toast.makeText(SplashActivity.this, "Its not you its us, please try again later", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

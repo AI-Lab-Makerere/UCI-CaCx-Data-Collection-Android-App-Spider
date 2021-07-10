@@ -85,7 +85,7 @@ public class FifthFragment extends Fragment {
                         break;
                     case NOT_SURE:
                         Toast.makeText(getActivity(), "Not Sure", Toast.LENGTH_SHORT).show();
-                        value = "Not Sure";
+                        value = "Unknown";
                         break;
                     default:
                         break;
@@ -208,7 +208,7 @@ public class FifthFragment extends Fragment {
             radioButton1.setChecked(true);
         } else if (value.equals("No")) {
             radioButton2.setChecked(true);
-        } else if (value.equals("Not Sure")) {
+        } else if (value.equals("Unknown")) {
             radioButton3.setChecked(true);
         } else {
             radioButton1.setChecked(false);

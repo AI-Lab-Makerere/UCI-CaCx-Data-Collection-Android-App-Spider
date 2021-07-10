@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
-    tools:context=".Activities.DashBoardActivity">
+    tools:context=".Activities.HomeActivity">
 
     <include layout="@layout/toolbar"
         android:id="@+id/toolbar" />
@@ -90,7 +90,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginRight="5dp"
                         android:layout_marginBottom="10dp"
-                        android:onClick="collect"
+                        android:onClick="reviewed"
                         android:clickable="true"
                         android:focusable="true"
                         android:foreground="?android:attr/selectableItemBackground"
@@ -109,7 +109,7 @@
                                 android:id="@+id/find_profile"
                                 android:layout_width="wrap_content"
                                 android:layout_height="90dp"
-                                android:src="@drawable/ic_data_collection"
+                                android:src="@drawable/ic_medical_folder"
                                 android:layout_gravity="center" />
 
                             <TextView
@@ -118,51 +118,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
                                 android:gravity="center"
-                                android:text="CaCx Screening"
-                                android:textColor="@color/colorTextPrimary"
-                                android:textSize="14sp"
-                                android:textStyle="normal" />
-
-                        </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/view9"
-                        android:layout_width="180dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginBottom="20dp"
-                        android:onClick="results"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        app:cardCornerRadius="10dp"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/view2">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:padding="10dp">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="90dp"
-                                android:layout_gravity="center"
-                                android:src="@drawable/ic_medical_folder" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:gravity="center"
-                                android:text="Experts' Feedback"
+                                android:text="Reviewed Cases"
                                 android:textColor="@color/colorTextPrimary"
                                 android:textSize="14sp"
                                 android:textStyle="normal" />
@@ -179,7 +135,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_marginBottom="10dp"
-                        android:onClick="diagnosis"
+                        android:onClick="review"
                         android:clickable="true"
                         android:foreground="?android:attr/selectableItemBackground"
                         app:cardCornerRadius="10dp"
@@ -204,7 +160,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
                                 android:gravity="center"
-                                android:text="Records"
+                                android:text="Cases to Review"
                                 android:textColor="@color/colorTextPrimary"
                                 android:textSize="14sp"
                                 android:textStyle="normal" />

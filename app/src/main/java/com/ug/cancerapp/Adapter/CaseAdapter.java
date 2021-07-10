@@ -9,18 +9,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ug.cancerapp.Models.Case;
 import com.ug.cancerapp.Models.Gynecologist;
+import com.ug.cancerapp.Models.Model;
 import com.ug.cancerapp.R;
 
 import java.util.List;
 
-public class GynecologistAdapter extends RecyclerView.Adapter<GynecologistAdapter.GynecologistHolder> {
+public class CaseAdapter extends RecyclerView.Adapter<CaseAdapter.CaseHolder>{
 
-    List<Gynecologist> gynecologists;
+    List<Gynecologist> gynecologist;
     private OnItemClickListener mListener;
 
-    public GynecologistAdapter(List<Gynecologist> gynecologists) {
-        this.gynecologists = gynecologists;
+    public CaseAdapter(List<Gynecologist> gynecologist) {
+        this.gynecologist = gynecologist;
     }
 
     public interface OnItemClickListener {
@@ -35,35 +37,35 @@ public class GynecologistAdapter extends RecyclerView.Adapter<GynecologistAdapte
 
     @NonNull
     @Override
-    public GynecologistHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.case_file, parent, false);
-        GynecologistHolder gynecologistHolder = new GynecologistHolder(view, mListener);
-        return gynecologistHolder;
+    public CaseHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.reply, parent, false);
+        CaseHolder caseHolder = new CaseHolder(view, mListener);
+        return caseHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull GynecologistHolder holder, int position) {
-
-        holder.study.setText("StudyID: " + gynecologists.get(position).getStudyId());
-        holder.age.setText("Age: " + gynecologists.get(position).getAge());
+    public void onBindViewHolder(@NonNull CaseHolder holder, int position) {
+        holder.study.setText("StudyID: " + gynecologist.get(position).getStudyId());
+        holder.age.setText("Age: " + gynecologist.get(position).getAge());
+        holder.via.setText("My Via Results: " + gynecologist.get(position).getNurse());
     }
 
     @Override
     public int getItemCount() {
-        return gynecologists.size();
+        return gynecologist.size();
     }
 
-    public static class GynecologistHolder extends RecyclerView.ViewHolder {
+    public static class CaseHolder extends RecyclerView.ViewHolder {
 
-        TextView study, age;
+        TextView study, age, via;
         Button image, data, feedback;
 
-        public GynecologistHolder(@NonNull View itemView, OnItemClickListener listener) {
+        public CaseHolder(@NonNull View itemView, OnItemClickListener listener) {
             super(itemView);
 
             study = itemView.findViewById(R.id.studyId);
             age = itemView.findViewById(R.id.age);
+            via = itemView.findViewById(R.id.via);
             image = itemView.findViewById(R.id.images);
             data = itemView.findViewById(R.id.data);
             feedback = itemView.findViewById(R.id.feedback);
@@ -103,7 +105,6 @@ public class GynecologistAdapter extends RecyclerView.Adapter<GynecologistAdapte
                     }
                 }
             });
-
         }
     }
 }

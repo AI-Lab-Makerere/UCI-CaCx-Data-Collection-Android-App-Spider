@@ -39,14 +39,14 @@ import static com.ug.cancerapp.Activities.LoginActivity.TOKEN;
 
 public class DataActivity extends AppCompatActivity {
 
-    String instanceId;
+    String instanceId, act;
     ProgressBar progressBar;
     JsonPlaceHolder jsonPlaceHolder;
 
     public static final String SHARED_API = "sharedApi";
     String token;
 
-    LinearLayout ns;
+    LinearLayout ns, models;
     TextView error, message, swipe;
 
     @Override
@@ -61,6 +61,9 @@ public class DataActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         instanceId = getIntent().getStringExtra("uuid");
+        act = getIntent().getStringExtra("extra");
+
+        models = findViewById(R.id.models);
 
         progressBar = findViewById(R.id.spin_kit);
         ns = findViewById(R.id.empty);
@@ -185,8 +188,8 @@ public class DataActivity extends AppCompatActivity {
         abo.setText("Abortions: " + response.body().getAbortions());
         TextView con = findViewById(R.id.contra);
         con.setText("Contraceptives Used: " + response.body().getContraceptives());
-        TextView via = findViewById(R.id.via);
-        via.setText("Nurse's Via Results: " + response.body().getViaResult());
+//        TextView via = findViewById(R.id.via);
+//        via.setText("Nurse's Via Results: " + response.body().getViaResult());
         progressBar.setVisibility(View.INVISIBLE);
 
     }
@@ -199,5 +202,17 @@ public class DataActivity extends AppCompatActivity {
         String ago = prettyTime.format(new Date(time));
 
         return ago;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (act.equals("gyne")){
+            Intent intent = new Intent(DataActivity.this, GynaecologistActivity.class);
+            startActivity(intent);
+        }else {
+            Intent intent = new Intent(DataActivity.this, CaseActivity.class);
+            startActivity(intent);
+        }
     }
 }

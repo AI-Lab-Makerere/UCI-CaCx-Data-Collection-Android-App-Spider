@@ -150,7 +150,7 @@ public class ResultsActivity extends AppCompatActivity {
                     via += cas.getViaResults();
                     gyneResults += cas.getGyneco().get(0).getViaResult();
                     gynenotes += cas.getGyneco().get(0).getNotes();
-                    Gynecologist gynecologist = new Gynecologist(instanceID, studyId, age, via, gynenotes, gyneResults);
+                    Gynecologist gynecologist = new Gynecologist(instanceID, studyId, age, via, gynenotes, gyneResults, "");
                     gynecologistList.add(gynecologist);
 
                 }

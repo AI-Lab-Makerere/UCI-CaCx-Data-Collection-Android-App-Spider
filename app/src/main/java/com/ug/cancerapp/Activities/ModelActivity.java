@@ -45,10 +45,7 @@ public class ModelActivity extends AppCompatActivity {
     SharedPreferences.Editor editor;
 
     Bitmap bitmap1, bitmap2, bitmap3, bitmap4;
-    String via;
-    float pos4, pos3;
-    String viar4, viar3;
-    float threshold = (float) 0.3;
+    String nurse, model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +68,26 @@ public class ModelActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
+        loadImages();
+
+        nurse = getIntent().getStringExtra("nurse");
+        model = getIntent().getStringExtra("model");
+
+        getPrediction();
+
+        btnCont.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editor.clear();
+                editor.apply();
+                Toast.makeText(ModelActivity.this, "Task Successful", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(ModelActivity.this, DashBoardActivity.class));
+            }
+        });
+    }
+
+    private void loadImages() {
+
         String sImage = sharedPreferences.getString(IMAGE, "");
         String sImage2 = sharedPreferences.getString(IMAGE2, "");
         String sImage3 = sharedPreferences.getString(IMAGE3, "");
@@ -90,84 +107,35 @@ public class ModelActivity extends AppCompatActivity {
         imageView2.setImageBitmap(bitmap2);
         imageView3.setImageBitmap(bitmap3);
         imageView4.setImageBitmap(bitmap4);
-
-        String positive3 = sharedPreferences.getString(FLOP3, "");
-        pos3 = Float.parseFloat(positive3);
-        viar3 = sharedPreferences.getString(VR3, "");
-
-        String positive4 = sharedPreferences.getString(FLOP4, "");
-        pos4 = Float.parseFloat(positive4);
-        viar4 = sharedPreferences.getString(VR4, "");
-
-        via = sharedPreferences.getString(VIA, "");
-        txtnv.setText(via);
-
-//        nurse = txtnv.getText().toString();
-        if (via.equals("Positive")){
-            txtnv.setTextColor(Color.parseColor("#FFA726"));
-        }else {
-            txtnv.setTextColor(Color.parseColor("#C33B2F"));
-        }
-        getPrediction();
-
-        btnCont.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                editor.clear();
-//                editor.apply();
-//                Toast.makeText(ModelActivity.this, "Task Successful", Toast.LENGTH_SHORT).show();
-//                startActivity(new Intent(ModelActivity.this, DashBoardActivity.class));
-            }
-        });
     }
 
     private void getPrediction() {
 
-
-        if (viar3.equals(viar4)){
-            txtmm.setText(viar3);
-            if (viar3.equals("Positive")){
-                txtmm.setTextColor(Color.parseColor("#FFA726"));
-            }else {
-                txtmm.setTextColor(Color.parseColor("#C33B2F"));
-            }
-            button(viar3);
-
+        txtnv.setText(nurse);
+        if (nurse.equals("Positive")){
+            txtnv.setTextColor(Color.parseColor("#FFA726"));
         }else {
-           if (viar3.equals("Positive")){
-              if (pos3 >= threshold){
-                  Toast.makeText(this, "first " + pos4, Toast.LENGTH_SHORT).show();
-                  txtmm.setText(viar3);
-                  txtmm.setTextColor(Color.parseColor("#FFA726"));
-                  button(viar3);
-              }else {
-                  viar3 = "Negative";
-                  txtmm.setText(viar3);
-                  txtmm.setTextColor(Color.parseColor("#C33B2F"));
-                  button(viar3);
-              }
-           }else {
-               if (pos4 >= threshold){
-                   Toast.makeText(this, "Second " + pos4, Toast.LENGTH_SHORT).show();
-                   txtmm.setText(viar4);
-                   txtmm.setTextColor(Color.parseColor("#FFA726"));
-                   button(viar4);
-               }else {
-                   viar4 = "Negative";
-                   txtmm.setText(viar4);
-                   txtmm.setTextColor(Color.parseColor("#C33B2F"));
-                   button(viar4);
-               }
-           }
+            txtnv.setTextColor(Color.parseColor("#C33B2F"));
         }
-    }
 
-    private void button(String im1) {
-        if (im1.equals(via)){
+        txtmm.setText(model);
+        if (model.equals(nurse)){
             btnAgree.setText("Agreement");
         }else {
             btnAgree.setText("Discordance");
             btnAgree.setBackgroundResource(R.drawable.primary_btn2);
         }
+
+        if (model.equals("Positive")){
+            txtmm.setTextColor(Color.parseColor("#FFA726"));
+        }else {
+            txtmm.setTextColor(Color.parseColor("#C33B2F"));
+        }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(this, "Please click 'Continue to Dashboard' to proceed", Toast.LENGTH_SHORT).show();
     }
 }

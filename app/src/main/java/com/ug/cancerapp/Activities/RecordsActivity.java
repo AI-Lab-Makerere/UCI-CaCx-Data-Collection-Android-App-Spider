@@ -281,6 +281,7 @@ public class RecordsActivity extends AppCompatActivity {
         float neg4 = formList.get(position).getPicture4_nc();
         float pos4 = formList.get(position).getPicture4_pc();
         String var4 = formList.get(position).getPicture4_via();
+        String ml_result = formList.get(position).getDiagnosis();
 
         long key = formList.get(position).getKey();
         Log.v("TAG", "data");
@@ -296,27 +297,6 @@ public class RecordsActivity extends AppCompatActivity {
         int fac_id = Integer.parseInt(facility);
         Log.v("TAG", "data2");
 
-////        String da = "02-12-2021-03-52-21";
-//        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss", Locale.ENGLISH);
-//        SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
-//        try {
-//            Date parsedDate = sdf.parse(date);
-//            Date parsedDate2 = sdf2.parse(time);
-//            if (!datey.isEmpty()){
-//                parsedDate3 = sdf2.parse(datey);
-//            }
-//            SimpleDateFormat print = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-////            System.out.println();
-//            date1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse()
-//            Log.v("TAG", ""+print.format(parsedDate));
-//            Log.v("TAG", ""+print.format(parsedDate2));
-//            if (!datey.isEmpty()){
-//                Log.v("TAG", ""+print.format(parsedDate3));
-//            }
-////
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
 
         try {
             if (!datey.isEmpty()){
@@ -331,20 +311,20 @@ public class RecordsActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        Picture picture1 = new Picture(neg, pos, var, sImage);
-        Picture picture2 = new Picture(neg2, pos2, var2, sImage2);
-        Picture picture3 = new Picture(neg3, pos3, var3, sImage3);
-        Picture picture4 = new Picture(neg4, pos4, var4, sImage4);
+        Picture picture1 = new Picture(neg, pos, var, sImage, "");
+        Picture picture2 = new Picture(neg2, pos2, var2, sImage2, "");
+        Picture picture3 = new Picture(neg3, pos3, var3, sImage3, "");
+        Picture picture4 = new Picture(neg4, pos4, var4, sImage4, "");
 
         Capture capture = new Capture(instanceID, date1, username, fac_id, studyID, initial,
                 district, county, zone, age, text, ss, symptom, text2, sss, past, treat, date2,
                 value3, valuex, year, value, date3, child, abort, s4, choice, location, via, notes,
-                true, picture1, picture2, picture3, picture4);
+                ml_result,true, picture1, picture2, picture3, picture4);
 
         Capture2 capture2 = new Capture2(instanceID, date1, username, fac_id, studyID, initial,
                 district, county, zone, age, text, ss, symptom, text2,
                 value3, valuex, year, value, date3, child, abort, s4, choice, location, via, notes,
-                true, picture1, picture2, picture3, picture4);
+                ml_result, true, picture1, picture2, picture3, picture4);
 
         Log.v("TAG", "data3");
 
@@ -433,11 +413,22 @@ public class RecordsActivity extends AppCompatActivity {
         TextView con = dialog.findViewById(R.id.contra);
         con.setText("Contraceptives Used: " + formList.get(position).getContraceptives());
         TextView via = dialog.findViewById(R.id.via);
-        via.setText("My Via Results: " + formList.get(position).getVia());
+        String nurse = formList.get(position).getVia();
+        via.setText("My Via Results: " + nurse);
         TextView loc = dialog.findViewById(R.id.lesion);
         loc.setText("Location of the Lesion: " + formList.get(position).getLocation());
         TextView notes = dialog.findViewById(R.id.notes);
         notes.setText("My Notes: " + formList.get(position).getNotes());
+        TextView model = dialog.findViewById(R.id.model);
+        String mmv = formList.get(position).getDiagnosis();
+        model.setText("Model Via Results: " + mmv);
+        TextView agree = dialog.findViewById(R.id.agreement);
+        if (nurse.equals(mmv)){
+            agree.setText("You and the model are in: Agreement");
+        }else {
+            agree.setText("You and the model are in: Discordance");
+        }
+
     }
 
 

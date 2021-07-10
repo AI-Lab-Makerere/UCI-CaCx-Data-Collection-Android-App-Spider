@@ -176,7 +176,7 @@ public class LoginActivity extends AppCompatActivity {
         submit.setEnabled(true);
 
         if (category.equals("gynecologist")) {
-            startActivity(new Intent(LoginActivity.this, GynaecologistActivity.class));
+            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
             finish();
         } else {
             startActivity(new Intent(LoginActivity.this, DashBoardActivity.class));

@@ -6,7 +6,9 @@ import com.ug.cancerapp.Models.CurrentUser;
 import com.ug.cancerapp.Models.Capture;
 import com.ug.cancerapp.Models.Feedback;
 import com.ug.cancerapp.Models.Information;
+import com.ug.cancerapp.Models.Model;
 import com.ug.cancerapp.Models.Review;
+import com.ug.cancerapp.Models.Settings;
 import com.ug.cancerapp.Models.User;
 
 import java.util.List;
@@ -51,4 +53,12 @@ public interface JsonPlaceHolder {
     @Headers("Accept: application/json")
     @GET("api/my-reviewed-entries")
     Call<List<Case>> reviewed(@Header("Authorization") String header);
+
+    @Headers("Accept: application/json")
+    @GET("api/settings")
+    Call<Settings> setting(@Header("Authorization") String header);
+
+    @Headers("Accept: application/json")
+    @GET("api/my-gynecologist-reviews")
+    Call<List<Model>> model(@Header("Authorization") String header);
 }

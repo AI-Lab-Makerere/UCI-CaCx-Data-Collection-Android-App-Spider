@@ -53,28 +53,6 @@ public class DashBoardActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("UDA");
 
 
-//        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-//        String contra = "Apple, Oranges, Mangoes,";
-//
-//        if(contra.endsWith(","))
-//        {
-//            contra = contra.substring(0,contra.length() - 1);
-//        }
-//        Toast.makeText(this, contra, Toast.LENGTH_SHORT).show();
-//        String[] elements = contra.split(",");
-//        List<String> fixedLengthList = Arrays.asList(elements);
-//        ArrayList<String> listOfString = new ArrayList<String>(fixedLengthList);
-//
-//        String sDate1="16-06-2021-08-25-58";
-//        try {
-////            date1 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
-//            date1 = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss").parse(sDate1);
-//            Log.v("TAG", ""+date1);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        System.out.println(sDate1+"\t"+date1);
-//        Log.v("TAG", date.toString());
     }
 
     public void collect(View view) {

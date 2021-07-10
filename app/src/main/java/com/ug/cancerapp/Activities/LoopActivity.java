@@ -9,33 +9,29 @@ import android.widget.Button;
 
 import com.ug.cancerapp.R;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class LoopActivity extends AppCompatActivity {
 
-    Button btn1, btn2, btn3, btn4;
+    ArrayList<String> people;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loop);
 
-        btn1 = findViewById(R.id.one);
-        btn2 = findViewById(R.id.one1);
-        btn3 = findViewById(R.id.one2);
-        btn4 = findViewById(R.id.one3);
 
-        Random ran = new Random();
-        final Button[] all = {btn1, btn2, btn3, btn4};
-        Handler handler = new Handler();
-        for (int a = 0; a <= all.length; a++) {
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Button btn5 = all[ran.nextInt(all.length)];
-                    btn5.setBackgroundColor(Color.RED);
-                }
-            }, 1000 * a);
+        people = new ArrayList<>();
+
+        people.add("mutebi");
+        people.add("chodrine");
+        people.add("musisi");
+        people.add("john");
+
+        for (int i = 0; i<people.size(); i++){
+
         }
+
     }
 }

@@ -1,6 +1,5 @@
 package com.ug.cancerapp.Activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -11,8 +10,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,14 +17,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.ybq.android.spinkit.sprite.Sprite;
-import com.github.ybq.android.spinkit.style.ChasingDots;
-import com.github.ybq.android.spinkit.style.ThreeBounce;
+import com.ug.cancerapp.Adapter.CaseAdapter;
 import com.ug.cancerapp.Adapter.GynecologistAdapter;
 import com.ug.cancerapp.Apis.ApiClient;
 import com.ug.cancerapp.Apis.JsonPlaceHolder;
 import com.ug.cancerapp.Models.Case;
 import com.ug.cancerapp.Models.Gynecologist;
+import com.ug.cancerapp.Models.Model;
 import com.ug.cancerapp.R;
 
 import java.util.ArrayList;
@@ -39,7 +35,7 @@ import retrofit2.Response;
 
 import static com.ug.cancerapp.Activities.LoginActivity.TOKEN;
 
-public class GynaecologistActivity extends AppCompatActivity {
+public class CaseActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     ProgressBar progressBar;
@@ -49,20 +45,21 @@ public class GynaecologistActivity extends AppCompatActivity {
     SwipeRefreshLayout swipeRefreshLayout;
 
     List<Gynecologist> gynecologistList;
-    GynecologistAdapter gynecologistAdapter;
+    CaseAdapter caseAdapter;
     JsonPlaceHolder jsonPlaceHolder;
 
     public static final String SHARED_API = "sharedApi";
     String username, token, facility;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gynaecologist);
+        setContentView(R.layout.activity_case);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Review Cases");
+        getSupportActionBar().setTitle("Reviewed Cases");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -77,15 +74,11 @@ public class GynaecologistActivity extends AppCompatActivity {
 
         jsonPlaceHolder = ApiClient.getClient().create(JsonPlaceHolder.class);
 
-        Sprite chasingDots = new ThreeBounce();
-        progressBar.setIndeterminateDrawable(chasingDots);
-
-//        recyclerView.setHasFixedSize(true);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         gynecologistList = new ArrayList<>();
-        gynecologistAdapter = new GynecologistAdapter(gynecologistList);
+        caseAdapter = new CaseAdapter(gynecologistList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(gynecologistAdapter);
+        recyclerView.setAdapter(caseAdapter);
 
         handleCases();
 
@@ -97,7 +90,7 @@ public class GynaecologistActivity extends AppCompatActivity {
             }
         });
 
-        gynecologistAdapter.setOnItemClickListener(new GynecologistAdapter.OnItemClickListener() {
+        caseAdapter.setOnItemClickListener(new CaseAdapter.OnItemClickListener() {
             @Override
             public void onImageClick(int position) {
 
@@ -106,22 +99,15 @@ public class GynaecologistActivity extends AppCompatActivity {
             @Override
             public void onDateClick(int position) {
                 String instanceId = gynecologistList.get(position).getInstanceID();
-                Intent intent = new Intent(GynaecologistActivity.this, DataActivity.class);
+                Intent intent = new Intent(CaseActivity.this, DataActivity.class);
                 intent.putExtra("uuid", instanceId);
-                intent.putExtra("extra", "gyne");
+                intent.putExtra("extra", "case");
                 startActivity(intent);
             }
 
             @Override
             public void onFeedClick(int position) {
-                String instanceId = gynecologistList.get(position).getInstanceID();
-                String nurse = gynecologistList.get(position).getNurse();
-                String ml_result = gynecologistList.get(position).getMl_via_result();
-                Intent intent = new Intent(GynaecologistActivity.this, FeedbackActivity.class);
-                intent.putExtra("uuid", instanceId);
-                intent.putExtra("nurse", nurse);
-                intent.putExtra("ml_result", ml_result);
-                startActivity(intent);
+
             }
         });
     }
@@ -134,47 +120,45 @@ public class GynaecologistActivity extends AppCompatActivity {
         gynecologistList.clear();
         progressBar.setVisibility(View.VISIBLE);
 
-        Call<List<Case>> call = jsonPlaceHolder.cases("Bearer " + token);
-        call.enqueue(new Callback<List<Case>>() {
+        Call<List<Model>> call = jsonPlaceHolder.model("Bearer " + token);
+        call.enqueue(new Callback<List<Model>>() {
             @Override
-            public void onResponse(Call<List<Case>> call, Response<List<Case>> response) {
+            public void onResponse(Call<List<Model>> call, Response<List<Model>> response) {
                 if (!response.isSuccessful()){
                     progressBar.setVisibility(View.INVISIBLE);
                     ns.setVisibility(View.VISIBLE);
                     return;
                 }
 
-                List<Case> cases = response.body();
-                for (Case cas: cases){
+                List<Model> cases = response.body();
+                for (Model cas: cases){
                     String instanceID = "";
                     String studyId = "";
                     String age = "";
                     String via = "";
-                    String ml_result = "";
-                    instanceID += cas.getInstanceID();
-                    studyId += cas.getStudyID();
-                    age += cas.getAge();
-                    via += cas.getViaResults();
-                    ml_result += cas.getMl_via_result();
-                    Gynecologist gynecologist = new Gynecologist(instanceID, studyId, age, via, "", "", ml_result);
+                    instanceID += cas.getEntry().getInstanceID();
+                    studyId += cas.getEntry().getStudyID();
+                    age += cas.getEntry().getAge();
+                    via += cas.getViaResult();
+                    Gynecologist gynecologist = new Gynecologist(instanceID, studyId, age, via, "", "", "");
                     gynecologistList.add(gynecologist);
 
                 }
 
-                gynecologistAdapter.notifyDataSetChanged();
+                caseAdapter.notifyDataSetChanged();
                 progressBar.setVisibility(View.INVISIBLE);
             }
 
             @Override
-            public void onFailure(Call<List<Case>> call, Throwable t) {
+            public void onFailure(Call<List<Model>> call, Throwable t) {
                 progressBar.setVisibility(View.INVISIBLE);
                 ns.setVisibility(View.VISIBLE);
                 error.setText("Its not you, its us");
                 message.setText("Try again later");
                 swipe.setVisibility(View.GONE);
-                Toast.makeText(GynaecologistActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(CaseActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-    }
 
+    }
 }

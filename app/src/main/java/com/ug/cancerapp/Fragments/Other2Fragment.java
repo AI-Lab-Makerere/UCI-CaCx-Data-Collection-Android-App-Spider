@@ -3,6 +3,7 @@ package com.ug.cancerapp.Fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -25,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
+import static com.ug.cancerapp.Activities.SplashActivity.THRESHOLD;
 import static com.ug.cancerapp.Fragments.Camera1Fragment.FLON;
 import static com.ug.cancerapp.Fragments.Camera1Fragment.FLOP;
 import static com.ug.cancerapp.Fragments.Camera1Fragment.IMAGE;
@@ -79,10 +81,18 @@ public class Other2Fragment extends Fragment {
     private FormViewModel formViewModel;
 
     public static final String SHARED_PREFS = "sharedPrefs";
+    public static final String SHARED_API = "sharedApi";
     public static String uniqueID;
 
     SharedPreferences sharedPreferences;
+    SharedPreferences sharedPreferences2;
     SharedPreferences.Editor editor;
+
+    String via;
+    float pos4, pos3;
+    String viar4, viar3;
+
+    String mmv;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -95,9 +105,23 @@ public class Other2Fragment extends Fragment {
         model = view.findViewById(R.id.model);
 
         sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        sharedPreferences2 = getActivity().getSharedPreferences(SHARED_API, Context.MODE_PRIVATE);
+
         editor = sharedPreferences.edit();
 
         formViewModel = ViewModelProviders.of(this).get(FormViewModel.class);
+
+        String positive3 = sharedPreferences.getString(FLOP3, "");
+        pos3 = Float.parseFloat(positive3);
+        viar3 = sharedPreferences.getString(VR3, "");
+
+        via = sharedPreferences.getString(VIA, "");
+
+        String positive4 = sharedPreferences.getString(FLOP4, "");
+        pos4 = Float.parseFloat(positive4);
+        viar4 = sharedPreferences.getString(VR4, "");
+
+        getModelResults();
 
         send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,7 +149,10 @@ public class Other2Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 saveData();
-                startActivity(new Intent(getActivity(), ModelActivity.class));
+                Intent intent = new Intent(getActivity(), ModelActivity.class);
+                intent.putExtra("model", mmv);
+                intent.putExtra("nurse", via);
+                startActivity(intent);
             }
         });
 
@@ -181,7 +208,7 @@ public class Other2Fragment extends Fragment {
         String sImage2 = sharedPreferences.getString(IMAGE2, "");
         String sImage3 = sharedPreferences.getString(IMAGE3, "");
         String sImage4 = sharedPreferences.getString(IMAGE4, "");
-        String via = sharedPreferences.getString(VIA, "");
+
         String notes = sharedPreferences.getString(NOTES, "");
         String location = sharedPreferences.getString(LESION, "");
 
@@ -199,18 +226,16 @@ public class Other2Fragment extends Fragment {
 
         String negative3 = sharedPreferences.getString(FLON3, "");
         float neg3 = Float.parseFloat(negative3);
-        String positive3 = sharedPreferences.getString(FLOP3, "");
-        float pos3 = Float.parseFloat(positive3);
-        String viar3 = sharedPreferences.getString(VR3, "");
+
+
 
         String negative4 = sharedPreferences.getString(FLON4, "");
         float neg4 = Float.parseFloat(negative4);
-        String positive4 = sharedPreferences.getString(FLOP4, "");
-        float pos4 = Float.parseFloat(positive4);
-        String viar4 = sharedPreferences.getString(VR4, "");
 
 
-        String diagnosis = "";
+
+
+        String diagnosis = mmv;
         Boolean consult = false;
         uniqueID = UUID.randomUUID().toString();
 
@@ -223,5 +248,29 @@ public class Other2Fragment extends Fragment {
                 neg, pos, viar, neg2, pos2, viar2, neg3, pos3, viar3, neg4, pos4, viar4, uniqueID);
 
         formViewModel.insert(form);
+    }
+
+    private void getModelResults() {
+
+        String thres = sharedPreferences2.getString(THRESHOLD, "");
+        float threshold = Float.parseFloat(thres);
+
+        if (viar3.equals(viar4)){
+            mmv = viar3;
+        }else {
+            if (viar3.equals("Positive")) {
+                if (pos3 >= threshold) {
+                    mmv = viar3;
+                } else {
+                    mmv = "Negative";
+                }
+            } else {
+                if (pos4 >= threshold) {
+                    mmv = viar4;
+                } else {
+                    mmv = "Negative";
+                }
+            }
+        }
     }
 }

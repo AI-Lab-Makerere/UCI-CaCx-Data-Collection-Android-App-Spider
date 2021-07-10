@@ -31,14 +31,15 @@
             android:textColor="@color/colorTextPrimary"/>
 
         <TextView
-            android:id="@+id/via"
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
+            android:textSize="12sp"
             android:layout_height="wrap_content"
-            android:text="Nurse's Diagnosis: Positive"
-            android:textColor="@color/colorTextPrimary"/>
+            android:textStyle="italic"
+            android:text="This case needs your review"/>
 
         <LinearLayout
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:weightSum="10"

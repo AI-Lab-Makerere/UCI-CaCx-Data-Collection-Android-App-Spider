@@ -7,28 +7,6 @@
     android:orientation="vertical"
     tools:context=".Activities.LoopActivity">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/one"
-        android:text="chodrine"/>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/one1"
-        android:text="mutebi"/>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/one2"
-        android:text="chrisis"/>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/one3"
-        android:text="make"/>
 
 </LinearLayout>

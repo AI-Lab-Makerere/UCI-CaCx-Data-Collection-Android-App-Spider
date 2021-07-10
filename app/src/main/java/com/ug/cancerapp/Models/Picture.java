@@ -6,12 +6,15 @@ public class Picture {
     private Float positive_confidence;
     private String pred_class;
     private String image_file_name;
+    private String image_file_name_outline;
 
-    public Picture(Float negative_confidence, Float positive_confidence, String pred_class, String image_file_name) {
+    public Picture(Float negative_confidence, Float positive_confidence, String pred_class, String image_file_name,
+                   String image_file_name_outline) {
         this.negative_confidence = negative_confidence;
         this.positive_confidence = positive_confidence;
         this.pred_class = pred_class;
         this.image_file_name = image_file_name;
+        this.image_file_name_outline = image_file_name_outline;
     }
 
     public Float getNegative_confidence() {
@@ -44,5 +47,13 @@ public class Picture {
 
     public void setImage_file_name(String image_file_name) {
         this.image_file_name = image_file_name;
+    }
+
+    public String getImage_file_name_outline() {
+        return image_file_name_outline;
+    }
+
+    public void setImage_file_name_outline(String image_file_name_outline) {
+        this.image_file_name_outline = image_file_name_outline;
     }
 }

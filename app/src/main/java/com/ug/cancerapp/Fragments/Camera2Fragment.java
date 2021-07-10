@@ -153,12 +153,13 @@ public class Camera2Fragment extends Fragment {
 
             bitmap = (Bitmap) data.getExtras().get("data");
             bitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
-            runTensorflowModel(bitmap);
+//
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
             byte[] bytes = stream.toByteArray();
             sImage = Base64.encodeToString(bytes, Base64.DEFAULT);
             imageView.setImageBitmap(bitmap);
+            runTensorflowModel(bitmap);
 
         }
         if (requestCode == IMAGE_PICKER_CODE && resultCode == -1 && data != null){
@@ -169,7 +170,7 @@ public class Camera2Fragment extends Fragment {
 //                Bitmap bitmap = SiliCompressor.with(getActivity()).getCompressBitmap(String.valueOf(uri));
                 bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
                 bitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
-                runTensorflowModel(bitmap);
+//                runTensorflowModel(bitmap);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
                 byte[] bytes = stream.toByteArray();

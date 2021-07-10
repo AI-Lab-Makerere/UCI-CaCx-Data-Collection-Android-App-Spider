@@ -58,7 +58,6 @@ public class Camera1Fragment extends Fragment {
     public static final String FLOP = "positive";
     public static final String VR = "viaR";
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -165,12 +164,12 @@ public class Camera1Fragment extends Fragment {
 
             bitmap = (Bitmap) data.getExtras().get("data");
             bitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
-            runTensorflowModel(bitmap);
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
             byte[] bytes = stream.toByteArray();
             sImage = Base64.encodeToString(bytes, Base64.DEFAULT);
             imageView.setImageBitmap(bitmap);
+            runTensorflowModel(bitmap);
 
         }
         if (requestCode == IMAGE_PICKER_CODE && resultCode == -1 && data != null){
@@ -180,13 +179,12 @@ public class Camera1Fragment extends Fragment {
 
                 bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
                 bitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
-                runTensorflowModel(bitmap);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
                 byte[] bytes = stream.toByteArray();
                 sImage = Base64.encodeToString(bytes, Base64.DEFAULT);
-//                long lengthbmp = bytes.length;
                 imageView.setImageURI(uri);
+                runTensorflowModel(bitmap);
 
 //                Toast.makeText(getActivity(), ""+ lengthbmp, Toast.LENGTH_LONG).show();
 

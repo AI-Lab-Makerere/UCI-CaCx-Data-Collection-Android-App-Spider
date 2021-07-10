@@ -23,6 +23,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -62,11 +63,15 @@ public class RecordsActivity extends AppCompatActivity {
     FormAdapter formAdapter;
     RecyclerView recyclerView;
     Dialog dialog;
+    Button submit;
     ImageView imageView1, imageView2, imageView3, imageView4;
     Uri uri;
     Bitmap bitmap1, bitmap2, bitmap3, bitmap4;
     EditText etSearch;
     Date parsedDate3;
+
+    FormRepository formRepository;
+    Form form;
 
     public static final String SHARED_API = "sharedApi";
     String username, token, facility, text2;
@@ -75,8 +80,9 @@ public class RecordsActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
 
     Date date1, date2, date3;
-
+    long i = 0;
     Call<String> call;
+    ArrayList<Long> arrayForm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,15 +95,16 @@ public class RecordsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-//        https://stackoverflow.com/questions/20896245/how-to-delay-a-loop-in-android-without-using-thread-sleep
-
         etSearch = findViewById(R.id.search);
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        submit = findViewById(R.id.submit);
 
         progressDialog = new ProgressDialog(this);
+
+        arrayForm = new ArrayList<>();
 
         new LoadDataTask().execute();
 
@@ -119,7 +126,23 @@ public class RecordsActivity extends AppCompatActivity {
             }
         });
 
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (arrayForm.size() == 0){
+                    Toast.makeText(RecordsActivity.this, "Select the files to Upload", Toast.LENGTH_SHORT).show();
+                }else {
+
+                    new SendDataTask().execute();
+
+                }
+
+            }
+        });
+
     }
+
 
     class LoadDataTask extends AsyncTask<Void, Void, Void>{
 
@@ -209,7 +232,60 @@ public class RecordsActivity extends AppCompatActivity {
                     progressDialog.show();
                     handleData(position);
                 }
+
+                @Override
+                public void onCheckedClick(int position) {
+                    long key = formList.get(position).getKey();
+                    arrayForm.add(key);
+                }
+
+                @Override
+                public void onNotCheckedClick(int position) {
+                    long key = formList.get(position).getKey();
+                    arrayForm.remove(key);
+                    Toast.makeText(RecordsActivity.this, "bad", Toast.LENGTH_SHORT).show();
+                }
             });
+        }
+    }
+
+    class SendDataTask extends AsyncTask<Void, Void, Void>{
+
+//        FormRepository formRepository;
+//        Form form;
+//        String studyID;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            formRepository = new FormRepository((Application) getApplicationContext());
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+
+            for (i = 0; i < arrayForm.size(); i++){
+                form = formRepository.getOnlyOne(arrayForm.get((int) i));
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressDialog.setMessage("Sending Data, Please wait...");
+                        progressDialog.show();
+                    }
+                });
+                sendData();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+//            Toast.makeText(RecordsActivity.this, studyID, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -346,23 +422,41 @@ public class RecordsActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (!response.isSuccessful()){
-                    Toast.makeText(RecordsActivity.this, "Connection Issue: " + response.code() + " error", Toast.LENGTH_SHORT).show();
-                    Log.v("TAG", ""+response.code());
-                    progressDialog.dismiss();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(RecordsActivity.this, "Connection Issue: " + response.code() + " error", Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
+                            Log.v("TAG", ""+response.code());
+                        }
+                    });
                     return;
                 }
+
                 String message = response.body();
-                Toast.makeText(RecordsActivity.this, message, Toast.LENGTH_SHORT).show();
-                Log.v("TAG", message);
-                progressDialog.dismiss();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(RecordsActivity.this, message, Toast.LENGTH_SHORT).show();
+                        Log.v("TAG", message);
+                        progressDialog.dismiss();
+                    }
+                });
+
 
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                Toast.makeText(RecordsActivity.this, "Something went wrong: " + t.getMessage() , Toast.LENGTH_SHORT).show();
-                Log.v("TAG", "Something went wrong: " + t.getMessage());
-                progressDialog.dismiss();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(RecordsActivity.this, "Something went wrong: " + t.getMessage() , Toast.LENGTH_SHORT).show();
+                        Log.v("TAG", "Something went wrong: " + t.getMessage());
+                        progressDialog.dismiss();
+                    }
+                });
+
             }
         });
     }
@@ -429,6 +523,104 @@ public class RecordsActivity extends AppCompatActivity {
             agree.setText("You and the model are in: Discordance");
         }
 
+    }
+
+
+    private void sendData() {
+
+        String studyID = form.getStudyID();
+        String initial = form.getInitials();
+        int age = form.getAge();
+        String district = form.getDistrict();
+        String county = form.getCounty();
+        String zone = form.getVillage();
+        String text = form.getHave_symptoms();
+        String ss = form.getSymptoms();
+        String symptom = form.getOther_symptoms();
+        text2 = form.getScreened_for_cancer();
+        String past = form.getScreening_results();
+        String sss = form.getScreening_process();
+        String datey = form.getLast_screened();
+        String treat = form.getTreatment();
+        String value3 = form.getHiv_status();
+        String valuex = form.getOn_haart();
+        int year = form.getYears_on_haart();
+        String value = form.getPregnant();
+        String time = form.getLast_menstrual();
+        int child = form.getParity();
+        int abort = form.getAbortion();
+        String choice = form.getOn_contraceptives();
+        String s4 = form.getContraceptives();
+        String sImage = form.getImage1();
+        String sImage2 = form.getImage2();
+        String sImage3 = form.getImage3();
+        String sImage4 = form.getImage4();
+        String via = form.getVia();
+        String notes = form.getNotes();
+        String location = form.getLocation();
+        String date = form.getDate();
+
+        String instanceID = form.getInstanceID();
+        float neg = form.getPicture1_nc();
+        float pos = form.getPicture1_pc();
+        String var = form.getPicture1_via();
+        float neg2 = form.getPicture2_nc();
+        float pos2 = form.getPicture2_pc();
+        String var2 = form.getPicture2_via();
+        float neg3 = form.getPicture3_nc();
+        float pos3 = form.getPicture3_pc();
+        String var3 = form.getPicture3_via();
+        float neg4 = form.getPicture4_nc();
+        float pos4 = form.getPicture4_pc();
+        String var4 = form.getPicture4_via();
+        String ml_result = form.getDiagnosis();
+
+        long key = form.getKey();
+        Log.v("TAG", "data");
+
+        FormDAO formDAO = FormDatabase.getInstance(RecordsActivity.this).formDAO();
+        formDAO.UpdateConsult(true, key);
+        Log.v("TAG", "" + key);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_API, MODE_PRIVATE);
+        token = sharedPreferences.getString(TOKEN, "");
+        username = sharedPreferences.getString(EMAIL, "");
+        facility = sharedPreferences.getString(FACID, "");
+        int fac_id = Integer.parseInt(facility);
+        Log.v("TAG", "data2");
+
+
+        try {
+            if (!datey.isEmpty()){
+                date2 = new SimpleDateFormat("dd/MM/yyyy").parse(datey);
+            }
+            date3 = new SimpleDateFormat("dd/MM/yyyy").parse(time);
+            date1 = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss").parse(date);
+            Log.v("TAG", ""+date1);
+            Log.v("TAG", ""+date2);
+            Log.v("TAG", ""+date3);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Picture picture1 = new Picture(neg, pos, var, sImage, "");
+        Picture picture2 = new Picture(neg2, pos2, var2, sImage2, "");
+        Picture picture3 = new Picture(neg3, pos3, var3, sImage3, "");
+        Picture picture4 = new Picture(neg4, pos4, var4, sImage4, "");
+
+        Capture capture = new Capture(instanceID, date1, username, fac_id, studyID, initial,
+                district, county, zone, age, text, ss, symptom, text2, sss, past, treat, date2,
+                value3, valuex, year, value, date3, child, abort, s4, choice, location, via, notes,
+                ml_result,true, picture1, picture2, picture3, picture4);
+
+        Capture2 capture2 = new Capture2(instanceID, date1, username, fac_id, studyID, initial,
+                district, county, zone, age, text, ss, symptom, text2,
+                value3, valuex, year, value, date3, child, abort, s4, choice, location, via, notes,
+                ml_result, true, picture1, picture2, picture3, picture4);
+
+        Log.v("TAG", "data3");
+
+        sendOverNetwork(token, capture, capture2);
     }
 
 

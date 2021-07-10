@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,6 +35,8 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormHolder> {
         void onLoadClick(int position);
         void onViewClick(int position);
         void onConsultClick(int position);
+        void onCheckedClick(int position);
+        void onNotCheckedClick(int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener){
@@ -66,6 +70,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormHolder> {
 
         private TextView studyID, initials, age, via;
         private Button load, images, consult;
+        private CheckBox checkBox;
 
         public FormHolder(@NonNull View itemView, OnItemClickListener listener) {
             super(itemView);
@@ -77,6 +82,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormHolder> {
             load = itemView.findViewById(R.id.load);
             images = itemView.findViewById(R.id.images);
             consult = itemView.findViewById(R.id.consult);
+            checkBox = itemView.findViewById(R.id.ok);
 
             images.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -109,6 +115,28 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormHolder> {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION){
                             listener.onLoadClick(position);
+                        }
+                    }
+                }
+            });
+
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (checkBox.isChecked()){
+                        if (listener != null){
+                            int position = getAdapterPosition();
+                            if (position != RecyclerView.NO_POSITION){
+                                listener.onCheckedClick(position);
+                            }
+                        }
+                    }
+                    else {
+                        if (listener != null){
+                            int position = getAdapterPosition();
+                            if (position != RecyclerView.NO_POSITION){
+                                listener.onNotCheckedClick(position);
+                            }
                         }
                     }
                 }

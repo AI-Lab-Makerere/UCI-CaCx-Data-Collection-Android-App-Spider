@@ -41,10 +41,17 @@ public class FormRepository {
 
 
 
+
+
     public List<Form> getAllForms(){
         List<Form> formList = formDAO.getAllForms();
         return formList;
     }
 
+    public Form getOnlyOne(Long id){
+
+        Form form = formDAO.getOne(id);
+        return form;
+    }
 
 }

@@ -158,6 +158,7 @@ public class Camera3Fragment extends Fragment {
             byte[] bytes = stream.toByteArray();
             sImage = Base64.encodeToString(bytes, Base64.DEFAULT);
             imageView.setImageBitmap(bitmap);
+            runTensorflowModel(bitmap);
 
         }
         if (requestCode == IMAGE_PICKER_CODE && resultCode == -1 && data != null){
@@ -169,7 +170,7 @@ public class Camera3Fragment extends Fragment {
 
                 bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
                 bitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
-                runTensorflowModel(bitmap);
+//                runTensorflowModel(bitmap);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
                 byte[] bytes = stream.toByteArray();

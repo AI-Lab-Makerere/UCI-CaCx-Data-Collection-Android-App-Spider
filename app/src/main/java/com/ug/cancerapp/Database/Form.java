@@ -25,6 +25,7 @@ public class Form {
     String via, location, notes;
     String diagnosis;
     Boolean consult;
+    Boolean uploaded;
     float picture1_nc;
     float picture1_pc;
     String picture1_via;
@@ -39,7 +40,16 @@ public class Form {
     String picture4_via;
     String instanceID;
 
-    public Form(String date, String studyID, String initials, String district, String county, String village, int age, String have_symptoms, String symptoms, String other_symptoms, String screened_for_cancer, String last_screened, String screening_process, String treatment, String screening_results, String hiv_status, String on_haart, int years_on_haart, String pregnant, String last_menstrual, int parity, int abortion, String on_contraceptives, String contraceptives, String image1, String image2, String image3, String image4, String via, String location, String notes, String diagnosis, Boolean consult, float picture1_nc, float picture1_pc, String picture1_via, float picture2_nc, float picture2_pc, String picture2_via, float picture3_nc, float picture3_pc, String picture3_via, float picture4_nc, float picture4_pc, String picture4_via, String instanceID) {
+    public Form(String date, String studyID, String initials, String district, String county, String village,
+                int age, String have_symptoms, String symptoms, String other_symptoms, String screened_for_cancer,
+                String last_screened, String screening_process, String treatment, String screening_results,
+                String hiv_status, String on_haart, int years_on_haart, String pregnant, String last_menstrual,
+                int parity, int abortion, String on_contraceptives, String contraceptives, String image1,
+                String image2, String image3, String image4, String via, String location, String notes,
+                String diagnosis, Boolean consult, Boolean uploaded, float picture1_nc, float picture1_pc,
+                String picture1_via, float picture2_nc, float picture2_pc, String picture2_via, float picture3_nc,
+                float picture3_pc, String picture3_via, float picture4_nc, float picture4_pc, String picture4_via,
+                String instanceID) {
         this.date = date;
         this.studyID = studyID;
         this.initials = initials;
@@ -73,6 +83,7 @@ public class Form {
         this.notes = notes;
         this.diagnosis = diagnosis;
         this.consult = consult;
+        this.uploaded = uploaded;
         this.picture1_nc = picture1_nc;
         this.picture1_pc = picture1_pc;
         this.picture1_via = picture1_via;
@@ -91,8 +102,6 @@ public class Form {
     public long getKey() {
         return key;
     }
-
-
 
     public String getDate() {
         return date;
@@ -460,5 +469,13 @@ public class Form {
 
     public void setInstanceID(String instanceID) {
         this.instanceID = instanceID;
+    }
+
+    public Boolean getUploaded() {
+        return uploaded;
+    }
+
+    public void setUploaded(Boolean uploaded) {
+        this.uploaded = uploaded;
     }
 }

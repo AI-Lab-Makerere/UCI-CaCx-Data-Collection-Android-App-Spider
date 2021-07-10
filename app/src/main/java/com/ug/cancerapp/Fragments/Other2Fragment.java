@@ -1,15 +1,20 @@
 package com.ug.cancerapp.Fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +26,14 @@ import com.ug.cancerapp.Database.Form;
 import com.ug.cancerapp.Database.FormViewModel;
 import com.ug.cancerapp.R;
 import com.ug.cancerapp.Activities.DashBoardActivity;
+import com.ug.cancerapp.ml.Cancer;
 
+import org.tensorflow.lite.DataType;
+import org.tensorflow.lite.support.image.TensorImage;
+import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
+
+import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
@@ -89,16 +101,26 @@ public class Other2Fragment extends Fragment {
     SharedPreferences.Editor editor;
 
     String via;
-    float pos4, pos3;
-    String viar4, viar3;
+    float pos, pos2, pos4, pos3, neg, neg2, neg3, neg4;
+    String viar, viar2, viar4, viar3;
 
     String mmv;
+    Bitmap bitmap1, bitmap2, bitmap3, bitmap4;
+    ProgressDialog progressDialog;
+
+    String studyID, initial, age, district, county, zone, text, ss, symptom,
+            text2, past, method, datey, treat, value3, valuex, year, value, time, child, abort,
+            choice, s4, notes, location, diagnosis, format;
+
+    Boolean consult;
+
+    int abortion, children;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view =  inflater.inflate(R.layout.fragment_other2, container, false);
+        view = inflater.inflate(R.layout.fragment_other2, container, false);
 
         back = view.findViewById(R.id.back);
         send = view.findViewById(R.id.save);
@@ -109,13 +131,11 @@ public class Other2Fragment extends Fragment {
 
         editor = sharedPreferences.edit();
 
-        formViewModel = ViewModelProviders.of(this).get(FormViewModel.class);
+        via = sharedPreferences.getString(VIA, "");
 
         String positive3 = sharedPreferences.getString(FLOP3, "");
         pos3 = Float.parseFloat(positive3);
         viar3 = sharedPreferences.getString(VR3, "");
-
-        via = sharedPreferences.getString(VIA, "");
 
         String positive4 = sharedPreferences.getString(FLOP4, "");
         pos4 = Float.parseFloat(positive4);
@@ -123,13 +143,18 @@ public class Other2Fragment extends Fragment {
 
         getModelResults();
 
+        formViewModel = ViewModelProviders.of(this).get(FormViewModel.class);
+
+        progressDialog = new ProgressDialog(getActivity());
+
+
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 saveData();
-                editor.clear();
-                editor.apply();
+//                editor.clear();
+//                editor.apply();
                 Toast.makeText(getActivity(), "Task Successful", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getActivity(), DashBoardActivity.class));
 
@@ -170,11 +195,11 @@ public class Other2Fragment extends Fragment {
         String zone = sharedPreferences.getString(ZONE, "");
         String text = sharedPreferences.getString(TEXT, "");
         String ss = sharedPreferences.getString(SS, "");
-        if (ss.equals("")){
+        if (ss.equals("")) {
             ss = "None";
         }
         String symptom = sharedPreferences.getString(OTHER, "");
-        if (symptom.equals("")){
+        if (symptom.equals("")) {
             symptom = "None";
         }
         String text2 = sharedPreferences.getString(TEXT2, "");
@@ -184,33 +209,29 @@ public class Other2Fragment extends Fragment {
         String treat = sharedPreferences.getString(TREATMENT, "");
         String value3 = sharedPreferences.getString(TEXT3, "");
         String valuex = sharedPreferences.getString(CHOICE2, "");
-        if (valuex.equals("")){
+        if (valuex.equals("")) {
             valuex = "No";
         }
         String year = sharedPreferences.getString(YEARS, "");
-        if (year.isEmpty()){
+        if (year.isEmpty()) {
             num2 = 0;
-        }else {
+        } else {
             num2 = Integer.parseInt(year);
         }
         String value = sharedPreferences.getString(PREGNANT, "");
         String time = sharedPreferences.getString(DATS, "");
         String child = sharedPreferences.getString(PARITY, "");
-        int children = Integer.parseInt(child);
+        children = Integer.parseInt(child);
         String abort = sharedPreferences.getString(ABORTION, "");
-        int abortion = Integer.parseInt(abort);
-        String choice = sharedPreferences.getString(CHOICES, "");
-        String s4 = sharedPreferences.getString(S4, "");
-        if (s4.equals("")){
+        abortion = Integer.parseInt(abort);
+        choice = sharedPreferences.getString(CHOICES, "");
+        s4 = sharedPreferences.getString(S4, "");
+        if (s4.equals("")) {
             s4 = "None";
         }
-        String sImage = sharedPreferences.getString(IMAGE, "");
-        String sImage2 = sharedPreferences.getString(IMAGE2, "");
-        String sImage3 = sharedPreferences.getString(IMAGE3, "");
-        String sImage4 = sharedPreferences.getString(IMAGE4, "");
 
-        String notes = sharedPreferences.getString(NOTES, "");
-        String location = sharedPreferences.getString(LESION, "");
+        notes = sharedPreferences.getString(NOTES, "");
+        location = sharedPreferences.getString(LESION, "");
 
         String negative = sharedPreferences.getString(FLON, "");
         float neg = Float.parseFloat(negative);
@@ -228,26 +249,30 @@ public class Other2Fragment extends Fragment {
         float neg3 = Float.parseFloat(negative3);
 
 
-
         String negative4 = sharedPreferences.getString(FLON4, "");
         float neg4 = Float.parseFloat(negative4);
 
 
-
-
-        String diagnosis = mmv;
-        Boolean consult = false;
+        diagnosis = mmv;
+        consult = false;
         uniqueID = UUID.randomUUID().toString();
 
+        String sImage = sharedPreferences.getString(IMAGE, "");
+        String sImage2 = sharedPreferences.getString(IMAGE2, "");
+        String sImage3 = sharedPreferences.getString(IMAGE3, "");
+        String sImage4 = sharedPreferences.getString(IMAGE4, "");
+
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
-        String format = simpleDateFormat.format(new Date());
+        format = simpleDateFormat.format(new Date());
+
 
         Form form = new Form(format, studyID, initial, district, county, zone, number, text, ss, symptom,
                 text2, datey, method, treat, past, value3, valuex, num2, value, time, children, abortion, choice,
-                s4, sImage, sImage2, sImage3, sImage4, via, location, notes, diagnosis, consult,
+                s4, sImage, sImage2, sImage3, sImage4, via, location, notes, diagnosis, consult, false,
                 neg, pos, viar, neg2, pos2, viar2, neg3, pos3, viar3, neg4, pos4, viar4, uniqueID);
 
         formViewModel.insert(form);
+
     }
 
     private void getModelResults() {
@@ -255,9 +280,9 @@ public class Other2Fragment extends Fragment {
         String thres = sharedPreferences2.getString(THRESHOLD, "");
         float threshold = Float.parseFloat(thres);
 
-        if (viar3.equals(viar4)){
+        if (viar3.equals(viar4)) {
             mmv = viar3;
-        }else {
+        } else {
             if (viar3.equals("Positive")) {
                 if (pos3 >= threshold) {
                     mmv = viar3;

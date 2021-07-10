@@ -39,7 +39,7 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="20dp"
         android:textAllCaps="false"
-        android:textColor="@color/colorBackground"
-        android:background="@drawable/primary_btn"/>
+        android:textColor="@color/colorPrimary"
+        android:background="@drawable/secondary_btn_bg"/>
 
 </RelativeLayout>

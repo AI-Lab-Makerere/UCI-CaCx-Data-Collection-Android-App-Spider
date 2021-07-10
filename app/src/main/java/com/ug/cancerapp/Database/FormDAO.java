@@ -28,6 +28,8 @@ public interface FormDAO {
     @Query("UPDATE Cervix_Screening SET consult = :text WHERE `key` = :id")
     void UpdateConsult (Boolean text, long id);
 
+    @Query("SELECT * FROM Cervix_Screening WHERE `key` = :id")
+    Form getOne (long id);
 
     @Delete
     void deleteForm(Form form);

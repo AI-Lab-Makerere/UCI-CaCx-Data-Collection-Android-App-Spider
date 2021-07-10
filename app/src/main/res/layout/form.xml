@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:text="VIA Results: Positive"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textColor="@color/colorTextPrimary"/>
 
         <LinearLayout

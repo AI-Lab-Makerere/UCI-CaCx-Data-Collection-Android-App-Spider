@@ -12,6 +12,7 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -164,6 +165,7 @@ public class SplashActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString(THRESHOLD, thres);
                 editor.apply();
+                Log.v("TAG......", thres);
                 startActivity(new Intent(SplashActivity.this, DashBoardActivity.class));
                 finish();
             }

@@ -25,12 +25,15 @@ import android.widget.Toast;
 import com.ug.cancerapp.Apis.ApiClient;
 import com.ug.cancerapp.Apis.JsonPlaceHolder;
 import com.ug.cancerapp.Models.CurrentUser;
+import com.ug.cancerapp.Models.Settings;
 import com.ug.cancerapp.Models.User;
 import com.ug.cancerapp.R;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.ug.cancerapp.Activities.SplashActivity.THRESHOLD;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -50,6 +53,8 @@ public class LoginActivity extends AppCompatActivity {
     public static final String FACID = "fac_id";
     public static final String TOKEN= "token";
 
+    SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
         submit = findViewById(R.id.verify_btn);
         progressBar = findViewById(R.id.otp_progress_bar);
 
-
+        sharedPreferences = getSharedPreferences(SHARED_API, MODE_PRIVATE);
 
         category = getIntent().getStringExtra("category");
         if (category.equals("gynecologist")) {
@@ -162,7 +167,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void saveData(String email, String userId, String facId, String facName, String token) {
 
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_API, MODE_PRIVATE);
+
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putString(EMAIL, email);
@@ -179,8 +184,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
             finish();
         } else {
-            startActivity(new Intent(LoginActivity.this, DashBoardActivity.class));
-            finish();
+            saveThreshold();
         }
 
     }
@@ -243,5 +247,32 @@ public class LoginActivity extends AppCompatActivity {
         super.onBackPressed();
         startActivity(new Intent(LoginActivity.this, WelcomeActivity.class));
         finish();
+    }
+
+    private void saveThreshold() {
+
+        JsonPlaceHolder jsonPlaceHolder = ApiClient.getClient().create(JsonPlaceHolder.class);
+        Call<Settings> call = jsonPlaceHolder.setting("Bearer " + token);
+        call.enqueue(new Callback<Settings>() {
+            @Override
+            public void onResponse(Call<Settings> call, Response<Settings> response) {
+                if (!response.isSuccessful()){
+                    Toast.makeText(LoginActivity.this, "There is a connection issue, Please check your internet connection", Toast.LENGTH_SHORT).show();
+                }
+
+                String thres = String.valueOf(response.body().getPositive_analysis_threshold());
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(THRESHOLD, thres);
+                editor.apply();
+                Log.v("TAG......", thres);
+                startActivity(new Intent(LoginActivity.this, DashBoardActivity.class));
+                finish();
+            }
+
+            @Override
+            public void onFailure(Call<Settings> call, Throwable t) {
+                Toast.makeText(LoginActivity.this, "Its not you its us, please try again later", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

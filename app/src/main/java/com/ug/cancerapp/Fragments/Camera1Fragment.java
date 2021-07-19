@@ -38,6 +38,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
 import static com.ug.cancerapp.Fragments.SixtyFragment.CHECKS;
 
 
@@ -50,6 +52,7 @@ public class Camera1Fragment extends Fragment {
     Bitmap bitmap;
 
     private static final int IMAGE_PICKER_CODE = 1000;
+    private static final int IMAGE_CODE = 100;
     private static final int PERMISSIONS_CODE = 1001;
 
     String sImage, value, negative, positive, viar;
@@ -79,7 +82,7 @@ public class Camera1Fragment extends Fragment {
         gallery = view.findViewById(R.id.gallery);
         imageView = view.findViewById(R.id.image);
 
-        progressDialog = new ProgressDialog(getActivity());
+//        progressDialog = new ProgressDialog(getActivity());
 
         loadData();
         updateViews();
@@ -91,13 +94,13 @@ public class Camera1Fragment extends Fragment {
                 if (sImage.isEmpty()){
                     Toast.makeText(getActivity(), "Take a picture or load one from gallery", Toast.LENGTH_SHORT).show();
                 }else {
-                    progressDialog.setMessage("Saving Image...");
-                    progressDialog.show();
-                    byte[] bytes = Base64.decode(sImage, Base64.DEFAULT);
-                    Bitmap bitmap2 = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                    runTensorflowModel(bitmap2);
+//                    progressDialog.setMessage("Saving Image...");
+//                    progressDialog.show();
+//                    byte[] bytes = Base64.decode(sImage, Base64.DEFAULT);
+//                    Bitmap bitmap2 = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+//                    runTensorflowModel(bitmap2);
                     saveData();
-                    progressDialog.dismiss();
+//                    progressDialog.dismiss();
                     FragmentTransaction fr = getFragmentManager().beginTransaction();
                     fr.replace(R.id.fragment_container, new Camera2Fragment());
                     fr.addToBackStack(null);
@@ -127,7 +130,7 @@ public class Camera1Fragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, 100);
+                startActivityForResult(intent, IMAGE_CODE);
             }
         });
 
@@ -171,16 +174,18 @@ public class Camera1Fragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 //        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 100){
-
-            bitmap = (Bitmap) data.getExtras().get("data");
-            bitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-            byte[] bytes = stream.toByteArray();
-            sImage = Base64.encodeToString(bytes, Base64.DEFAULT);
-            imageView.setImageBitmap(bitmap);
-//            runTensorflowModel(bitmap);
+        if(requestCode == IMAGE_CODE){
+            if (resultCode == RESULT_OK){
+                bitmap = (Bitmap) data.getExtras().get("data");
+                bitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                byte[] bytes = stream.toByteArray();
+                sImage = Base64.encodeToString(bytes, Base64.DEFAULT);
+                imageView.setImageBitmap(bitmap);
+            }else if (resultCode ==  RESULT_CANCELED){
+                Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_LONG).show();
+            }
 
         }
         if (requestCode == IMAGE_PICKER_CODE && resultCode == -1 && data != null){
@@ -196,9 +201,6 @@ public class Camera1Fragment extends Fragment {
                 sImage = Base64.encodeToString(bytes, Base64.DEFAULT);
                 imageView.setImageURI(uri);
 
-
-//                Toast.makeText(getActivity(), ""+ lengthbmp, Toast.LENGTH_LONG).show();
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -213,9 +215,9 @@ public class Camera1Fragment extends Fragment {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putString(IMAGE, sImage);
-        editor.putString(VR, viar);
-        editor.putString(FLON, negative);
-        editor.putString(FLOP, positive);
+//        editor.putString(VR, viar);
+//        editor.putString(FLON, negative);
+//        editor.putString(FLOP, positive);
 
         editor.apply();
 //        Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
@@ -224,9 +226,9 @@ public class Camera1Fragment extends Fragment {
     public void loadData(){
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         sImage = sharedPreferences.getString(IMAGE, "");
-        viar = sharedPreferences.getString(VR, "");
-        negative = sharedPreferences.getString(FLON, "");
-        positive = sharedPreferences.getString(FLOP, "");
+//        viar = sharedPreferences.getString(VR, "");
+//        negative = sharedPreferences.getString(FLON, "");
+//        positive = sharedPreferences.getString(FLOP, "");
 
     }
 

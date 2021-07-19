@@ -41,20 +41,41 @@
                     android:textColor="@color/colorTextPrimary"
                     android:textSize="16sp" />
 
-                <Button
-                    android:id="@+id/datepicker"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:weightSum="10"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="60dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginTop="15dp"
-                    android:layout_marginRight="60dp"
-                    android:background="@drawable/primary_btn"
-                    android:text="Select Date"
-                    android:textAllCaps="false"
-                    android:textColor="@color/colorBackground"
-                    android:textSize="20sp" />
+                    android:layout_marginRight="10dp"
+                    android:orientation="horizontal">
 
+                    <Button
+                        android:id="@+id/datepicker"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:background="@drawable/primary_btn"
+                        android:layout_marginRight="5dp"
+                        android:text="Select Date"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorBackground"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/none"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/primary_btn"
+                        android:text="Not Sure"
+                        android:textAllCaps="false"
+                        android:textColor="@color/colorBackground"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/date"

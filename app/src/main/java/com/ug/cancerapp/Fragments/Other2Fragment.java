@@ -89,6 +89,9 @@ public class Other2Fragment extends Fragment {
     Button back, send, model;
     String s = "";
     int num2 = 0;
+    int number = 0;
+    int act = 0;
+    int ident = 0;
 
     private FormViewModel formViewModel;
 
@@ -104,7 +107,7 @@ public class Other2Fragment extends Fragment {
     float pos, pos2, pos4, pos3, neg, neg2, neg3, neg4;
     String viar, viar2, viar4, viar3;
 
-    String mmv;
+    String mmv, sImage, sImage2, sImage3, sImage4;
     Bitmap bitmap1, bitmap2, bitmap3, bitmap4;
     ProgressDialog progressDialog;
 
@@ -126,22 +129,16 @@ public class Other2Fragment extends Fragment {
         send = view.findViewById(R.id.save);
         model = view.findViewById(R.id.model);
 
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+        format = simpleDateFormat.format(new Date());
+
         sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        sharedPreferences2 = getActivity().getSharedPreferences(SHARED_API, Context.MODE_PRIVATE);
 
         editor = sharedPreferences.edit();
 
         via = sharedPreferences.getString(VIA, "");
 
-        String positive3 = sharedPreferences.getString(FLOP3, "");
-        pos3 = Float.parseFloat(positive3);
-        viar3 = sharedPreferences.getString(VR3, "");
-
-        String positive4 = sharedPreferences.getString(FLOP4, "");
-        pos4 = Float.parseFloat(positive4);
-        viar4 = sharedPreferences.getString(VR4, "");
-
-        getModelResults();
+//        getModelResults();
 
         formViewModel = ViewModelProviders.of(this).get(FormViewModel.class);
 
@@ -152,11 +149,15 @@ public class Other2Fragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                saveData();
-                editor.clear();
-                editor.apply();
-                Toast.makeText(getActivity(), "Data saved Successful", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getActivity(), DashBoardActivity.class));
+                act = 2;
+                progressDialog.setCancelable(false);
+                progressDialog.setCanceledOnTouchOutside(false);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.setMessage("Saving Data...");
+                progressDialog.show();
+                makePredictions();
+//                editor.clear();
+//                editor.apply();
 
             }
         });
@@ -173,56 +174,210 @@ public class Other2Fragment extends Fragment {
         model.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveData();
-                Intent intent = new Intent(getActivity(), ModelActivity.class);
-                intent.putExtra("model", mmv);
-                intent.putExtra("nurse", via);
-                startActivity(intent);
+//                saveData();
+                act = 1;
+                progressDialog.setCancelable(false);
+                progressDialog.setCanceledOnTouchOutside(false);
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.setMessage("Saving Data...");
+                progressDialog.show();
+                makePredictions();
             }
         });
 
         return view;
     }
 
-    private void saveData() {
+//    private void saveData() {
+//
+////        studyID = sharedPreferences.getString(STUDY, "");
+////        initial = sharedPreferences.getString(INITIAL, "");
+////        age = sharedPreferences.getString(AGE, "");
+////        number = Integer.parseInt(age);
+////        district = sharedPreferences.getString(DISTRICT, "");
+////        county = sharedPreferences.getString(COUNTY, "");
+////        zone = sharedPreferences.getString(ZONE, "");
+////        text = sharedPreferences.getString(TEXT, "");
+////        ss = sharedPreferences.getString(SS, "");
+////        if (ss.equals("")) {
+////            ss = "None";
+////        }
+////        symptom = sharedPreferences.getString(OTHER, "");
+////        if (symptom.equals("")) {
+////            symptom = "None";
+////        }
+////        text2 = sharedPreferences.getString(TEXT2, "");
+////        past = sharedPreferences.getString(CHOICE, "");
+////        method = sharedPreferences.getString(METHOD, "");
+////        datey = sharedPreferences.getString(DATEPICKER, "");
+////        treat = sharedPreferences.getString(TREATMENT, "");
+////        value3 = sharedPreferences.getString(TEXT3, "");
+////        valuex = sharedPreferences.getString(CHOICE2, "");
+////        if (valuex.equals("")) {
+////            valuex = "No";
+////        }
+////        year = sharedPreferences.getString(YEARS, "");
+////        if (year.isEmpty()) {
+////            num2 = 0;
+////        } else {
+////            num2 = Integer.parseInt(year);
+////        }
+////        value = sharedPreferences.getString(PREGNANT, "");
+////        time = sharedPreferences.getString(DATS, "");
+////        child = sharedPreferences.getString(PARITY, "");
+////        children = Integer.parseInt(child);
+////        abort = sharedPreferences.getString(ABORTION, "");
+////        abortion = Integer.parseInt(abort);
+////        choice = sharedPreferences.getString(CHOICES, "");
+////        s4 = sharedPreferences.getString(S4, "");
+////        if (s4.equals("")) {
+////            s4 = "None";
+////        }
+////
+////        notes = sharedPreferences.getString(NOTES, "");
+////        location = sharedPreferences.getString(LESION, "");
+////
+//////        String negative = sharedPreferences.getString(FLON, "");
+//////        float neg = Float.parseFloat(negative);
+//////        String positive = sharedPreferences.getString(FLOP, "");
+//////        float pos = Float.parseFloat(positive);
+//////        String viar = sharedPreferences.getString(VR, "");
+//////
+//////        String negative2 = sharedPreferences.getString(FLON2, "");
+//////        float neg2 = Float.parseFloat(negative2);
+//////        String positive2 = sharedPreferences.getString(FLOP2, "");
+//////        float pos2 = Float.parseFloat(positive2);
+//////        String viar2 = sharedPreferences.getString(VR2, "");
+//////
+//////        String negative3 = sharedPreferences.getString(FLON3, "");
+//////        float neg3 = Float.parseFloat(negative3);
+//////
+//////
+//////        String negative4 = sharedPreferences.getString(FLON4, "");
+//////        float neg4 = Float.parseFloat(negative4);
+////
+////
+////        diagnosis = mmv;
+////
+////        if (mmv.equals(via)){
+////            consult = false;
+////        }else {
+////            consult = true;
+////        }
+////
+////        consult = false;
+////        uniqueID = UUID.randomUUID().toString();
+////
+////        sImage = sharedPreferences.getString(IMAGE, "");
+////        sImage2 = sharedPreferences.getString(IMAGE2, "");
+////        sImage3 = sharedPreferences.getString(IMAGE3, "");
+////        sImage4 = sharedPreferences.getString(IMAGE4, "");
+////
+////        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
+////        format = simpleDateFormat.format(new Date());
+////
+////
+////        Form form = new Form(format, studyID, initial, district, county, zone, number, text, ss, symptom,
+////                text2, datey, method, treat, past, value3, valuex, num2, value, time, children, abortion, choice,
+////                s4, sImage, sImage2, sImage3, sImage4, via, location, notes, diagnosis, consult, false,
+////                neg, pos, viar, neg2, pos2, viar2, neg3, pos3, viar3, neg4, pos4, viar4, uniqueID);
+////
+////        formViewModel.insert(form);
+//
+//    }
 
-        String studyID = sharedPreferences.getString(STUDY, "");
-        String initial = sharedPreferences.getString(INITIAL, "");
-        String age = sharedPreferences.getString(AGE, "");
-        int number = Integer.parseInt(age);
-        String district = sharedPreferences.getString(DISTRICT, "");
-        String county = sharedPreferences.getString(COUNTY, "");
-        String zone = sharedPreferences.getString(ZONE, "");
-        String text = sharedPreferences.getString(TEXT, "");
-        String ss = sharedPreferences.getString(SS, "");
+
+    private void makePredictions(){
+
+        sImage = sharedPreferences.getString(IMAGE, "");
+        byte[] bytes = Base64.decode(sImage, Base64.DEFAULT);
+        bitmap1 = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        ident = 1;
+        boolean sone = runTensorflowModel(bitmap1, ident);
+        if (sone){
+            sImage2 = sharedPreferences.getString(IMAGE2, "");
+            byte[] bytes2 = Base64.decode(sImage2, Base64.DEFAULT);
+            bitmap2 = BitmapFactory.decodeByteArray(bytes2, 0, bytes2.length);
+            ident = 2;
+            boolean sone2 = runTensorflowModel(bitmap2, ident);
+            if (sone2){
+                sImage3 = sharedPreferences.getString(IMAGE3, "");
+                byte[] bytes3 = Base64.decode(sImage3, Base64.DEFAULT);
+                bitmap3 = BitmapFactory.decodeByteArray(bytes3, 0, bytes3.length);
+                ident = 3;
+                boolean sone3 = runTensorflowModel(bitmap3, ident);
+                if (sone3){
+                    sImage4 = sharedPreferences.getString(IMAGE4, "");
+                    byte[] bytes4 = Base64.decode(sImage4, Base64.DEFAULT);
+                    bitmap4 = BitmapFactory.decodeByteArray(bytes4, 0, bytes4.length);
+                    ident = 4;
+                    boolean sone4 = runTensorflowModel(bitmap4, ident);
+                    if (sone4) {
+                        boolean diagno = getModelResults();
+                        if (diagno){
+                            savingData();
+                        }else {
+                            progressDialog.dismiss();
+                            Toast.makeText(getActivity(), "Failed to obtain general diagnosis", Toast.LENGTH_SHORT).show();
+                        }
+                    }else {
+                        progressDialog.dismiss();
+                        Toast.makeText(getActivity(), "Failed to obtain predictions of the fourth image", Toast.LENGTH_SHORT).show();
+                    }
+                }else {
+                    progressDialog.dismiss();
+                    Toast.makeText(getActivity(), "Failed to obtain predictions of the third image", Toast.LENGTH_SHORT).show();
+                }
+            }else {
+                progressDialog.dismiss();
+                Toast.makeText(getActivity(), "Failed to obtain predictions of the second image", Toast.LENGTH_SHORT).show();
+            }
+        }else {
+            progressDialog.dismiss();
+            Toast.makeText(getActivity(), "Failed to obtain predictions of the first image", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private void savingData() {
+
+        studyID = sharedPreferences.getString(STUDY, "");
+        initial = sharedPreferences.getString(INITIAL, "");
+        age = sharedPreferences.getString(AGE, "");
+        number = Integer.parseInt(age);
+        district = sharedPreferences.getString(DISTRICT, "");
+        county = sharedPreferences.getString(COUNTY, "");
+        zone = sharedPreferences.getString(ZONE, "");
+        text = sharedPreferences.getString(TEXT, "");
+        ss = sharedPreferences.getString(SS, "");
         if (ss.equals("")) {
             ss = "None";
         }
-        String symptom = sharedPreferences.getString(OTHER, "");
+        symptom = sharedPreferences.getString(OTHER, "");
         if (symptom.equals("")) {
             symptom = "None";
         }
-        String text2 = sharedPreferences.getString(TEXT2, "");
-        String past = sharedPreferences.getString(CHOICE, "");
-        String method = sharedPreferences.getString(METHOD, "");
-        String datey = sharedPreferences.getString(DATEPICKER, "");
-        String treat = sharedPreferences.getString(TREATMENT, "");
-        String value3 = sharedPreferences.getString(TEXT3, "");
-        String valuex = sharedPreferences.getString(CHOICE2, "");
+        text2 = sharedPreferences.getString(TEXT2, "");
+        past = sharedPreferences.getString(CHOICE, "");
+        method = sharedPreferences.getString(METHOD, "");
+        datey = sharedPreferences.getString(DATEPICKER, "");
+        treat = sharedPreferences.getString(TREATMENT, "");
+        value3 = sharedPreferences.getString(TEXT3, "");
+        valuex = sharedPreferences.getString(CHOICE2, "");
         if (valuex.equals("")) {
             valuex = "No";
         }
-        String year = sharedPreferences.getString(YEARS, "");
+        year = sharedPreferences.getString(YEARS, "");
         if (year.isEmpty()) {
             num2 = 0;
         } else {
             num2 = Integer.parseInt(year);
         }
-        String value = sharedPreferences.getString(PREGNANT, "");
-        String time = sharedPreferences.getString(DATS, "");
-        String child = sharedPreferences.getString(PARITY, "");
+        value = sharedPreferences.getString(PREGNANT, "");
+        time = sharedPreferences.getString(DATS, "");
+        child = sharedPreferences.getString(PARITY, "");
         children = Integer.parseInt(child);
-        String abort = sharedPreferences.getString(ABORTION, "");
+        abort = sharedPreferences.getString(ABORTION, "");
         abortion = Integer.parseInt(abort);
         choice = sharedPreferences.getString(CHOICES, "");
         s4 = sharedPreferences.getString(S4, "");
@@ -232,26 +387,6 @@ public class Other2Fragment extends Fragment {
 
         notes = sharedPreferences.getString(NOTES, "");
         location = sharedPreferences.getString(LESION, "");
-
-        String negative = sharedPreferences.getString(FLON, "");
-        float neg = Float.parseFloat(negative);
-        String positive = sharedPreferences.getString(FLOP, "");
-        float pos = Float.parseFloat(positive);
-        String viar = sharedPreferences.getString(VR, "");
-
-        String negative2 = sharedPreferences.getString(FLON2, "");
-        float neg2 = Float.parseFloat(negative2);
-        String positive2 = sharedPreferences.getString(FLOP2, "");
-        float pos2 = Float.parseFloat(positive2);
-        String viar2 = sharedPreferences.getString(VR2, "");
-
-        String negative3 = sharedPreferences.getString(FLON3, "");
-        float neg3 = Float.parseFloat(negative3);
-
-
-        String negative4 = sharedPreferences.getString(FLON4, "");
-        float neg4 = Float.parseFloat(negative4);
-
 
         diagnosis = mmv;
 
@@ -264,28 +399,97 @@ public class Other2Fragment extends Fragment {
         consult = false;
         uniqueID = UUID.randomUUID().toString();
 
-        String sImage = sharedPreferences.getString(IMAGE, "");
-        String sImage2 = sharedPreferences.getString(IMAGE2, "");
-        String sImage3 = sharedPreferences.getString(IMAGE3, "");
-        String sImage4 = sharedPreferences.getString(IMAGE4, "");
-
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
-        format = simpleDateFormat.format(new Date());
-
-
         Form form = new Form(format, studyID, initial, district, county, zone, number, text, ss, symptom,
                 text2, datey, method, treat, past, value3, valuex, num2, value, time, children, abortion, choice,
                 s4, sImage, sImage2, sImage3, sImage4, via, location, notes, diagnosis, consult, false,
                 neg, pos, viar, neg2, pos2, viar2, neg3, pos3, viar3, neg4, pos4, viar4, uniqueID);
 
         formViewModel.insert(form);
+        progressDialog.dismiss();
 
+        if (act == 1){
+            Intent intent = new Intent(getActivity(), ModelActivity.class);
+            intent.putExtra("model", mmv);
+            intent.putExtra("nurse", via);
+            startActivity(intent);
+        }else {
+            Toast.makeText(getActivity(), "Data saved Successful", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(getActivity(), DashBoardActivity.class));
+        }
     }
 
-    private void getModelResults() {
+    private boolean runTensorflowModel(Bitmap bitmap, int ident) {
 
-        String thres = sharedPreferences2.getString(THRESHOLD, "");
-        float threshold = Float.parseFloat(thres);
+        try {
+            Cancer model = Cancer.newInstance(getActivity());
+
+            // Creates inputs for reference.
+            TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 300, 300, 3}, DataType.FLOAT32);
+
+            TensorImage tensorImage = new TensorImage(DataType.FLOAT32);
+            tensorImage.load(bitmap);
+            ByteBuffer byteBuffer = tensorImage.getBuffer();
+            inputFeature0.loadBuffer(byteBuffer);
+
+            // Runs model inference and gets result.
+            Cancer.Outputs outputs = model.process(inputFeature0);
+            TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
+
+            // Releases model resources if no longer used.
+            model.close();
+
+            if (ident == 1){
+                neg = outputFeature0.getFloatArray()[0];
+                pos = outputFeature0.getFloatArray()[1];
+
+                if (neg > pos){
+                    viar = "Negative";
+                }else {
+                    viar = "Positive";
+                }
+
+            }else if (ident == 2){
+                neg2 = outputFeature0.getFloatArray()[0];
+                pos2 = outputFeature0.getFloatArray()[1];
+
+                if (neg2 > pos2){
+                    viar2 = "Negative";
+                }else {
+                    viar2 = "Positive";
+                }
+
+            }else if (ident == 3){
+                neg3 = outputFeature0.getFloatArray()[0];
+                pos3 = outputFeature0.getFloatArray()[1];
+
+                if (neg3 > pos3){
+                    viar3 = "Negative";
+                }else {
+                    viar3 = "Positive";
+                }
+
+            }else {
+                neg4 = outputFeature0.getFloatArray()[0];
+                pos4 = outputFeature0.getFloatArray()[1];
+
+                if (neg4 > pos4){
+                    viar4 = "Negative";
+                }else {
+                    viar4 = "Positive";
+                }
+            }
+
+
+        } catch (IOException e) {
+            // TODO Handle the exception
+        }
+
+        return true;
+    }
+
+    private boolean getModelResults() {
+
+        float threshold = (float) 0.5;
 
         if (viar3.equals(viar4)) {
             mmv = viar3;
@@ -304,5 +508,7 @@ public class Other2Fragment extends Fragment {
                 }
             }
         }
+
+        return true;
     }
 }

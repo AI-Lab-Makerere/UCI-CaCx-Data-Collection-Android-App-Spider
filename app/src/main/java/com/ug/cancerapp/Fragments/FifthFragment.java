@@ -1,5 +1,6 @@
 package com.ug.cancerapp.Fragments;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -30,7 +31,7 @@ import static com.ug.cancerapp.Fragments.Haart2Fragment.YEARS;
 public class FifthFragment extends Fragment {
 
     View view;
-    Button back, next, datepicker;
+    Button back, next, datepicker, btnNone;
     TextView date;
     EditText parity, abortions;
     RadioGroup radioGroup;
@@ -56,6 +57,7 @@ public class FifthFragment extends Fragment {
         back = view.findViewById(R.id.back);
         next = view.findViewById(R.id.next);
         datepicker = view.findViewById(R.id.datepicker);
+        btnNone = view.findViewById(R.id.none);
         date = view.findViewById(R.id.date);
         parity = view.findViewById(R.id.parity);
         abortions = view.findViewById(R.id.abortions);
@@ -144,6 +146,13 @@ public class FifthFragment extends Fragment {
             }
         });
 
+        btnNone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                date.setText("Not Sure");
+            }
+        });
+
         datepicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -152,7 +161,9 @@ public class FifthFragment extends Fragment {
                 int month = calendar.get(Calendar.MONTH);
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog dialog = new DatePickerDialog(getContext(), android.R.style.Theme_DeviceDefault_Dialog, dateSetListener, year, month, day);
+                int style = AlertDialog.THEME_HOLO_LIGHT;
+
+                DatePickerDialog dialog = new DatePickerDialog(getContext(), style, dateSetListener, year, month, day);
 //                disable past date
 //                dialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
 //                disable future date

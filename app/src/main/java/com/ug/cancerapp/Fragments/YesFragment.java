@@ -76,7 +76,7 @@ public class YesFragment extends Fragment {
 
                 if (s.contains("Other")){
                     saveData(s);
-                    Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
                     FragmentTransaction fr = getFragmentManager().beginTransaction();
                     fr.replace(R.id.fragment_container, new OtherFragment());
                     fr.addToBackStack(null);
@@ -87,7 +87,7 @@ public class YesFragment extends Fragment {
 
                 }else {
                     saveData(s);
-                    Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
                     FragmentTransaction fr = getFragmentManager().beginTransaction();
                     fr.replace(R.id.fragment_container, new ThirdFragment());
                     fr.addToBackStack(null);

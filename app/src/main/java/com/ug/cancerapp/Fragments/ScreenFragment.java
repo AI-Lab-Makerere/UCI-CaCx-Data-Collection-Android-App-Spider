@@ -1,5 +1,6 @@
 package com.ug.cancerapp.Fragments;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -31,7 +32,7 @@ import java.util.Calendar;
 public class ScreenFragment extends Fragment {
 
    View view;
-   Button back, next, datePick;
+   Button back, next, datePick, btnNone;
    TextView date;
    RadioButton hpv, via, others;
     String s = "";
@@ -69,6 +70,7 @@ public class ScreenFragment extends Fragment {
         via = view.findViewById(R.id.vil);
         others = view.findViewById(R.id.others);
         datePick = view.findViewById(R.id.datepicker);
+        btnNone = view.findViewById(R.id.none);
         radioGroup = view.findViewById(R.id.radioGroup);
         radioGroup2 = view.findViewById(R.id.radioGroup2);
         radioButton1 = view.findViewById(R.id.negative);
@@ -156,6 +158,13 @@ public class ScreenFragment extends Fragment {
             }
         });
 
+        btnNone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                date.setText("Not Sure");
+            }
+        });
+
         datePick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,7 +173,9 @@ public class ScreenFragment extends Fragment {
                 int month = calendar.get(Calendar.MONTH);
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog dialog = new DatePickerDialog(getContext(), android.R.style.Theme_DeviceDefault_Dialog, dateSetListener, year, month, day);
+                int style = AlertDialog.THEME_HOLO_LIGHT;
+
+                DatePickerDialog dialog = new DatePickerDialog(getContext(), style, dateSetListener, year, month, day);
 //                disable past date
 //                dialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
 //                disable future date

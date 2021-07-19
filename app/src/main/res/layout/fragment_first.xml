@@ -7,15 +7,13 @@
     android:background="@color/colorBackground"
     tools:context=".Fragments.FirstFragment">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/buttons">
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="10dp"
             android:fadeScrollbars="true"
+            android:layout_above="@id/buttons"
             android:scrollbars="none">
 
             <LinearLayout
@@ -45,10 +43,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="5dp"
-                    android:saveEnabled="false"
-                    android:inputType="textCapCharacters"
                     android:background="@drawable/text_bg"
-                    android:paddingLeft="5dp" />
+                    android:inputType="textCapCharacters"
+                    android:paddingLeft="5dp"
+                    android:saveEnabled="false" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -75,8 +73,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:layout_marginTop="5dp"
-                            android:inputType="textCapCharacters"
                             android:background="@drawable/text_bg"
+                            android:inputType="textCapCharacters"
                             android:paddingLeft="5dp" />
 
                     </LinearLayout>
@@ -164,26 +162,26 @@
 
         </ScrollView>
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/buttons"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
-
-
-        <Button
-            android:id="@+id/next"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/buttons"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_margin="10dp"
-            android:background="@drawable/primary_btn"
-            android:text="next"
-            android:textColor="@color/colorBackground"/>
+            android:layout_alignParentBottom="true"
+            android:background="#FDFBFB"
+            android:layout_marginBottom="-1dp">
 
-    </RelativeLayout>
+
+            <Button
+                android:id="@+id/next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_margin="10dp"
+                android:background="@drawable/primary_btn"
+                android:text="next"
+                android:textColor="@color/colorBackground" />
+
+        </RelativeLayout>
 
 
 </RelativeLayout>

@@ -83,6 +83,7 @@ public class RecordsActivity extends AppCompatActivity {
     Date date1, date2, date3;
     long i = 0;
     Call<String> call;
+    Long key;
     ArrayList<Long> arrayForm;
 
     @Override
@@ -362,7 +363,7 @@ public class RecordsActivity extends AppCompatActivity {
         String var4 = formList.get(position).getPicture4_via();
         String ml_result = formList.get(position).getDiagnosis();
 
-        long key = formList.get(position).getKey();
+        key = formList.get(position).getKey();
         Log.v("TAG", "data");
 
         FormDAO formDAO = FormDatabase.getInstance(RecordsActivity.this).formDAO();
@@ -443,6 +444,7 @@ public class RecordsActivity extends AppCompatActivity {
                         Toast.makeText(RecordsActivity.this, "Form Uploaded Successfully", Toast.LENGTH_SHORT).show();
                         Log.v("TAG", message);
                         progressDialog.dismiss();
+                        formDAO.UpdateUpload(true, key);
                     }
                 });
 
@@ -579,12 +581,12 @@ public class RecordsActivity extends AppCompatActivity {
         String ml_result = form.getDiagnosis();
         Boolean consult = form.getConsult();
 
-        long key = form.getKey();
+        key = form.getKey();
         Log.v("TAG", "data");
 
 //        FormDAO formDAO = FormDatabase.getInstance(RecordsActivity.this).formDAO();
 //        formDAO.UpdateConsult(true, key);
-        formDAO.UpdateUpload(true, key);
+
         Log.v("TAG", "" + key);
 
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_API, MODE_PRIVATE);
@@ -597,13 +599,17 @@ public class RecordsActivity extends AppCompatActivity {
 
         try {
             if (!datey.isEmpty()){
-                date2 = new SimpleDateFormat("dd/MM/yyyy").parse(datey);
+                if (!datey.equals("Not Sure")){
+                    date2 = new SimpleDateFormat("dd/MM/yyyy").parse(datey);
+                }
             }
-            date3 = new SimpleDateFormat("dd/MM/yyyy").parse(time);
+            if (!time.equals("Not Sure")){
+                date3 = new SimpleDateFormat("dd/MM/yyyy").parse(time);
+            }
             date1 = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss").parse(date);
-            Log.v("TAG", ""+date1);
-            Log.v("TAG", ""+date2);
-            Log.v("TAG", ""+date3);
+            Log.v("TAG1", ""+date1);
+            Log.v("TAG2", ""+date2);
+            Log.v("TAG3", ""+date3);
         } catch (ParseException e) {
             e.printStackTrace();
         }

@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
-            android:text="Collect Data, get diagnosis on captured images and get diagnosis feedback from various gynaecologists"
+            android:text="Collect Data, get diagnosis on captured images and get diagnosis feedback from various medical experts"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:gravity="center"

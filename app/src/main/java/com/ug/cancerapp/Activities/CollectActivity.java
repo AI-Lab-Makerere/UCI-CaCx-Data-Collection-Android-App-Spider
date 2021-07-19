@@ -10,6 +10,8 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import com.ug.cancerapp.Fragments.Camera1Fragment;
+import com.ug.cancerapp.Fragments.ScreenFragment;
 import com.ug.cancerapp.R;
 import com.ug.cancerapp.Fragments.FirstFragment;
 

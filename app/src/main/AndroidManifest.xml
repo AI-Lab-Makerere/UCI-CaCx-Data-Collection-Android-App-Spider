@@ -22,7 +22,9 @@
         <activity android:name=".Activities.CaseActivity" />
         <activity android:name=".Activities.HomeActivity" />
         <activity android:name=".Activities.ModelActivity" />
-        <activity android:name=".Activities.LoopActivity" />
+        <activity android:name=".Activities.LoopActivity">
+
+        </activity>
         <activity
             android:name=".Activities.FeedbackActivity"
             android:parentActivityName=".Activities.GynaecologistActivity" />

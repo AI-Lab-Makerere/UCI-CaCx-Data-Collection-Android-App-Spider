@@ -13,4 +13,13 @@
         <item>Negative</item>
     </string-array>
 
+    <string-array name="same">
+        <item>Select One</item>
+        <item>Beginning of the Month</item>
+        <item>Mid of the Month</item>
+        <item>End of the Month</item>
+    </string-array>
+
+
+
 </resources>

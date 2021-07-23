@@ -12,15 +12,19 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ug.cancerapp.R;
+import com.whiteelephant.monthpicker.MonthPickerDialog;
 
 import java.util.Calendar;
 
@@ -28,11 +32,13 @@ import static com.ug.cancerapp.Fragments.FourthFragment.TEXT3;
 import static com.ug.cancerapp.Fragments.Haart2Fragment.YEARS;
 
 
-public class FifthFragment extends Fragment {
+public class FifthFragment extends Fragment implements AdapterView.OnItemSelectedListener{
 
     View view;
     Button back, next, datepicker, btnNone;
-    TextView date;
+    TextView date, times;
+    String tim, text, months, timmy;
+    Spinner spinner;
     EditText parity, abortions;
     RadioGroup radioGroup;
     RadioButton radioButton1, radioButton2, radioButton3;
@@ -47,6 +53,8 @@ public class FifthFragment extends Fragment {
     public static final String DATS = "date";
     public static final String PARITY = "parity";
     public static final String ABORTION = "abortion";
+    public static final String DATES1 = "dates1";
+    public static final String DURATION1 = "duration1";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,7 +65,7 @@ public class FifthFragment extends Fragment {
         back = view.findViewById(R.id.back);
         next = view.findViewById(R.id.next);
         datepicker = view.findViewById(R.id.datepicker);
-        btnNone = view.findViewById(R.id.none);
+//        btnNone = view.findViewById(R.id.none);
         date = view.findViewById(R.id.date);
         parity = view.findViewById(R.id.parity);
         abortions = view.findViewById(R.id.abortions);
@@ -65,6 +73,8 @@ public class FifthFragment extends Fragment {
         radioButton1 = view.findViewById(R.id.yes);
         radioButton2 = view.findViewById(R.id.no);
         radioButton3 = view.findViewById(R.id.not_sure);
+        spinner = view.findViewById(R.id.day);
+        times = view.findViewById(R.id.time);
 
         loadData();
         updateViews();
@@ -101,8 +111,10 @@ public class FifthFragment extends Fragment {
 
                 child = parity.getText().toString();
                 abort = abortions.getText().toString();
+                tim = date.getText().toString();
+                timmy = times.getText().toString();
 
-                if (value.isEmpty() || time.equals("No Date Selected") || child.isEmpty() || abort.isEmpty()) {
+                if (value.isEmpty() || tim.equals("No Date Selected") || child.isEmpty() || abort.isEmpty() || timmy.equals("Nothing Selected")) {
                     Toast.makeText(getActivity(), "Fill in all the fields", Toast.LENGTH_SHORT).show();
                 } else {
                     int part = Integer.parseInt(child);
@@ -146,41 +158,47 @@ public class FifthFragment extends Fragment {
             }
         });
 
-        btnNone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                date.setText("Not Sure");
-            }
-        });
-
         datepicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Calendar calendar = Calendar.getInstance();
                 int year = calendar.get(calendar.YEAR);
                 int month = calendar.get(Calendar.MONTH);
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
+//                int day = calendar.get(Calendar.DAY_OF_MONTH);
+//
+//                int style = AlertDialog.THEME_HOLO_LIGHT;
+//
+//                DatePickerDialog dialog = new DatePickerDialog(getContext(), style, dateSetListener, year, month, day);
+////                disable past date
+////                dialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+////                disable future date
+//                dialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+//                dialog.show();
 
-                int style = AlertDialog.THEME_HOLO_LIGHT;
+                MonthPickerDialog.Builder builder = new MonthPickerDialog.Builder(getActivity(), new MonthPickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(int selectedMonth, int selectedYear) {
+                        tim = (selectedMonth + 1) + "/" + selectedYear;
+                        date.setText(tim);
+//                        linearLayout.setVisibility(View.VISIBLE);
+                    }
+                }, year, month);
 
-                DatePickerDialog dialog = new DatePickerDialog(getContext(), style, dateSetListener, year, month, day);
-//                disable past date
-//                dialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
-//                disable future date
-                dialog.getDatePicker().setMaxDate(System.currentTimeMillis());
-                dialog.show();
+                builder.setActivatedMonth(month)
+                        .setMinYear(2010)
+                        .setActivatedYear(year)
+                        .setMaxYear(year)
+                        .setTitle("Select Month")
+                        .build().show();
 
             }
         });
 
-        dateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month = month + 1;
-                String data = day + "/" + month + "/" + year;
-                date.setText(data);
-            }
-        };
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.same, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
 
         child = parity.getText().toString();
         abort = abortions.getText().toString();
@@ -194,7 +212,9 @@ public class FifthFragment extends Fragment {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putString(PREGNANT, value);
-        editor.putString(DATS, date.getText().toString());
+        editor.putString(DATS, months);
+        editor.putString(DATES1, tim);
+        editor.putString(DURATION1, times.getText().toString());
         editor.putString(PARITY, parity.getText().toString());
         editor.putString(ABORTION, abortions.getText().toString());
 
@@ -205,14 +225,17 @@ public class FifthFragment extends Fragment {
     public void loadData() {
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         value = sharedPreferences.getString(PREGNANT, "");
-        time = sharedPreferences.getString(DATS, "");
+        months = sharedPreferences.getString(DATS, "");
+        timmy = sharedPreferences.getString(DURATION1, "");
+        tim = sharedPreferences.getString(DATES1, "");
         child = sharedPreferences.getString(PARITY, "");
         abort = sharedPreferences.getString(ABORTION, "");
 
     }
 
     public void updateViews() {
-        date.setText(time);
+        date.setText(tim);
+        times.setText(timmy);
         parity.setText(child);
         abortions.setText(abort);
         if (value.equals("Yes")) {
@@ -236,4 +259,30 @@ public class FifthFragment extends Fragment {
 
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        text = parent.getItemAtPosition(position).toString();
+        if (!(tim == null)){
+            if (position == 1){
+                times.setText(text);
+                months = "01/" + tim;
+//                Toast.makeText(getActivity(), months, Toast.LENGTH_SHORT).show();
+            }else  if (position == 2){
+                times.setText(text);
+                months = "15/" + tim;
+//                Toast.makeText(getActivity(), months, Toast.LENGTH_SHORT).show();
+            }else if (position == 3) {
+                times.setText(text);
+                months = "29/" + tim;
+//                Toast.makeText(getActivity(), months, Toast.LENGTH_SHORT).show();
+            }
+        }else {
+            Toast.makeText(getActivity(), "Please first select the month and the year", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }

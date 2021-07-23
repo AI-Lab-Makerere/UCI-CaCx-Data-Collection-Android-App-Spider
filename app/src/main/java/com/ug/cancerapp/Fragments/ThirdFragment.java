@@ -18,6 +18,8 @@ import android.widget.Toast;
 import com.ug.cancerapp.R;
 
 import static com.ug.cancerapp.Fragments.OtherFragment.OTHER;
+import static com.ug.cancerapp.Fragments.ScreenFragment.DATES;
+import static com.ug.cancerapp.Fragments.ScreenFragment.DURATION;
 import static com.ug.cancerapp.Fragments.ScreenFragment.METHOD;
 import static com.ug.cancerapp.Fragments.ScreenFragment.CHOICE;
 import static com.ug.cancerapp.Fragments.ScreenFragment.DATEPICKER;
@@ -130,6 +132,8 @@ public class ThirdFragment extends Fragment {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove(METHOD);
         editor.remove(DATEPICKER);
+        editor.remove(DATES);
+        editor.remove(DURATION);
         editor.remove(TREATMENT);
         editor.remove(CHOICE);
         editor.apply();

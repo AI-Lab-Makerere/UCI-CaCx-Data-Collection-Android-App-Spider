@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import com.ug.cancerapp.Fragments.Camera1Fragment;
+import com.ug.cancerapp.Fragments.FifthFragment;
 import com.ug.cancerapp.Fragments.ScreenFragment;
 import com.ug.cancerapp.R;
 import com.ug.cancerapp.Fragments.FirstFragment;
@@ -38,7 +39,7 @@ public class CollectActivity extends AppCompatActivity {
         }
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.fragment_container, new FirstFragment());
+        fragmentTransaction.add(R.id.fragment_container, new FifthFragment());
         fragmentTransaction.commit();
 
     }

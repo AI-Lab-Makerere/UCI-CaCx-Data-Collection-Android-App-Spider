@@ -156,8 +156,8 @@ public class Other2Fragment extends Fragment {
                 progressDialog.setMessage("Saving Data...");
                 progressDialog.show();
                 makePredictions();
-//                editor.clear();
-//                editor.apply();
+                editor.clear();
+                editor.apply();
 
             }
         });

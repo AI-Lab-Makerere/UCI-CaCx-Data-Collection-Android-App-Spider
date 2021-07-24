@@ -45,7 +45,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
     public void onBindViewHolder(@NonNull ReviewHolder holder, int position) {
         holder.study.setText("StudyID: " + gynecologists.get(position).getStudyId());
         holder.age.setText("Age: " + gynecologists.get(position).getAge());
-        holder.via.setText("Nurse's VIA Results: " + gynecologists.get(position).getNurse());
+//        holder.via.setText("Nurse's VIA Results: " + gynecologists.get(position).getNurse());
     }
 
     @Override

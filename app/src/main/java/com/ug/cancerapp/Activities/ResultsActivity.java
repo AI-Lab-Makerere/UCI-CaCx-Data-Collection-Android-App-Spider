@@ -100,8 +100,8 @@ public class ResultsActivity extends AppCompatActivity {
 
             @Override
             public void onFeedClick(int position) {
-                String via = gynecologistList.get(position).getGyneVia();
-                String notes = gynecologistList.get(position).getGyneNotes();
+//                String via = gynecologistList.get(position).getGyneVia();
+//                String notes = gynecologistList.get(position).getGyneNotes();
 
                 dialog = new Dialog(ResultsActivity.this);
                 dialog.setContentView(R.layout.feedback);
@@ -109,8 +109,8 @@ public class ResultsActivity extends AppCompatActivity {
                 results = dialog.findViewById(R.id.results);
                 note = dialog.findViewById(R.id.notes);
 
-                results.setText(via);
-                note.setText(notes);
+//                results.setText(via);
+//                note.setText(notes);
 
                 dialog.show();
             }
@@ -147,11 +147,11 @@ public class ResultsActivity extends AppCompatActivity {
                     instanceID += cas.getInstanceID();
                     studyId += cas.getStudyID();
                     age += cas.getAge();
-                    via += cas.getViaResults();
+//                    via += cas.getViaResults();
                     gyneResults += cas.getGyneco().get(0).getViaResult();
                     gynenotes += cas.getGyneco().get(0).getNotes();
-                    Gynecologist gynecologist = new Gynecologist(instanceID, studyId, age, via, gynenotes, gyneResults, "");
-                    gynecologistList.add(gynecologist);
+//                    Gynecologist gynecologist = new Gynecologist(instanceID, studyId, age, via, gynenotes, gyneResults, "");
+//                    gynecologistList.add(gynecologist);
 
                 }
 

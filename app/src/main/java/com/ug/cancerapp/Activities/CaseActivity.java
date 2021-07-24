@@ -139,9 +139,9 @@ public class CaseActivity extends AppCompatActivity {
                     instanceID += cas.getEntry().getInstanceID();
                     studyId += cas.getEntry().getStudyID();
                     age += cas.getEntry().getAge();
-                    via += cas.getViaResult();
-                    Gynecologist gynecologist = new Gynecologist(instanceID, studyId, age, via, "", "", "");
-                    gynecologistList.add(gynecologist);
+//                    via += cas.getViaResult();
+//                    Gynecologist gynecologist = new Gynecologist(instanceID, studyId, age, via, "", "", "");
+//                    gynecologistList.add(gynecologist);
 
                 }
 

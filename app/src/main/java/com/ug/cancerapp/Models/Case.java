@@ -2,6 +2,7 @@ package com.ug.cancerapp.Models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
 import java.util.List;
 
 public class Case {
@@ -9,18 +10,19 @@ public class Case {
     String instanceID;
     String studyID;
     int age;
-    String viaResult;
-    String ml_via_result;
+    String date;
     @SerializedName("gynecologist_reviews")
     List<Gyneco> gyneco;
+    @SerializedName("mlresults")
+    List<Mlresults> mlresults;
 
-    public Case(String instanceID, String studyID, int age, String viaResult, String ml_via_result, List<Gyneco> gyneco) {
+    public Case(String instanceID, String studyID, int age, String date, List<Gyneco> gyneco, List<Mlresults> mlresults) {
         this.instanceID = instanceID;
         this.studyID = studyID;
         this.age = age;
-        this.viaResult = viaResult;
-        this.ml_via_result = ml_via_result;
+        this.date = date;
         this.gyneco = gyneco;
+        this.mlresults = mlresults;
     }
 
     public String getInstanceID() {
@@ -35,19 +37,15 @@ public class Case {
         return age;
     }
 
-    public String getViaResults() {
-        return viaResult;
+    public String getDate() {
+        return date;
     }
 
     public List<Gyneco> getGyneco() {
         return gyneco;
     }
 
-    public String getViaResult() {
-        return viaResult;
-    }
-
-    public String getMl_via_result() {
-        return ml_via_result;
+    public List<Mlresults> getMlresults() {
+        return mlresults;
     }
 }

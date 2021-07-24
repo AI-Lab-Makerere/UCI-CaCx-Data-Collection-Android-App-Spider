@@ -17,14 +17,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.SavedActivity"
-            android:parentActivityName=".Activities.DashBoardActivity"></activity>
+        <activity android:name=".Activities.SavingActivity">
+
+        </activity>
+        <activity
+            android:name=".Activities.SavedActivity"
+            android:parentActivityName=".Activities.DashBoardActivity" />
         <activity android:name=".Activities.CaseActivity" />
         <activity android:name=".Activities.HomeActivity" />
         <activity android:name=".Activities.ModelActivity" />
-        <activity android:name=".Activities.LoopActivity">
-
-        </activity>
+        <activity android:name=".Activities.LoopActivity"></activity>
         <activity
             android:name=".Activities.FeedbackActivity"
             android:parentActivityName=".Activities.GynaecologistActivity" />
@@ -39,7 +41,13 @@
         </activity>
         <activity
             android:name=".Activities.GynaecologistActivity"
-            android:parentActivityName=".Activities.HomeActivity" />
+            android:parentActivityName=".Activities.HomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Activities.ResultsActivity"
             android:parentActivityName=".Activities.DashBoardActivity" />
@@ -70,12 +78,8 @@
         </activity>
         <activity
             android:name=".Activities.CollectActivity"
-            android:parentActivityName=".Activities.DashBoardActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:parentActivityName=".Activities.DashBoardActivity">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"

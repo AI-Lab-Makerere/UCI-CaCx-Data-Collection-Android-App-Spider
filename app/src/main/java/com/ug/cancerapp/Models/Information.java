@@ -1,6 +1,7 @@
 package com.ug.cancerapp.Models;
 
 import java.util.Date;
+import java.util.List;
 
 public class Information {
 
@@ -17,13 +18,15 @@ public class Information {
     private String parity, abortions;
     private String contraceptives, otherContraceptive;
     private String viaResult, nurse_notes;
+    List<Mlresults> mlresults;
 
-    public Information(String instanceID, String studyID, String initials, String district, String county,
-                       String village, int age, String symptoms, String selectSymptoms, String otherSymptoms,
-                       String priorCaCxScreening, String pastScreeningMethod, String pastCaCxScreeningResults,
-                       String priorTreatment, String whenLastScreening, String hivStatus, String onHAART,
-                       String hAARTDuration, String untitled67, String lnmp, String parity, String abortions,
-                       String contraceptives, String otherContraceptive, String viaResult, String nurse_notes) {
+    public Information(String instanceID, String studyID, String initials, String district,
+                       String county, String village, int age, String symptoms, String selectSymptoms,
+                       String otherSymptoms, String priorCaCxScreening, String pastScreeningMethod,
+                       String pastCaCxScreeningResults, String priorTreatment, String whenLastScreening,
+                       String hivStatus, String onHAART, String hAARTDuration, String untitled67,
+                       String lnmp, String parity, String abortions, String contraceptives, String otherContraceptive,
+                       String viaResult, String nurse_notes, List<Mlresults> mlresults) {
         this.instanceID = instanceID;
         this.studyID = studyID;
         this.initials = initials;
@@ -50,6 +53,7 @@ public class Information {
         this.otherContraceptive = otherContraceptive;
         this.viaResult = viaResult;
         this.nurse_notes = nurse_notes;
+        this.mlresults = mlresults;
     }
 
     public String getInstanceID() {
@@ -154,5 +158,9 @@ public class Information {
 
     public String getNurse_notes() {
         return nurse_notes;
+    }
+
+    public List<Mlresults> getMlresults() {
+        return mlresults;
     }
 }

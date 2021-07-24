@@ -30,8 +30,14 @@ import com.ug.cancerapp.Models.Case;
 import com.ug.cancerapp.Models.Gynecologist;
 import com.ug.cancerapp.R;
 
+import org.ocpsoft.prettytime.PrettyTime;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,7 +59,7 @@ public class GynaecologistActivity extends AppCompatActivity {
     JsonPlaceHolder jsonPlaceHolder;
 
     public static final String SHARED_API = "sharedApi";
-    String username, token, facility;
+    String username, token, facility, ago;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,12 +121,12 @@ public class GynaecologistActivity extends AppCompatActivity {
             @Override
             public void onFeedClick(int position) {
                 String instanceId = gynecologistList.get(position).getInstanceID();
-                String nurse = gynecologistList.get(position).getNurse();
-                String ml_result = gynecologistList.get(position).getMl_via_result();
+//                String nurse = gynecologistList.get(position).getNurse();
+//                String ml_result = gynecologistList.get(position).getMl_via_result();
                 Intent intent = new Intent(GynaecologistActivity.this, FeedbackActivity.class);
                 intent.putExtra("uuid", instanceId);
-                intent.putExtra("nurse", nurse);
-                intent.putExtra("ml_result", ml_result);
+//                intent.putExtra("nurse", nurse);
+//                intent.putExtra("ml_result", ml_result);
                 startActivity(intent);
             }
         });
@@ -149,14 +155,23 @@ public class GynaecologistActivity extends AppCompatActivity {
                     String instanceID = "";
                     String studyId = "";
                     String age = "";
-                    String via = "";
-                    String ml_result = "";
+                    String date = "";
                     instanceID += cas.getInstanceID();
                     studyId += cas.getStudyID();
                     age += cas.getAge();
-                    via += cas.getViaResults();
-                    ml_result += cas.getMl_via_result();
-                    Gynecologist gynecologist = new Gynecologist(instanceID, studyId, age, via, "", "", ml_result);
+                    date += cas.getDate();
+
+                    try {
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+                        long time = 0;
+                        time = sdf.parse(date).getTime();
+                        PrettyTime prettyTime = new PrettyTime(Locale.getDefault());
+                        ago = prettyTime.format(new Date(time)) + " ago";
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    Gynecologist gynecologist = new Gynecologist(instanceID, studyId, age, ago);
                     gynecologistList.add(gynecologist);
 
                 }
@@ -175,6 +190,16 @@ public class GynaecologistActivity extends AppCompatActivity {
                 Toast.makeText(GynaecologistActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private String formatDate(String date) throws ParseException {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        long time = sdf.parse(date).getTime();
+        PrettyTime prettyTime = new PrettyTime(Locale.getDefault());
+        String ago = prettyTime.format(new Date(time));
+
+        return ago;
     }
 
     @Override

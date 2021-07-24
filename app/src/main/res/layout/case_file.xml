@@ -31,12 +31,11 @@
             android:textColor="@color/colorTextPrimary"/>
 
         <TextView
-            android:layout_marginTop="10dp"
+            android:id="@+id/date"
             android:layout_width="match_parent"
             android:textSize="12sp"
             android:layout_height="wrap_content"
-            android:textStyle="italic"
-            android:text="This case needs your review"/>
+            android:text="Form filled in on:"/>
 
         <LinearLayout
             android:layout_marginTop="5dp"
@@ -46,24 +45,12 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/images"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_weight="2"
-                android:text="Images"
-                android:textAllCaps="false"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="10dp"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@color/colorBackground"
-                android:background="@drawable/primary_btn"/>
-
-            <Button
                 android:id="@+id/data"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
-                android:layout_weight="3"
-                android:text="More Data"
+                android:layout_weight="5"
+                android:text="Load More Data"
+                android:layout_marginRight="10dp"
                 android:textAllCaps="false"
                 android:layout_marginBottom="10dp"
                 android:layout_gravity="center_horizontal"
@@ -75,7 +62,7 @@
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_weight="5"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="10dp"
                 android:text="Provide Feedback"
                 android:textAllCaps="false"
                 android:layout_marginBottom="10dp"

@@ -57,13 +57,11 @@ public class DataActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Patient's Data");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         instanceId = getIntent().getStringExtra("uuid");
         act = getIntent().getStringExtra("extra");
 
-        models = findViewById(R.id.models);
+//        models = findViewById(R.id.models);
 
         progressBar = findViewById(R.id.spin_kit);
         ns = findViewById(R.id.empty);
@@ -93,7 +91,7 @@ public class DataActivity extends AppCompatActivity {
             public void onResponse(Call<Information> call, Response<Information> response) {
                 if (!response.isSuccessful()){
                     progressBar.setVisibility(View.INVISIBLE);
-                    Toast.makeText(DataActivity.this, "COnnection issue: " + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DataActivity.this, "Connection issue: " + response.code(), Toast.LENGTH_SHORT).show();
                     return;
                 }
 

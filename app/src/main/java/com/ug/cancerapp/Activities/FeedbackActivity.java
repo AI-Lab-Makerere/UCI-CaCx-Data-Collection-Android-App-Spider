@@ -6,7 +6,10 @@ import androidx.appcompat.widget.Toolbar;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Adapter;
@@ -14,21 +17,30 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.ug.cancerapp.Apis.ApiClient;
 import com.ug.cancerapp.Apis.JsonPlaceHolder;
 import com.ug.cancerapp.Models.Feedback;
+import com.ug.cancerapp.Models.Information;
 import com.ug.cancerapp.Models.Review;
 import com.ug.cancerapp.R;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.text.ParseException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Url;
 
 import static com.ug.cancerapp.Activities.LoginActivity.EMAIL;
 import static com.ug.cancerapp.Activities.LoginActivity.TOKEN;
@@ -42,8 +54,11 @@ public class FeedbackActivity extends AppCompatActivity implements AdapterView.O
     RelativeLayout feedback;
     LinearLayout mml;
     TextView txtnurse, txtmodel, txtgyne;
+    ImageView imageView1, imageView2, imageView3, imageView4;
+    Bitmap bitmap1, bitmap2, bitmap3, bitmap4;
+    URL url1, url2, url3, url4;
 
-    String instanceId, viaResults, moreNotes, nurse, ml_result;
+    String instanceId, viaResults, moreNotes, nurse, ml_result, image1, image2, image3, image4;
     JsonPlaceHolder jsonPlaceHolder;
 
     public static final String SHARED_API = "sharedApi";
@@ -63,19 +78,24 @@ public class FeedbackActivity extends AppCompatActivity implements AdapterView.O
         spinner = findViewById(R.id.via);
         notes = findViewById(R.id.notes);
         save = findViewById(R.id.save);
-        model = findViewById(R.id.model);
-        cont = findViewById(R.id.cont);
+//        model = findViewById(R.id.model);
+//        cont = findViewById(R.id.cont);
         feedback = findViewById(R.id.feedback);
-        mml = findViewById(R.id.mml);
-        txtnurse = findViewById(R.id.nurse);
-        txtmodel = findViewById(R.id.models);
-        txtgyne = findViewById(R.id.gyne);
+//        mml = findViewById(R.id.mml);
+//        txtnurse = findViewById(R.id.nurse);
+//        txtmodel = findViewById(R.id.models);
+//        txtgyne = findViewById(R.id.gyne);
+        imageView1 = findViewById(R.id.image1);
+        imageView2 = findViewById(R.id.image2);
+        imageView3 = findViewById(R.id.image3);
+        imageView4 = findViewById(R.id.image4);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_API, MODE_PRIVATE);
+        token = sharedPreferences.getString(TOKEN, "");
+        username = sharedPreferences.getString(EMAIL, "");
 
 
         instanceId = getIntent().getStringExtra("uuid");
-        nurse = getIntent().getStringExtra("nurse");
-        ml_result = getIntent().getStringExtra("ml_result");
-
 
         progressDialog = new ProgressDialog(this);
 
@@ -105,30 +125,15 @@ public class FeedbackActivity extends AppCompatActivity implements AdapterView.O
             }
         });
 
-        model.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                moreNotes = notes.getText().toString().trim();
+//        cont.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(FeedbackActivity.this, GynaecologistActivity.class));
+//                finish();
+//            }
+//        });
 
-                if (viaResults.equals("Select One")){
-                    Toast.makeText(FeedbackActivity.this, "Please select either Positive or Negative", Toast.LENGTH_SHORT).show();
-                }
-                else if (moreNotes.isEmpty()){
-                    Toast.makeText(FeedbackActivity.this, "Please provide some notes supporting your VIA Results", Toast.LENGTH_SHORT).show();
-                }else {
-                    saveData();
-                    loadModel();
-                }
-            }
-        });
-
-        cont.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(FeedbackActivity.this, GynaecologistActivity.class));
-                finish();
-            }
-        });
+        loadImages();
 
     }
 
@@ -147,10 +152,6 @@ public class FeedbackActivity extends AppCompatActivity implements AdapterView.O
 
         progressDialog.setMessage("Just a second");
         progressDialog.show();
-
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_API, MODE_PRIVATE);
-        token = sharedPreferences.getString(TOKEN, "");
-        username = sharedPreferences.getString(EMAIL, "");
 
         Feedback feedback = new Feedback(instanceId, viaResults, username, moreNotes);
 
@@ -178,28 +179,79 @@ public class FeedbackActivity extends AppCompatActivity implements AdapterView.O
 
     }
 
-    private void loadModel() {
 
-        feedback.setVisibility(View.GONE);
-        mml.setVisibility(View.VISIBLE);
+    private void loadImages() {
 
-        txtnurse.setText(nurse);
-        if (nurse.equals("Positive")){
-            txtnurse.setTextColor(Color.parseColor("#FFA726"));
-        }else {
-            txtnurse.setTextColor(Color.parseColor("#C33B2F"));
+        progressDialog.setMessage("Loading Images...");
+        progressDialog.show();
+
+        Call<Information> call = jsonPlaceHolder.patient("Bearer " + token, instanceId);
+        call.enqueue(new Callback<Information>() {
+            @Override
+            public void onResponse(Call<Information> call, Response<Information> response) {
+                if (!response.isSuccessful()){
+//                    progressBar.setVisibility(View.INVISIBLE);
+                    Toast.makeText(FeedbackActivity.this, "Connection issue: " + response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                image1 = response.body().getMlresults().get(0).getImage_url();
+                image2 = response.body().getMlresults().get(1).getImage_url();
+                image3 = response.body().getMlresults().get(2).getImage_url();
+                image4 = response.body().getMlresults().get(3).getImage_url();
+
+                Toast.makeText(FeedbackActivity.this, image1, Toast.LENGTH_SHORT).show();
+                Picasso.get().load(image1).into(imageView1);
+                Picasso.get().load(image2).into(imageView2);
+                Picasso.get().load(image3).into(imageView3);
+                Picasso.get().load(image4).into(imageView4);
+
+                progressDialog.dismiss();
+//                loadBitmaps();
+
+            }
+
+            @Override
+            public void onFailure(Call<Information> call, Throwable t) {
+//                progressBar.setVisibility(View.INVISIBLE);
+                Toast.makeText(FeedbackActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void loadBitmaps() throws IOException {
+
+//        new loadingImages().execute();
+        Picasso.get().load(image1).into(imageView1);
+        progressDialog.dismiss();
+
+    }
+
+    class loadingImages extends AsyncTask<Void, Void, Void>{
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
         }
-        txtmodel.setText(ml_result);
-        if (ml_result.equals("Positive")){
-            txtmodel.setTextColor(Color.parseColor("#FFA726"));
-        }else {
-            txtmodel.setTextColor(Color.parseColor("#C33B2F"));
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            try {
+                url1 = new URL(image1);
+                bitmap1 = BitmapFactory.decodeStream(url1.openConnection().getInputStream());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return null;
         }
-        txtgyne.setText(viaResults);
-        if (viaResults.equals("Positive")){
-            txtgyne.setTextColor(Color.parseColor("#FFA726"));
-        }else {
-            txtgyne.setTextColor(Color.parseColor("#C33B2F"));
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+            imageView1.setImageBitmap(bitmap1);
+            progressDialog.dismiss();
         }
     }
 }

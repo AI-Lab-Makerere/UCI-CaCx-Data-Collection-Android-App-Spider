@@ -525,7 +525,7 @@ public class RecordsActivity extends AppCompatActivity {
         if (nurse.equals(mmv)){
             agree.setText("You and the model are in: Agreement");
         }else {
-            agree.setText("You and the model are in: Discordance");
+            agree.setText("You and the model are in: Disagreement");
         }
 
     }

@@ -47,6 +47,7 @@ public class GynecologistAdapter extends RecyclerView.Adapter<GynecologistAdapte
 
         holder.study.setText("StudyID: " + gynecologists.get(position).getStudyId());
         holder.age.setText("Age: " + gynecologists.get(position).getAge());
+        holder.dat.setText("Form filled in: " + gynecologists.get(position).getDate());
     }
 
     @Override
@@ -56,7 +57,7 @@ public class GynecologistAdapter extends RecyclerView.Adapter<GynecologistAdapte
 
     public static class GynecologistHolder extends RecyclerView.ViewHolder {
 
-        TextView study, age;
+        TextView study, age, dat;
         Button image, data, feedback;
 
         public GynecologistHolder(@NonNull View itemView, OnItemClickListener listener) {
@@ -64,21 +65,22 @@ public class GynecologistAdapter extends RecyclerView.Adapter<GynecologistAdapte
 
             study = itemView.findViewById(R.id.studyId);
             age = itemView.findViewById(R.id.age);
-            image = itemView.findViewById(R.id.images);
+            dat = itemView.findViewById(R.id.date);
+//            image = itemView.findViewById(R.id.images);
             data = itemView.findViewById(R.id.data);
             feedback = itemView.findViewById(R.id.feedback);
 
-            image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null){
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION){
-                            listener.onImageClick(position);
-                        }
-                    }
-                }
-            });
+//            image.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if (listener != null){
+//                        int position = getAdapterPosition();
+//                        if (position != RecyclerView.NO_POSITION){
+//                            listener.onImageClick(position);
+//                        }
+//                    }
+//                }
+//            });
 
             data.setOnClickListener(new View.OnClickListener() {
                 @Override

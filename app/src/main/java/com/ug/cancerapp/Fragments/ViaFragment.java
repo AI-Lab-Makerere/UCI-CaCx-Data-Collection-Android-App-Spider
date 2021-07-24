@@ -1,6 +1,7 @@
 package com.ug.cancerapp.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -17,6 +18,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.ug.cancerapp.R;
+import com.ug.cancerapp.Activities.SavingActivity;
 
 public class ViaFragment extends Fragment {
 
@@ -84,9 +86,10 @@ public class ViaFragment extends Fragment {
                     Toast.makeText(getActivity(), "Fill in all fields", Toast.LENGTH_SHORT).show();
                 }else {
                     saveData();
-                    FragmentTransaction fr = getFragmentManager().beginTransaction();
-                    fr.replace(R.id.fragment_container, new Other2Fragment());
-                    fr.commit();
+//                    FragmentTransaction fr = getFragmentManager().beginTransaction();
+//                    fr.replace(R.id.fragment_container, new Other2Fragment());
+//                    fr.commit();
+                    startActivity(new Intent(getActivity(), SavingActivity.class));
                 }
 
             }

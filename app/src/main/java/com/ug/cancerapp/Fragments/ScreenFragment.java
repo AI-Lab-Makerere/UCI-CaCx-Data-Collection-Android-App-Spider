@@ -152,7 +152,7 @@ public class ScreenFragment extends Fragment implements AdapterView.OnItemSelect
                 timmy = time.getText().toString();
 
 
-                if (method.isEmpty() || past.isEmpty() || tim.equals("No Date Selected") || treat.isEmpty() || timmy.equals("Nothing Selected") ){
+                if (method.isEmpty() || past.isEmpty() || tim.isEmpty() || treat.isEmpty() || timmy.isEmpty() ){
                     Toast.makeText(getActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }else{
                     saveData();

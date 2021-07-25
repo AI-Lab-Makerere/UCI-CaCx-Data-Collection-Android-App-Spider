@@ -46,7 +46,7 @@ public class DataActivity extends AppCompatActivity {
     public static final String SHARED_API = "sharedApi";
     String token;
 
-    LinearLayout ns, models;
+    LinearLayout ns, models, nurseOnly;
     TextView error, message, swipe;
 
     @Override
@@ -68,6 +68,8 @@ public class DataActivity extends AppCompatActivity {
         error = findViewById(R.id.error);
         message = findViewById(R.id.message);
         swipe = findViewById(R.id.swip);
+
+        nurseOnly = findViewById(R.id.nurseOnly);
 
         jsonPlaceHolder = ApiClient.getClient().create(JsonPlaceHolder.class);
 
@@ -188,6 +190,30 @@ public class DataActivity extends AppCompatActivity {
         con.setText("Contraceptives Used: " + response.body().getContraceptives());
 //        TextView via = findViewById(R.id.via);
 //        via.setText("Nurse's Via Results: " + response.body().getViaResult());
+
+        if (act.equals("nurse") || act.equals("expert")){
+            TextView address = findViewById(R.id.address);
+            address.setText("Address: " + response.body().getDistrict() + "-" + response.body().getCounty() + "(" + response.body().getVillage() + ")");
+            address.setVisibility(View.VISIBLE);
+            nurseOnly.setVisibility(View.VISIBLE);
+            TextView via = findViewById(R.id.via);
+            String nurse = response.body().getViaResult();
+            via.setText("Nurse's VIA Results: " + nurse);
+            TextView loc = findViewById(R.id.lesion);
+            loc.setText("Location of the Lesion: " + response.body().getLesionLocation());
+            TextView notes = findViewById(R.id.notes);
+            notes.setText("Nurse's Notes: " + response.body().getNurse_notes());
+            TextView model = findViewById(R.id.model);
+            String mmv = response.body().getMl_via_result();
+            model.setText("Model Predictions: " + mmv);
+            TextView agree = findViewById(R.id.agreement);
+            if (nurse.equals(mmv)){
+                agree.setText("Nurse and the model are in: Agreement");
+            }else {
+                agree.setText("Nurse and the model were in: Disagreement");
+            }
+        }
+
         progressBar.setVisibility(View.INVISIBLE);
 
     }
@@ -208,8 +234,14 @@ public class DataActivity extends AppCompatActivity {
         if (act.equals("gyne")){
             Intent intent = new Intent(DataActivity.this, GynaecologistActivity.class);
             startActivity(intent);
-        }else {
+        }else if (act.equals("case")){
             Intent intent = new Intent(DataActivity.this, CaseActivity.class);
+            startActivity(intent);
+        }else if (act.equals("nurse")){
+            Intent intent = new Intent(DataActivity.this, SavedActivity.class);
+            startActivity(intent);
+        }else {
+            Intent intent = new Intent(DataActivity.this, ResultsActivity.class);
             startActivity(intent);
         }
     }

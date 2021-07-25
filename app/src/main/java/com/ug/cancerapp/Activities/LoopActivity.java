@@ -31,77 +31,16 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
 
-public class LoopActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class LoopActivity extends AppCompatActivity{
 
-    TextView etDate, etMonthYear, etYear;
-    LinearLayout linearLayout;
-    Spinner spinner;
-    String text, time, months;
-    Calendar calendar;
-    int year, month;
-    int year1, month1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loop);
 
-//        etDate = findViewById(R.id.txt_date);
-        etMonthYear = findViewById(R.id.txt_month_year);
-        etYear = findViewById(R.id.txt_year);
-        linearLayout = findViewById(R.id.vnc);
-        spinner = findViewById(R.id.day);
-
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.same, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this);
 
     }
 
-    public void btnMonthYear(View view) {
 
-         calendar = Calendar.getInstance();
-         month = calendar.get(Calendar.MONTH);
-         year = calendar.get(Calendar.YEAR);
-
-        MonthPickerDialog.Builder builder = new MonthPickerDialog.Builder(this, new MonthPickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(int selectedMonth, int selectedYear) {
-                time = (selectedMonth + 1) + "/" + selectedYear;
-                etMonthYear.setText(time);
-                linearLayout.setVisibility(View.VISIBLE);
-            }
-        }, year, month);
-
-        builder.setActivatedMonth(month)
-                .setMinYear(2010)
-                .setActivatedYear(year)
-                .setMaxYear(year)
-                .setTitle("Select Month")
-                .build().show();
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        text = parent.getItemAtPosition(position).toString();
-        if (position == 1){
-            etYear.setText(text);
-            months = "01/" + time;
-            Toast.makeText(this, months, Toast.LENGTH_SHORT).show();
-        }else  if (position == 2){
-            etYear.setText(text);
-            months = "15/" + time;
-            Toast.makeText(this, months, Toast.LENGTH_SHORT).show();
-        }else if (position == 3) {
-            etYear.setText(text);
-            months = "29/" + time;
-            Toast.makeText(this, months, Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
 }

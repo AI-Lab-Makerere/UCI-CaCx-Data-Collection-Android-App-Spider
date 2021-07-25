@@ -44,8 +44,9 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
     @Override
     public void onBindViewHolder(@NonNull ReviewHolder holder, int position) {
         holder.study.setText("StudyID: " + gynecologists.get(position).getStudyId());
-        holder.age.setText("Age: " + gynecologists.get(position).getAge());
-//        holder.via.setText("Nurse's VIA Results: " + gynecologists.get(position).getNurse());
+        holder.age.setText("Nurse's VIA Results: " + gynecologists.get(position).getViaResults());
+        holder.via.setText("Expert's VIA Results: " + gynecologists.get(position).getGynResults());
+        holder.date.setText("Model Predictions: " + gynecologists.get(position).getDate());
     }
 
     @Override
@@ -55,7 +56,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
 
     public static class ReviewHolder extends RecyclerView.ViewHolder{
 
-        TextView study, age, via;
+        TextView study, age, via, date;
         Button image, data, feedback;
 
 
@@ -65,6 +66,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
             study = itemView.findViewById(R.id.studyId);
             age = itemView.findViewById(R.id.age);
             via = itemView.findViewById(R.id.via);
+            date = itemView.findViewById(R.id.date);
             image = itemView.findViewById(R.id.images);
             data = itemView.findViewById(R.id.data);
             feedback = itemView.findViewById(R.id.feedback);

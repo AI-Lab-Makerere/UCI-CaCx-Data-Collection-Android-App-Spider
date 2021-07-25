@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/root_layout"
     tools:context=".Activities.RecordsActivity">
 
     <include layout="@layout/toolbar"
@@ -39,7 +40,7 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="20dp"
         android:textAllCaps="false"
-        android:textColor="@color/colorPrimary"
-        android:background="@drawable/secondary_btn_bg"/>
+        android:textColor="@color/colorBackground"
+        android:background="@drawable/primary_btn"/>
 
 </RelativeLayout>

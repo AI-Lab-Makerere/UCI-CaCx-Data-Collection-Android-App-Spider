@@ -36,7 +36,7 @@ import static com.ug.cancerapp.Fragments.FirstFragment.STUDY;
 public class SplashActivity extends AppCompatActivity {
 
     LinearLayout root_layout;
-    static int SPLASH_TIME_OUT = 5000;
+    static int SPLASH_TIME_OUT = 1000;
     boolean InternetCheck = true;
 
     public static final String SHARED_API = "sharedApi";
@@ -61,12 +61,12 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                boolean InternetResult = checkConnection();
-                if (InternetResult){
+//                boolean InternetResult = checkConnection();
+//                if (InternetResult){
                     goToHome();
-                }else{
-                    DialogAppear();
-                }
+//                }else{
+//                    DialogAppear();
+//                }
             }
         }, SPLASH_TIME_OUT);
     }
@@ -82,7 +82,9 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(new Intent(SplashActivity.this, HomeActivity.class));
                 finish();
             }else {
-                saveThreshold();
+//                saveThreshold();
+                startActivity(new Intent(SplashActivity.this, DashBoardActivity.class));
+                finish();
             }
 
         }

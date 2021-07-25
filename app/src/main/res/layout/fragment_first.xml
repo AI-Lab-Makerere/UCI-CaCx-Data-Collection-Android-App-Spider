@@ -170,6 +170,16 @@
             android:background="#FDFBFB"
             android:layout_marginBottom="-1dp">
 
+            <Button
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:visibility="gone"
+                android:background="@drawable/primary_btn"
+                android:text="Back"
+                android:textColor="@color/colorBackground" />
+
 
             <Button
                 android:id="@+id/next"

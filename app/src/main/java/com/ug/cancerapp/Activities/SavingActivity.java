@@ -83,8 +83,8 @@ public class SavingActivity extends AppCompatActivity {
     public static String uniqueID;
 
     SharedPreferences sharedPreferences;
-    SharedPreferences sharedPreferences2;
     SharedPreferences.Editor editor;
+
 
     String via;
     float pos, pos2, pos4, pos3, neg, neg2, neg3, neg4;
@@ -185,8 +185,6 @@ public class SavingActivity extends AppCompatActivity {
 //            Toast.makeText(SavingActivity.this, "Via: " + viar + "\nVia2: " + viar2 +
 //                    "\nVia3: " + viar3 + "\nVia4: " + viar4 + "\nDiagnosis: " + mmv, Toast.LENGTH_SHORT).show();
             linearLayout.setVisibility(View.VISIBLE);
-//            editor.clear();
-//            editor.apply();
         }
     }
 
@@ -379,11 +377,15 @@ public class SavingActivity extends AppCompatActivity {
     }
 
     public void newForm(View view) {
+        editor.clear();
+        editor.apply();
         startActivity(new Intent(this, CollectActivity.class));
         finish();
     }
 
     public void dashboard(View view) {
+        editor.clear();
+        editor.apply();
         startActivity(new Intent(this, DashBoardActivity.class));
         finish();
     }

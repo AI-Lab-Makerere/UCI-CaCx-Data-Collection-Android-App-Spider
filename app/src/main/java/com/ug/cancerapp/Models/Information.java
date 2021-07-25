@@ -17,16 +17,17 @@ public class Information {
     private String lnmp;
     private String parity, abortions;
     private String contraceptives, otherContraceptive;
-    private String viaResult, nurse_notes;
+    private String viaResult, anyNotes, lesionLocation, ml_via_result;
     List<Mlresults> mlresults;
 
-    public Information(String instanceID, String studyID, String initials, String district,
-                       String county, String village, int age, String symptoms, String selectSymptoms,
-                       String otherSymptoms, String priorCaCxScreening, String pastScreeningMethod,
-                       String pastCaCxScreeningResults, String priorTreatment, String whenLastScreening,
-                       String hivStatus, String onHAART, String hAARTDuration, String untitled67,
-                       String lnmp, String parity, String abortions, String contraceptives, String otherContraceptive,
-                       String viaResult, String nurse_notes, List<Mlresults> mlresults) {
+
+    public Information(String instanceID, String studyID, String initials, String district, String county,
+                       String village, int age, String symptoms, String selectSymptoms, String otherSymptoms,
+                       String priorCaCxScreening, String pastScreeningMethod, String pastCaCxScreeningResults,
+                       String priorTreatment, String whenLastScreening, String hivStatus, String onHAART,
+                       String hAARTDuration, String untitled67, String lnmp, String parity, String abortions,
+                       String contraceptives, String otherContraceptive, String viaResult, String nurse_notes,
+                       String lesionLocation, String ml_via_result, List<Mlresults> mlresults) {
         this.instanceID = instanceID;
         this.studyID = studyID;
         this.initials = initials;
@@ -52,7 +53,9 @@ public class Information {
         this.contraceptives = contraceptives;
         this.otherContraceptive = otherContraceptive;
         this.viaResult = viaResult;
-        this.nurse_notes = nurse_notes;
+        this.anyNotes = nurse_notes;
+        this.lesionLocation = lesionLocation;
+        this.ml_via_result = ml_via_result;
         this.mlresults = mlresults;
     }
 
@@ -157,10 +160,18 @@ public class Information {
     }
 
     public String getNurse_notes() {
-        return nurse_notes;
+        return anyNotes;
     }
 
     public List<Mlresults> getMlresults() {
         return mlresults;
+    }
+
+    public String getLesionLocation() {
+        return lesionLocation;
+    }
+
+    public String getMl_via_result() {
+        return ml_via_result;
     }
 }

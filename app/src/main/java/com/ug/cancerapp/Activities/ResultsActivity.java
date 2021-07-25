@@ -8,18 +8,27 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.ThreeBounce;
+import com.google.android.material.snackbar.Snackbar;
 import com.ug.cancerapp.Adapter.ReviewAdapter;
 import com.ug.cancerapp.Apis.ApiClient;
 import com.ug.cancerapp.Apis.JsonPlaceHolder;
@@ -27,8 +36,14 @@ import com.ug.cancerapp.Models.Case;
 import com.ug.cancerapp.Models.Gynecologist;
 import com.ug.cancerapp.R;
 
+import org.ocpsoft.prettytime.PrettyTime;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,9 +64,12 @@ public class ResultsActivity extends AppCompatActivity {
     List<Gynecologist> gynecologistList;
     ReviewAdapter reviewAdapter;
     JsonPlaceHolder jsonPlaceHolder;
+    RelativeLayout root_layout;
+    boolean InternetCheck = true;
 
     public static final String SHARED_API = "sharedApi";
-    String username, token, facility;
+    public static final String CHOD = "chodrine";
+    String username, token, facility, ago;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +90,14 @@ public class ResultsActivity extends AppCompatActivity {
         message = findViewById(R.id.message);
         swipe = findViewById(R.id.swip);
         imageView = findViewById(R.id.wifi);
+        root_layout = findViewById(R.id.root_layout);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_API, MODE_PRIVATE);
+        token = sharedPreferences.getString(TOKEN, "");
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(CHOD, "result");
+        editor.apply();
+
 
         jsonPlaceHolder = ApiClient.getClient().create(JsonPlaceHolder.class);
 
@@ -85,32 +111,49 @@ public class ResultsActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(reviewAdapter);
 
-        ReviewedCases();
+
+        boolean InternetResult = checkConnection();
+        if (InternetResult){
+            ReviewedCases();
+        }else {
+            DialogAppear();
+        }
 
         reviewAdapter.setOnItemClickListener(new ReviewAdapter.OnItemClickListener() {
             @Override
             public void onImageClick(int position) {
-
+                String instanceId = gynecologistList.get(position).getInstanceID();
+                Intent intent = new Intent(ResultsActivity.this, FeedbackActivity.class);
+                intent.putExtra("uuid", instanceId);
+                startActivity(intent);
+                finish();
             }
 
             @Override
             public void onDateClick(int position) {
-
+                String instanceId = gynecologistList.get(position).getInstanceID();
+                Intent intent = new Intent(ResultsActivity.this, DataActivity.class);
+                intent.putExtra("uuid", instanceId);
+                intent.putExtra("extra", "expert");
+                startActivity(intent);
+                finish();
             }
 
             @Override
             public void onFeedClick(int position) {
-//                String via = gynecologistList.get(position).getGyneVia();
-//                String notes = gynecologistList.get(position).getGyneNotes();
+                String via = gynecologistList.get(position).getGynResults();
+                String notes = gynecologistList.get(position).getGynNotes();
 
                 dialog = new Dialog(ResultsActivity.this);
                 dialog.setContentView(R.layout.feedback);
+                Window window = dialog.getWindow();
+                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
 
                 results = dialog.findViewById(R.id.results);
                 note = dialog.findViewById(R.id.notes);
 
-//                results.setText(via);
-//                note.setText(notes);
+                results.setText(via);
+                note.setText(notes);
 
                 dialog.show();
             }
@@ -120,9 +163,6 @@ public class ResultsActivity extends AppCompatActivity {
 
     private void ReviewedCases() {
 
-
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_API, MODE_PRIVATE);
-        token = sharedPreferences.getString(TOKEN, "");
 
         gynecologistList.clear();
         progressBar.setVisibility(View.VISIBLE);
@@ -144,14 +184,28 @@ public class ResultsActivity extends AppCompatActivity {
                     String via = "";
                     String gynenotes = "";
                     String gyneResults = "";
+                    String date = "";
                     instanceID += cas.getInstanceID();
                     studyId += cas.getStudyID();
                     age += cas.getAge();
-//                    via += cas.getViaResults();
+                    via += cas.getViaResult();
                     gyneResults += cas.getGyneco().get(0).getViaResult();
                     gynenotes += cas.getGyneco().get(0).getNotes();
-//                    Gynecologist gynecologist = new Gynecologist(instanceID, studyId, age, via, gynenotes, gyneResults, "");
-//                    gynecologistList.add(gynecologist);
+                    date += cas.getMl_via_result();
+//                    date += cas.getGyneco().get(0).getDate();
+//
+//                    try {
+//                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+//                        long time = 0;
+//                        time = sdf.parse(date).getTime();
+//                        PrettyTime prettyTime = new PrettyTime(Locale.getDefault());
+//                        ago = prettyTime.format(new Date(time)) + " ago";
+//                    } catch (ParseException e) {
+//                        e.printStackTrace();
+//                    }
+
+                    Gynecologist gynecologist = new Gynecologist(instanceID, studyId, age, date, via, "", gyneResults, gynenotes);
+                    gynecologistList.add(gynecologist);
 
                 }
 
@@ -170,5 +224,41 @@ public class ResultsActivity extends AppCompatActivity {
                 Log.v("Tag", "Error: " + t.getMessage());
             }
         });
+    }
+
+    private boolean checkConnection() {
+        if (isOnline()){
+            return InternetCheck;
+        }else{
+            InternetCheck = false;
+            return InternetCheck;
+        }
+    }
+
+    private boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnectedOrConnecting()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    private void DialogAppear() {
+        Snackbar snackbar = Snackbar.make(root_layout, " ", Snackbar.LENGTH_INDEFINITE);
+        View custom = getLayoutInflater().inflate(R.layout.snackbar, null);
+        snackbar.getView().setBackgroundColor(Color.TRANSPARENT);
+        Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
+        snackbarLayout.setPadding(0,0,0,0);
+        (custom.findViewById(R.id.connect)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recreate();
+            }
+        });
+        snackbarLayout.addView(custom, 0);
+        snackbar.show();
+        progressBar.setVisibility(View.INVISIBLE);
     }
 }

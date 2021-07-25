@@ -39,14 +39,6 @@ public class FirstFragment extends Fragment {
 
     private FormViewModel formViewModel;
 
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -147,5 +139,6 @@ public class FirstFragment extends Fragment {
         etzone.setText(zone);
 
     }
+
 
 }

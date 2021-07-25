@@ -42,6 +42,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.http.Url;
 
+import static com.ug.cancerapp.Activities.GynaecologistActivity.CHOD;
 import static com.ug.cancerapp.Activities.LoginActivity.EMAIL;
 import static com.ug.cancerapp.Activities.LoginActivity.TOKEN;
 
@@ -52,8 +53,8 @@ public class FeedbackActivity extends AppCompatActivity implements AdapterView.O
     Button save, model, cont;
     ProgressDialog progressDialog;
     RelativeLayout feedback;
-    LinearLayout mml;
-    TextView txtnurse, txtmodel, txtgyne;
+    LinearLayout mml, mut;
+    TextView txtnurse, txtmodel, txtgyne, txttitle;
     ImageView imageView1, imageView2, imageView3, imageView4;
     Bitmap bitmap1, bitmap2, bitmap3, bitmap4;
     URL url1, url2, url3, url4;
@@ -62,7 +63,7 @@ public class FeedbackActivity extends AppCompatActivity implements AdapterView.O
     JsonPlaceHolder jsonPlaceHolder;
 
     public static final String SHARED_API = "sharedApi";
-    String username, token;
+    String username, token, chod;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,29 +72,33 @@ public class FeedbackActivity extends AppCompatActivity implements AdapterView.O
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Feedback");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
 
         spinner = findViewById(R.id.via);
         notes = findViewById(R.id.notes);
         save = findViewById(R.id.save);
-//        model = findViewById(R.id.model);
-//        cont = findViewById(R.id.cont);
         feedback = findViewById(R.id.feedback);
-//        mml = findViewById(R.id.mml);
-//        txtnurse = findViewById(R.id.nurse);
-//        txtmodel = findViewById(R.id.models);
-//        txtgyne = findViewById(R.id.gyne);
+        mut = findViewById(R.id.gyn);
         imageView1 = findViewById(R.id.image1);
         imageView2 = findViewById(R.id.image2);
         imageView3 = findViewById(R.id.image3);
         imageView4 = findViewById(R.id.image4);
+        txttitle = findViewById(R.id.title);
 
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_API, MODE_PRIVATE);
         token = sharedPreferences.getString(TOKEN, "");
         username = sharedPreferences.getString(EMAIL, "");
+        username = sharedPreferences.getString(EMAIL, "");
+        chod = sharedPreferences.getString(CHOD, "");
 
+        if (chod.equals("gyn")){
+            getSupportActionBar().setTitle("Feedback");
+            txttitle.setText("Provide your Feedback basing on the images below");
+            mut.setVisibility(View.VISIBLE);
+        }else {
+            getSupportActionBar().setTitle("Images");
+            txttitle.setText("Images of the selected Case");
+        }
 
         instanceId = getIntent().getStringExtra("uuid");
 
@@ -125,15 +130,40 @@ public class FeedbackActivity extends AppCompatActivity implements AdapterView.O
             }
         });
 
-//        cont.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(FeedbackActivity.this, GynaecologistActivity.class));
-//                finish();
-//            }
-//        });
-
         loadImages();
+
+        imageView1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FeedbackActivity.this, ImageViewActivity.class);
+                intent.putExtra("image", image1);
+                startActivity(intent);
+            }
+        });
+        imageView2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FeedbackActivity.this, ImageViewActivity.class);
+                intent.putExtra("image", image2);
+                startActivity(intent);
+            }
+        });
+        imageView3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FeedbackActivity.this, ImageViewActivity.class);
+                intent.putExtra("image", image3);
+                startActivity(intent);
+            }
+        });
+        imageView4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FeedbackActivity.this, ImageViewActivity.class);
+                intent.putExtra("image", image4);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -200,7 +230,7 @@ public class FeedbackActivity extends AppCompatActivity implements AdapterView.O
                 image3 = response.body().getMlresults().get(2).getImage_url();
                 image4 = response.body().getMlresults().get(3).getImage_url();
 
-                Toast.makeText(FeedbackActivity.this, image1, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(FeedbackActivity.this, image1, Toast.LENGTH_SHORT).show();
                 Picasso.get().load(image1).into(imageView1);
                 Picasso.get().load(image2).into(imageView2);
                 Picasso.get().load(image3).into(imageView3);
@@ -252,6 +282,20 @@ public class FeedbackActivity extends AppCompatActivity implements AdapterView.O
 
             imageView1.setImageBitmap(bitmap1);
             progressDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (chod.equals("gyn")){
+            startActivity(new Intent(FeedbackActivity.this, GynaecologistActivity.class));
+        }else if (chod.equals("case")){
+            startActivity(new Intent(FeedbackActivity.this, CaseActivity.class));
+        }else if (chod.equals("saved")){
+            startActivity(new Intent(FeedbackActivity.this, SavedActivity.class));
+        }else {
+            startActivity(new Intent(FeedbackActivity.this, ResultsActivity.class));
         }
     }
 }

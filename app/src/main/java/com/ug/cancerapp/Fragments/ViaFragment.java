@@ -86,10 +86,10 @@ public class ViaFragment extends Fragment {
                     Toast.makeText(getActivity(), "Fill in all fields", Toast.LENGTH_SHORT).show();
                 }else {
                     saveData();
-//                    FragmentTransaction fr = getFragmentManager().beginTransaction();
-//                    fr.replace(R.id.fragment_container, new Other2Fragment());
-//                    fr.commit();
-                    startActivity(new Intent(getActivity(), SavingActivity.class));
+                    FragmentTransaction fr = getFragmentManager().beginTransaction();
+                    fr.replace(R.id.fragment_container, new Other2Fragment());
+                    fr.commit();
+
                 }
 
             }

@@ -43,6 +43,10 @@ public interface JsonPlaceHolder {
     Call<List<Case>> cases(@Header("Authorization") String header);
 
     @Headers("Accept: application/json")
+    @GET("api/my-entries")
+    Call<List<Case>> uploaded(@Header("Authorization") String header);
+
+    @Headers("Accept: application/json")
     @POST("api/capture-gynecologist-review")
     Call<Review> feedback(@Header("Authorization") String header, @Body Feedback feedback);
 

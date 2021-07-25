@@ -11,54 +11,75 @@
         android:layout_height="match_parent"
         android:layout_above="@id/buttons">
 
-       <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:orientation="vertical"
-           android:layout_centerInParent="true">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fadeScrollbars="true"
+            android:scrollbars="none">
 
-           <TextView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:gravity="center_horizontal"
-               android:textColor="@color/colorPrimary"
-               android:textSize="20sp"
-               android:text="You are at the end of the CaCx Screening form"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="10dp">
 
-           <TextView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:gravity="center_horizontal"
-               android:layout_marginTop="10dp"
-               android:layout_marginBottom="10dp"
-               android:textColor="@color/colorTextPrimary"
-               android:text="You won't be able to perform any changes if you continue from here. Check if the information provided is right and then continue"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Other Nurses Involved"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp"
+                    android:gravity="center_horizontal"/>
 
-           <Button
-               android:id="@+id/model"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:text="View Diagnosis Results"
-               android:layout_margin="20dp"
-               android:layout_gravity="center_horizontal"
-               android:textColor="@color/colorTextPrimary"
-               android:textAllCaps="false"
-               android:textSize="16sp"
-               android:background="@drawable/secondary_btn_bg"/>
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Please enter the names of the other nurses involved in this screening process"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorTextPrimary"/>
 
-           <Button
-               android:id="@+id/save"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:text="Continue to the Dashboard"
-               android:layout_margin="20dp"
-               android:layout_gravity="center_horizontal"
-               android:textColor="@color/colorBackground"
-               android:textAllCaps="false"
-               android:textSize="16sp"
-               android:background="@drawable/primary_btn"/>
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="(At least Provide One Other Nurse - Nurse1)"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:textStyle="italic"/>
 
-       </LinearLayout>
+                <EditText
+                    android:id="@+id/nurse1"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/text_bg"
+                    android:hint="Nurse 1*"
+                    android:inputType="text"
+                    android:paddingLeft="5dp" />
+
+                <EditText
+                    android:id="@+id/nurse2"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/text_bg"
+                    android:hint="Nurse 2"
+                    android:paddingLeft="5dp" />
+
+                <EditText
+                    android:id="@+id/nurse3"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/text_bg"
+                    android:hint="Nurse 3"
+                    android:paddingLeft="5dp" />
+
+
+            </LinearLayout>
+
+        </ScrollView>
 
     </RelativeLayout>
 
@@ -77,6 +98,15 @@
             android:text="Back"
             android:textColor="@color/colorBackground" />
 
+        <Button
+            android:id="@+id/next"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="save form"
+            android:layout_margin="10dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/primary_btn"
+            android:textColor="@color/colorBackground"/>
 
     </RelativeLayout>
 

@@ -37,7 +37,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="What is your VIA impression"
+                    android:text="What is your VIA impression?"
                     android:textColor="@color/colorTextPrimary"
                     android:textSize="16sp" />
 

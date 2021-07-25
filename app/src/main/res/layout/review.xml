@@ -31,6 +31,13 @@
             android:textColor="@color/colorTextPrimary"/>
 
         <TextView
+            android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Age: 20"
+            android:textColor="@color/colorTextPrimary"/>
+
+        <TextView
             android:id="@+id/via"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

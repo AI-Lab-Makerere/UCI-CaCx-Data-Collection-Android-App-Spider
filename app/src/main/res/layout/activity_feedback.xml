@@ -26,11 +26,20 @@
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
                 android:textColor="@color/colorTextPrimary"
-                android:textSize="14sp"
-                android:text="Provide your Feedback basing on the images below"/>
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textSize="12sp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/title"
+                android:text="Just Tap any image to view it clearly"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -39,13 +48,14 @@
                 android:weightSum="10"
                 android:layout_marginTop="10dp"
                 android:id="@+id/images"
-                android:layout_below="@id/title">
+                android:layout_below="@id/tt">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="5"
-                    android:layout_marginRight="3dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="20dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -62,7 +72,7 @@
                         android:id="@+id/image1"/>
 
                     <ImageView
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
                         android:scaleType="fitXY"
@@ -73,7 +83,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="5"
-                    android:layout_marginLeft="3dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="20dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -90,7 +101,7 @@
                         android:id="@+id/image3"/>
 
                     <ImageView
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
                         android:scaleType="fitXY"
@@ -102,48 +113,61 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/vnc"
+                android:id="@+id/gyn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="20dp"
+                android:orientation="vertical"
                 android:layout_below="@id/images"
-                android:background="@drawable/style_spinner"
-                android:orientation="vertical">
+                android:visibility="gone">
 
-                <Spinner
-                    android:id="@+id/via"
+                <LinearLayout
+                    android:id="@+id/vnc"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/style_spinner"
+                    android:orientation="vertical">
+
+                    <Spinner
+                        android:id="@+id/via"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"/>
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/notes"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_margin = "20dp"
+                    android:background="@drawable/text_bg"
+                    android:gravity="top"
+                    android:hint="Please provide some brief notes to support your VIA Results"
+                    android:inputType="textMultiLine"
+                    android:padding="10dp"
+                    android:textSize="16sp"
+                    android:layout_below="@id/vnc"/>
+
+                <Button
+                    android:id="@+id/save"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Submit Feedback"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/colorBackground"
+                    android:textAllCaps="false"
+                    android:textSize="16sp"
+                    android:layout_below="@id/notes"
+                    android:background="@drawable/primary_btn"/>
 
             </LinearLayout>
 
-            <EditText
-                android:id="@+id/notes"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_margin = "20dp"
-                android:background="@drawable/text_bg"
-                android:gravity="top"
-                android:hint="Please provide some brief notes to support your VIA Results"
-                android:inputType="textMultiLine"
-                android:padding="10dp"
-                android:textSize="16sp"
-                android:layout_below="@id/vnc"/>
 
-            <Button
-                android:id="@+id/save"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Submit Feedback"
-                android:layout_margin="10dp"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@color/colorBackground"
-                android:textAllCaps="false"
-                android:textSize="16sp"
-                android:layout_below="@id/notes"
-                android:background="@drawable/primary_btn"/>
 
         </RelativeLayout>
 

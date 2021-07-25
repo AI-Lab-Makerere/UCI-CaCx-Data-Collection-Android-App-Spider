@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
+    android:id="@+id/root_layout"
     tools:context=".Activities.GynaecologistActivity">
 
     <include
@@ -49,6 +50,7 @@
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                tools:listitem="@layout/review"
                 android:layout_below="@id/title"/>
 
             <include layout="@layout/network_issues"/>

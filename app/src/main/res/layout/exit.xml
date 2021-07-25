@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorBackground"
+    android:padding="20dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Exit UCI CaCx Form"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
+        android:gravity="center"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/colorGrey"/>
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Are you sure you want to exit this form"
+        android:textColor="@color/colorTextPrimary"
+        android:textSize="18sp"/>
+
+    <LinearLayout
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/yes"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Yes"
+            android:textAllCaps="false"
+            android:layout_marginRight="20dp"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/colorBackground"
+            android:background="@drawable/primary_btn"/>
+
+        <Button
+            android:id="@+id/no"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="No"
+            android:layout_marginLeft="20dp"
+            android:textAllCaps="false"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/colorBackground"
+            android:background="@drawable/primary_btn"/>
+
+    </LinearLayout>
+
+</LinearLayout>

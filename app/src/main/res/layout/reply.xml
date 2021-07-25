@@ -34,7 +34,7 @@
             android:id="@+id/via"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="My Via Results:"
+            android:text="Expert's Via Results:"
             android:textColor="@color/colorTextPrimary"/>
 
         <LinearLayout

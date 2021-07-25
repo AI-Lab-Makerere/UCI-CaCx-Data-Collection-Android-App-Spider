@@ -24,6 +24,10 @@ public class FormViewModel extends AndroidViewModel {
         repository.insert(form);
     }
 
+//    public void delete(Form form) {
+//        repository.delete(form);
+//    }
+
 
 //    public LiveData<List<Form>> getAllForms() {
 //        return allForms;

@@ -93,6 +93,14 @@
                         android:textColor="@color/colorTextPrimary"/>
 
                     <TextView
+                        android:id="@+id/address"
+                        android:visibility="gone"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorTextPrimary"/>
+
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Cancer Symptoms"
@@ -257,6 +265,82 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorTextPrimary"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:id="@+id/nurseOnly"
+                        android:visibility="gone">
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Nurse's VIA Observation"
+                            android:layout_marginTop="10dp"
+                            android:textStyle="italic"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@color/colorGrey"/>
+
+                        <TextView
+                            android:id="@+id/via"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Nurse's VIA Results: Positive"
+                            android:textColor="@color/colorTextPrimary"/>
+
+                        <TextView
+                            android:id="@+id/lesion"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Lesion: Positive"
+                            android:textColor="@color/colorTextPrimary"/>
+
+                        <TextView
+                            android:id="@+id/notes"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Nurse's VIA Results: Positive"
+                            android:textColor="@color/colorTextPrimary"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Model Predictions"
+                            android:layout_marginTop="10dp"
+                            android:textStyle="italic"/>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@color/colorGrey"/>
+
+                        <TextView
+                            android:id="@+id/model"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="VIA Results: Positive"
+                            android:textColor="@color/colorTextPrimary"/>
+
+                        <TextView
+                            android:id="@+id/agreement"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="You and the model are in: Positive"
+                            android:textColor="@color/colorTextPrimary"/>
+
+                    </LinearLayout>
 
 
                 </LinearLayout>

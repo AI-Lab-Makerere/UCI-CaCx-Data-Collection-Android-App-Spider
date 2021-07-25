@@ -114,7 +114,7 @@ public class FifthFragment extends Fragment implements AdapterView.OnItemSelecte
                 tim = date.getText().toString();
                 timmy = times.getText().toString();
 
-                if (value.isEmpty() || tim.equals("No Date Selected") || child.isEmpty() || abort.isEmpty() || timmy.equals("Nothing Selected")) {
+                if (value.isEmpty() || tim.isEmpty() || child.isEmpty() || abort.isEmpty() || timmy.isEmpty()) {
                     Toast.makeText(getActivity(), "Fill in all the fields", Toast.LENGTH_SHORT).show();
                 } else {
                     int part = Integer.parseInt(child);

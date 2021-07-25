@@ -50,7 +50,7 @@ public class DashBoardActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("UDA");
+        getSupportActionBar().setTitle("UCI Cacx");
 
 
     }

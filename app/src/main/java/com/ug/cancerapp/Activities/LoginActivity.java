@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +24,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.ug.cancerapp.Apis.ApiClient;
 import com.ug.cancerapp.Apis.JsonPlaceHolder;
 import com.ug.cancerapp.Models.CurrentUser;
@@ -38,6 +41,10 @@ import static com.ug.cancerapp.Activities.SplashActivity.THRESHOLD;
 public class LoginActivity extends AppCompatActivity {
 
     LinearLayout area;
+    LinearLayout root_layout;
+    static int SPLASH_TIME_OUT = 1000;
+    boolean InternetCheck = true;
+
     EditText username, password;
     Button submit;
     ProgressBar progressBar;
@@ -67,6 +74,7 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
         submit = findViewById(R.id.verify_btn);
         progressBar = findViewById(R.id.otp_progress_bar);
+        root_layout = findViewById(R.id.root_layout);
 
         sharedPreferences = getSharedPreferences(SHARED_API, MODE_PRIVATE);
 
@@ -97,7 +105,13 @@ public class LoginActivity extends AppCompatActivity {
                     submit.setEnabled(false);
 
                     User user = new User(userN, pass, getDeviceName());
-                    sendNetworkRequest(user);
+                    boolean InternetResult = checkConnection();
+                    if (InternetResult){
+                        sendNetworkRequest(user);
+                    }else {
+                        DialogAppear();
+                    }
+
                 }
             }
         });
@@ -151,7 +165,7 @@ public class LoginActivity extends AppCompatActivity {
                 String userId = String.valueOf(response.body().getUser_id());
                 String facId = String.valueOf(response.body().getHealth_facility_id());
                 String facName = response.body().getHealth_facility_name();
-
+//                Toast.makeText(LoginActivity.this, facId, Toast.LENGTH_SHORT).show();
                 saveData(email, userId, facId, facName, token);
 
             }
@@ -181,10 +195,16 @@ public class LoginActivity extends AppCompatActivity {
         submit.setEnabled(true);
 
         if (category.equals("gynecologist")) {
+            progressBar.setVisibility(View.INVISIBLE);
+            submit.setEnabled(true);
             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
             finish();
         } else {
-            saveThreshold();
+//            saveThreshold();
+            progressBar.setVisibility(View.INVISIBLE);
+            submit.setEnabled(true);
+            startActivity(new Intent(LoginActivity.this, DashBoardActivity.class));
+            finish();
         }
 
     }
@@ -274,5 +294,42 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, "Its not you its us, please try again later", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private boolean checkConnection() {
+        if (isOnline()){
+            return InternetCheck;
+        }else{
+            InternetCheck = false;
+            return InternetCheck;
+        }
+    }
+
+    private boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnectedOrConnecting()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    private void DialogAppear() {
+        Snackbar snackbar = Snackbar.make(root_layout, " ", Snackbar.LENGTH_INDEFINITE);
+        View custom = getLayoutInflater().inflate(R.layout.snackbar, null);
+        snackbar.getView().setBackgroundColor(Color.TRANSPARENT);
+        Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
+        snackbarLayout.setPadding(0,0,0,0);
+        (custom.findViewById(R.id.connect)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recreate();
+            }
+        });
+        snackbarLayout.addView(custom, 0);
+        snackbar.show();
+        progressBar.setVisibility(View.INVISIBLE);
+        submit.setEnabled(true);
     }
 }

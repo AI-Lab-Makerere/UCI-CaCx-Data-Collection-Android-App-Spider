@@ -10,9 +10,13 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -26,9 +30,11 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.ug.cancerapp.Adapter.FormAdapter;
 import com.ug.cancerapp.Apis.ApiClient;
 import com.ug.cancerapp.Apis.JsonPlaceHolder;
@@ -69,6 +75,8 @@ public class RecordsActivity extends AppCompatActivity {
     Bitmap bitmap1, bitmap2, bitmap3, bitmap4;
     EditText etSearch;
     Date parsedDate3;
+    RelativeLayout root_layout;
+    boolean InternetCheck = true;
 
     FormRepository formRepository;
     Form form;
@@ -85,6 +93,7 @@ public class RecordsActivity extends AppCompatActivity {
     Call<String> call;
     Long key;
     ArrayList<Long> arrayForm;
+    int fac_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,9 +112,17 @@ public class RecordsActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         submit = findViewById(R.id.submit);
+        root_layout = findViewById(R.id.root_layout);
 
         progressDialog = new ProgressDialog(this);
          formDAO = FormDatabase.getInstance(RecordsActivity.this).formDAO();
+
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_API, MODE_PRIVATE);
+        token = sharedPreferences.getString(TOKEN, "");
+        username = sharedPreferences.getString(EMAIL, "");
+        facility = sharedPreferences.getString(FACID, "");
+        fac_id = Integer.parseInt(facility);
+//        Toast.makeText(this, facility, Toast.LENGTH_SHORT).show();
 
         arrayForm = new ArrayList<>();
 
@@ -136,8 +153,13 @@ public class RecordsActivity extends AppCompatActivity {
                 if (arrayForm.size() == 0){
                     Toast.makeText(RecordsActivity.this, "Select the files to Upload", Toast.LENGTH_SHORT).show();
                 }else {
-
-                    new SendDataTask().execute();
+//
+                    boolean InternetResult = checkConnection();
+                    if (InternetResult){
+                        new SendDataTask().execute();
+                    }else {
+                        DialogAppear();
+                    }
 
                 }
 
@@ -370,10 +392,6 @@ public class RecordsActivity extends AppCompatActivity {
         formDAO.UpdateConsult(true, key);
         Log.v("TAG", "" + key);
 
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_API, MODE_PRIVATE);
-        token = sharedPreferences.getString(TOKEN, "");
-        username = sharedPreferences.getString(EMAIL, "");
-        facility = sharedPreferences.getString(FACID, "");
         int fac_id = Integer.parseInt(facility);
         Log.v("TAG", "data2");
 
@@ -513,19 +531,19 @@ public class RecordsActivity extends AppCompatActivity {
         con.setText("Contraceptives Used: " + formList.get(position).getContraceptives());
         TextView via = dialog.findViewById(R.id.via);
         String nurse = formList.get(position).getVia();
-        via.setText("My Via Results: " + nurse);
+        via.setText("Nurse's Via Results: " + nurse);
         TextView loc = dialog.findViewById(R.id.lesion);
         loc.setText("Location of the Lesion: " + formList.get(position).getLocation());
         TextView notes = dialog.findViewById(R.id.notes);
-        notes.setText("My Notes: " + formList.get(position).getNotes());
+        notes.setText("Nurse's Notes: " + formList.get(position).getNotes());
         TextView model = dialog.findViewById(R.id.model);
         String mmv = formList.get(position).getDiagnosis();
-        model.setText("Model Via Results: " + mmv);
+        model.setText("Model Predictions: " + mmv);
         TextView agree = dialog.findViewById(R.id.agreement);
         if (nurse.equals(mmv)){
-            agree.setText("You and the model are in: Agreement");
+            agree.setText("The Nurse and the model are in: Agreement");
         }else {
-            agree.setText("You and the model are in: Disagreement");
+            agree.setText("The Nurse and the model are in: Disagreement");
         }
 
     }
@@ -589,11 +607,13 @@ public class RecordsActivity extends AppCompatActivity {
 
         Log.v("TAG", "" + key);
 
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_API, MODE_PRIVATE);
-        token = sharedPreferences.getString(TOKEN, "");
-        username = sharedPreferences.getString(EMAIL, "");
-        facility = sharedPreferences.getString(FACID, "");
-        int fac_id = Integer.parseInt(facility);
+//        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_API, MODE_PRIVATE);
+//        token = sharedPreferences.getString(TOKEN, "");
+//        username = sharedPreferences.getString(EMAIL, "");
+//        facility = sharedPreferences.getString(FACID, "");
+
+
+
         Log.v("TAG", "data2");
 
 
@@ -632,6 +652,42 @@ public class RecordsActivity extends AppCompatActivity {
         Log.v("TAG", "data3");
 
         sendOverNetwork(token, capture, capture2);
+    }
+
+    private boolean checkConnection() {
+        if (isOnline()){
+            return InternetCheck;
+        }else{
+            InternetCheck = false;
+            return InternetCheck;
+        }
+    }
+
+    private boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnectedOrConnecting()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    private void DialogAppear() {
+        Snackbar snackbar = Snackbar.make(root_layout, " ", Snackbar.LENGTH_INDEFINITE);
+        View custom = getLayoutInflater().inflate(R.layout.snackbar, null);
+        snackbar.getView().setBackgroundColor(Color.TRANSPARENT);
+        Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
+        snackbarLayout.setPadding(0,0,0,0);
+        (custom.findViewById(R.id.connect)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recreate();
+            }
+        });
+        snackbarLayout.addView(custom, 0);
+        snackbar.show();
+        progressDialog.dismiss();
     }
 
 

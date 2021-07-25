@@ -8,8 +8,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,12 +21,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.ChasingDots;
 import com.github.ybq.android.spinkit.style.ThreeBounce;
+import com.google.android.material.snackbar.Snackbar;
 import com.ug.cancerapp.Adapter.GynecologistAdapter;
 import com.ug.cancerapp.Apis.ApiClient;
 import com.ug.cancerapp.Apis.JsonPlaceHolder;
@@ -53,12 +59,15 @@ public class GynaecologistActivity extends AppCompatActivity {
     TextView error, message, swipe;
     ImageView imageView;
     SwipeRefreshLayout swipeRefreshLayout;
+    RelativeLayout root_layout;
+    boolean InternetCheck = true;
 
     List<Gynecologist> gynecologistList;
     GynecologistAdapter gynecologistAdapter;
     JsonPlaceHolder jsonPlaceHolder;
 
     public static final String SHARED_API = "sharedApi";
+    public static final String CHOD = "chodrine";
     String username, token, facility, ago;
 
     @Override
@@ -68,9 +77,13 @@ public class GynaecologistActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Review Cases");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Cases To Review");
+
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_API, MODE_PRIVATE);
+        token = sharedPreferences.getString(TOKEN, "");
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(CHOD, "gyn");
+        editor.apply();
 
         recyclerView = findViewById(R.id.recycler_view);
         progressBar = findViewById(R.id.spin_kit);
@@ -85,6 +98,7 @@ public class GynaecologistActivity extends AppCompatActivity {
 
         Sprite chasingDots = new ThreeBounce();
         progressBar.setIndeterminateDrawable(chasingDots);
+        root_layout = findViewById(R.id.root_layout);
 
 //        recyclerView.setHasFixedSize(true);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -93,12 +107,22 @@ public class GynaecologistActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(gynecologistAdapter);
 
-        handleCases();
+        boolean InternetResult = checkConnection();
+        if (InternetResult){
+            handleCases();
+        }else {
+            DialogAppear();
+        }
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                handleCases();
+                boolean InternetResult = checkConnection();
+                if (InternetResult){
+                    handleCases();
+                }else {
+                    DialogAppear();
+                }
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -128,14 +152,12 @@ public class GynaecologistActivity extends AppCompatActivity {
 //                intent.putExtra("nurse", nurse);
 //                intent.putExtra("ml_result", ml_result);
                 startActivity(intent);
+                finish();
             }
         });
     }
 
     private void handleCases() {
-
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_API, MODE_PRIVATE);
-        token = sharedPreferences.getString(TOKEN, "");
 
         gynecologistList.clear();
         progressBar.setVisibility(View.VISIBLE);
@@ -171,7 +193,7 @@ public class GynaecologistActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    Gynecologist gynecologist = new Gynecologist(instanceID, studyId, age, ago);
+                    Gynecologist gynecologist = new Gynecologist(instanceID, studyId, age, ago, "", "", "", "");
                     gynecologistList.add(gynecologist);
 
                 }
@@ -206,5 +228,41 @@ public class GynaecologistActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         startActivity(new Intent(GynaecologistActivity.this, HomeActivity.class));
+    }
+
+    private boolean checkConnection() {
+        if (isOnline()){
+            return InternetCheck;
+        }else{
+            InternetCheck = false;
+            return InternetCheck;
+        }
+    }
+
+    private boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnectedOrConnecting()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    private void DialogAppear() {
+        Snackbar snackbar = Snackbar.make(root_layout, " ", Snackbar.LENGTH_INDEFINITE);
+        View custom = getLayoutInflater().inflate(R.layout.snackbar, null);
+        snackbar.getView().setBackgroundColor(Color.TRANSPARENT);
+        Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
+        snackbarLayout.setPadding(0,0,0,0);
+        (custom.findViewById(R.id.connect)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recreate();
+            }
+        });
+        snackbarLayout.addView(custom, 0);
+        snackbar.show();
+        progressBar.setVisibility(View.INVISIBLE);
     }
 }

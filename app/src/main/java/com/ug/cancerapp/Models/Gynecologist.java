@@ -6,12 +6,21 @@ public class Gynecologist {
     String studyId;
     String age;
     String date;
+    String viaResults;
+    String initials;
+    String gynResults;
+    String gynNotes;
 
-    public Gynecologist(String instanceID, String studyId, String age, String date) {
+    public Gynecologist(String instanceID, String studyId, String age, String date, String viaResults,
+                        String initials, String gynResults, String gynNotes) {
         this.instanceID = instanceID;
         this.studyId = studyId;
         this.age = age;
         this.date = date;
+        this.viaResults = viaResults;
+        this.initials = initials;
+        this.gynResults = gynResults;
+        this.gynNotes = gynNotes;
     }
 
     public String getInstanceID() {
@@ -40,5 +49,21 @@ public class Gynecologist {
 
     public String getDate() {
         return date;
+    }
+
+    public String getViaResults() {
+        return viaResults;
+    }
+
+    public String getInitials() {
+        return initials;
+    }
+
+    public String getGynResults() {
+        return gynResults;
+    }
+
+    public String getGynNotes() {
+        return gynNotes;
     }
 }

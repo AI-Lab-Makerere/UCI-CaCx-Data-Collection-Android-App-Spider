@@ -55,11 +55,5 @@ public class FormRepository {
         return form;
     }
 
-    public void deleteForm(Long id){
-
-        formDAO.DeleteForm(id);
-//        return null;
-    }
-
 
 }

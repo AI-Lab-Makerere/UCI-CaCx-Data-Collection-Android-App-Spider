@@ -377,15 +377,15 @@ public class SavingActivity extends AppCompatActivity {
     }
 
     public void newForm(View view) {
-        editor.clear();
-        editor.apply();
+//        editor.clear();
+//        editor.apply();
         startActivity(new Intent(this, CollectActivity.class));
         finish();
     }
 
     public void dashboard(View view) {
-        editor.clear();
-        editor.apply();
+//        editor.clear();
+//        editor.apply();
         startActivity(new Intent(this, DashBoardActivity.class));
         finish();
     }

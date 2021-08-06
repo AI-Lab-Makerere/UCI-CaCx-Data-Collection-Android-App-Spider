@@ -24,6 +24,7 @@ public class Capture2 {
     private String lesionLocation, via_results, nurse_notes;
     private String ml_via_result;
     private Boolean require_clinician_review;
+    private String other_nurses;
 
     @SerializedName("picture1_before")
     private Picture picture1_before;
@@ -42,7 +43,7 @@ public class Capture2 {
                     String more_symptoms, String other_symptoms, String cancer_screening, String hiv_status,
                     String on_haart, int years_on_haart, String patient_pregnant, Date last_known_menstrual_period_date,
                     int parity, int abortions, String contraceptives, String other_contraceptives, String lesionLocation,
-                    String via_results, String nurse_notes, String ml_via_result, Boolean require_clinician_review,
+                    String via_results, String nurse_notes, String ml_via_result, Boolean require_clinician_review,String other_nurses,
                     Picture picture1_before, Picture picture2_before, Picture picture3_after, Picture picture4_after) {
         this.instanceID = instanceID;
         this.entry_date = entry_date;
@@ -72,6 +73,7 @@ public class Capture2 {
         this.nurse_notes = nurse_notes;
         this.ml_via_result = ml_via_result;
         this.require_clinician_review = require_clinician_review;
+        this.other_nurses = other_nurses;
         this.picture1_before = picture1_before;
         this.picture2_before = picture2_before;
         this.picture3_after = picture3_after;

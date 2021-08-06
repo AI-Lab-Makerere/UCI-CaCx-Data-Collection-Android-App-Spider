@@ -16,51 +16,83 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <CheckBox
-            android:id="@+id/ok"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:layout_gravity="end"/>
-
-        <TextView
-            android:id="@+id/study"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="StudyID: UC001"
-            android:layout_marginTop="-30dp"
-            android:textColor="@color/colorTextPrimary"/>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="10">
 
-            <TextView
-                android:id="@+id/initials"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Initials: MC"
-                android:textColor="@color/colorTextPrimary"/>
+                android:layout_weight="9"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/age"
-                android:layout_width="wrap_content"
+
+                <TextView
+                    android:id="@+id/study"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="StudyID: UC001"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorTextPrimary"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/initials"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Initials: MC"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorTextPrimary"/>
+
+                    <TextView
+                        android:id="@+id/age"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:text="Age: 27"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorTextPrimary"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/results"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="VIA Results: Positive"
+                    android:textSize="15sp"
+                    android:textColor="@color/colorTextPrimary"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:text="Age: 27"
-                android:textColor="@color/colorTextPrimary"/>
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/ok"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:textSize="16sp"
+                    android:src="@drawable/ic_task"
+                    android:visibility="gone"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="end"/>
+
+
+            </LinearLayout>
 
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/results"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="VIA Results: Positive"
-            android:textSize="16sp"
-            android:textColor="@color/colorTextPrimary"/>
 
         <LinearLayout
             android:layout_marginTop="10dp"
@@ -72,7 +104,7 @@
             <Button
                 android:id="@+id/images"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:layout_weight="5"
                 android:text="View Images"
                 android:textAllCaps="false"
@@ -84,7 +116,7 @@
             <Button
                 android:id="@+id/load"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:layout_weight="5"
                 android:text="Load Data"
                 android:textAllCaps="false"

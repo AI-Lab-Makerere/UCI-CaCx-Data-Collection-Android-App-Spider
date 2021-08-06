@@ -1,5 +1,6 @@
 package com.ug.cancerapp.Activities;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -19,6 +20,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -50,9 +52,11 @@ import com.ug.cancerapp.R;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -65,11 +69,12 @@ import static com.ug.cancerapp.Activities.LoginActivity.TOKEN;
 
 public class RecordsActivity extends AppCompatActivity {
 
-    ArrayList<Form> formList, formList_search;
+    ArrayList<Form> formList, formList_search, selected;
+    Long index;
     FormAdapter formAdapter;
     RecyclerView recyclerView;
     Dialog dialog;
-    Button submit;
+    Button submit, btnSelected, btnDeselect;
     ImageView imageView1, imageView2, imageView3, imageView4;
     Uri uri;
     Bitmap bitmap1, bitmap2, bitmap3, bitmap4;
@@ -95,6 +100,8 @@ public class RecordsActivity extends AppCompatActivity {
     ArrayList<Long> arrayForm;
     int fac_id;
 
+    String others = "mchodrine@gmail.com";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,6 +119,8 @@ public class RecordsActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         submit = findViewById(R.id.submit);
+        btnSelected = findViewById(R.id.btn1);
+        btnDeselect = findViewById(R.id.btn2);
         root_layout = findViewById(R.id.root_layout);
 
         progressDialog = new ProgressDialog(this);
@@ -150,23 +159,45 @@ public class RecordsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (arrayForm.size() == 0){
-                    Toast.makeText(RecordsActivity.this, "Select the files to Upload", Toast.LENGTH_SHORT).show();
-                }else {
-//
+//                if (arrayForm.size() == 0){
+//                    Toast.makeText(RecordsActivity.this, "Select the files to Upload", Toast.LENGTH_SHORT).show();
+//                }else {
+////
                     boolean InternetResult = checkConnection();
                     if (InternetResult){
                         new SendDataTask().execute();
                     }else {
                         DialogAppear();
                     }
+//
+//                }
 
-                }
 
             }
         });
 
+        btnSelected.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                formAdapter.selectAll();
+            }
+        });
+
+        btnDeselect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                formAdapter.clearSelected();
+            }
+        });
+
     }
+
+//    public void selecting(){
+//        for (int i = formAdapter.getSelected().size() -1; i >= 0; i--){
+//            index = formAdapter.getSelected().get(i).getKey();
+//            Toast.makeText(RecordsActivity.this, "Key at position "  + i + "is : " + index, Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
 
     class LoadDataTask extends AsyncTask<Void, Void, Void>{
@@ -185,12 +216,14 @@ public class RecordsActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
             formList1 = formRepository.getAllForms();
             formList = new ArrayList<>();
+            selected = new ArrayList<>();
             formList_search = new ArrayList<>();
 
             for (int i = 0; i < formList1.size(); i++){
                 formList.add(formList1.get(i));
                 formList_search.add(formList1.get(i));
             }
+
 
             return null;
         }
@@ -199,7 +232,7 @@ public class RecordsActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            formAdapter = new FormAdapter(formList, RecordsActivity.this);
+            formAdapter = new FormAdapter(RecordsActivity.this, formList, selected);
             recyclerView.setAdapter(formAdapter);
 
             formAdapter.setOnItemClickListener(new FormAdapter.OnItemClickListener() {
@@ -259,18 +292,18 @@ public class RecordsActivity extends AppCompatActivity {
 //                    handleData(position);
                 }
 
-                @Override
-                public void onCheckedClick(int position) {
-                    long key = formList.get(position).getKey();
-                    arrayForm.add(key);
-                }
-
-                @Override
-                public void onNotCheckedClick(int position) {
-                    long key = formList.get(position).getKey();
-                    arrayForm.remove(key);
-//                    Toast.makeText(RecordsActivity.this, "bad", Toast.LENGTH_SHORT).show();
-                }
+//                @Override
+//                public void onCheckedClick(int position) {
+//                    long key = formList.get(position).getKey();
+//                    arrayForm.add(key);
+//                }
+//
+//                @Override
+//                public void onNotCheckedClick(int position) {
+//                    long key = formList.get(position).getKey();
+//                    arrayForm.remove(key);
+////                    Toast.makeText(RecordsActivity.this, "bad", Toast.LENGTH_SHORT).show();
+//                }
             });
         }
     }
@@ -288,12 +321,13 @@ public class RecordsActivity extends AppCompatActivity {
             formRepository = new FormRepository((Application) getApplicationContext());
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         protected Void doInBackground(Void... voids) {
 
-
-            for (i = 0; i < arrayForm.size(); i++){
-                form = formRepository.getOnlyOne(arrayForm.get((int) i));
+            for (int i = formAdapter.getSelected().size() -1; i >= 0; i--){
+                index = formAdapter.getSelected().get(i).getKey();
+                form = formRepository.getOnlyOne(index);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -302,7 +336,22 @@ public class RecordsActivity extends AppCompatActivity {
                     }
                 });
                 sendData();
+
             }
+
+//            for (i = 0; i < arrayForm.size(); i++){
+////                form = formRepository.getOnlyOne(arrayForm.get((int) i));
+////                FormDAO formDAO = FormDatabase.getInstance(RecordsActivity.this).formDAO();
+////                formDAO.DeleteForm(arrayForm.get((int) i));
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        progressDialog.setMessage("Sending Data, Please wait...");
+//                        progressDialog.show();
+//                    }
+//                });
+////                sendData();
+//            }
 
             return null;
         }
@@ -311,7 +360,10 @@ public class RecordsActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-//            Toast.makeText(RecordsActivity.this, studyID, Toast.LENGTH_SHORT).show();
+            Toast.makeText(RecordsActivity.this, "its done", Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
+//            finish();
+//            startActivity(getIntent());
         }
     }
 
@@ -409,24 +461,25 @@ public class RecordsActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+
         Picture picture1 = new Picture(neg, pos, var, sImage, "");
         Picture picture2 = new Picture(neg2, pos2, var2, sImage2, "");
         Picture picture3 = new Picture(neg3, pos3, var3, sImage3, "");
         Picture picture4 = new Picture(neg4, pos4, var4, sImage4, "");
 
-        Capture capture = new Capture(instanceID, date1, username, fac_id, studyID, initial,
-                district, county, zone, age, text, ss, symptom, text2, sss, past, treat, date2,
-                value3, valuex, year, value, date3, child, abort, s4, choice, location, via, notes,
-                ml_result,true, picture1, picture2, picture3, picture4);
-
-        Capture2 capture2 = new Capture2(instanceID, date1, username, fac_id, studyID, initial,
-                district, county, zone, age, text, ss, symptom, text2,
-                value3, valuex, year, value, date3, child, abort, s4, choice, location, via, notes,
-                ml_result, true, picture1, picture2, picture3, picture4);
-
-        Log.v("TAG", "data3");
-
-        sendOverNetwork(token, capture, capture2);
+//        Capture capture = new Capture(instanceID, date1, username, fac_id, studyID, initial,
+//                district, county, zone, age, text, ss, symptom, text2, sss, past, treat, date2,
+//                value3, valuex, year, value, date3, child, abort, s4, choice, location, via, notes,
+//                ml_result,true, others, picture1, picture2, picture3, picture4);
+//
+//        Capture2 capture2 = new Capture2(instanceID, date1, username, fac_id, studyID, initial,
+//                district, county, zone, age, text, ss, symptom, text2,
+//                value3, valuex, year, value, date3, child, abort, s4, choice, location, via, notes,
+//                ml_result, true, others, picture1, picture2, picture3, picture4);
+//
+//        Log.v("TAG", "data3");
+//
+//        sendOverNetwork(token, capture, capture2);
 
     }
 
@@ -549,6 +602,7 @@ public class RecordsActivity extends AppCompatActivity {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void sendData() {
 
         String studyID = form.getStudyID();
@@ -563,6 +617,7 @@ public class RecordsActivity extends AppCompatActivity {
         text2 = form.getScreened_for_cancer();
         String past = form.getScreening_results();
         String sss = form.getScreening_process();
+        sss = "HPV, VIA/VIL";
         String datey = form.getLast_screened();
         String treat = form.getTreatment();
         String value3 = form.getHiv_status();
@@ -639,15 +694,26 @@ public class RecordsActivity extends AppCompatActivity {
         Picture picture3 = new Picture(neg3, pos3, var3, sImage3, "");
         Picture picture4 = new Picture(neg4, pos4, var4, sImage4, "");
 
+        String other = "nurse@styxtechgroup.com";
+//        String[] elements = other.split(",", -1);
+//        List<String> fixedLenghtList = Arrays.asList(other.split(",", -1));
+//        ArrayList<String> listOfString = new ArrayList<String>(fixedLenghtList);
+//
+////        String ids = fixedLenghtList.stream().map(s -> "\"" + s + "\"").collect(Collectors.joining(", "));
+////        List<String> finals = Arrays.asList(ids.split(",", -1));
+////        ArrayList<String> listOfString = new ArrayList<String>(finals);
+//        Log.v("TAG: ", "" + listOfString);
+
+
         Capture capture = new Capture(instanceID, date1, username, fac_id, studyID, initial,
                 district, county, zone, age, text, ss, symptom, text2, sss, past, treat, date2,
                 value3, valuex, year, value, date3, child, abort, s4, choice, location, via, notes,
-                ml_result, consult, picture1, picture2, picture3, picture4);
+                ml_result, consult, other, picture1, picture2, picture3, picture4);
 
         Capture2 capture2 = new Capture2(instanceID, date1, username, fac_id, studyID, initial,
                 district, county, zone, age, text, ss, symptom, text2,
                 value3, valuex, year, value, date3, child, abort, s4, choice, location, via, notes,
-                ml_result, consult, picture1, picture2, picture3, picture4);
+                ml_result, consult, other, picture1, picture2, picture3, picture4);
 
         Log.v("TAG", "data3");
 

@@ -8,9 +8,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,16 +20,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ug.cancerapp.Database.Form;
 import com.ug.cancerapp.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormHolder> {
 
-    List<Form> formList;
+    List<Form> formList, selected;
     Context context;
     private OnItemClickListener mListener;
 
-    public FormAdapter(List<Form> formList, Context context) {
+    public FormAdapter(Context context, List<Form> formList, List<Form> selected) {
         this.formList = formList;
+        this.selected = selected;
         this.context = context;
     }
 
@@ -35,8 +39,6 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormHolder> {
         void onLoadClick(int position);
         void onViewClick(int position);
         void onConsultClick(int position);
-        void onCheckedClick(int position);
-        void onNotCheckedClick(int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener){
@@ -53,11 +55,66 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull FormHolder holder, int position) {
-        holder.studyID.setText("StudyID: " + formList.get(position).getStudyID());
-        holder.initials.setText("Initials: " + formList.get(position).getInitials());
-        holder.age.setText("Age: " + String.valueOf(formList.get(position).getAge()));
-        holder.via.setText("VIA Results: " + formList.get(position).getVia());
+        Form form = formList.get(position);
+        holder.studyID.setText("StudyID: " + form.getStudyID());
+        holder.initials.setText("Initials: " + form.getInitials());
+        holder.age.setText("Age: " + String.valueOf(form.getAge()));
+        holder.via.setText("VIA Results: " + form.getVia());
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (selected.contains(form)){
+                    selected.remove(form);
+                    unhighlightView(holder);
+                }else {
+                    selected.add(form);
+                    highlightView(holder);
+                }
+            }
+        });
+
+        if (selected.contains(form))
+            highlightView(holder);
+        else
+            unhighlightView(holder);
+
+    }
+
+    private void highlightView(FormHolder holder) {
+        holder.imageView.setVisibility(View.VISIBLE);
+    }
+
+    private void unhighlightView(FormHolder holder) {
+        holder.imageView.setVisibility(View.INVISIBLE);
+    }
+
+    public void addAll(List<Form> forms) {
+        clearAll(false);
+        this.formList= forms;
+        notifyDataSetChanged();
+    }
+
+    public void clearAll(boolean isNotify) {
+        formList.clear();
+        selected.clear();
+        if (isNotify) notifyDataSetChanged();
+    }
+    public void clearSelected() {
+        selected.clear();
+        notifyDataSetChanged();
+    }
+
+    public void selectAll() {
+        selected.clear();
+        selected.addAll(formList);
+        notifyDataSetChanged();
+    }
+
+
+    public List<Form> getSelected() {
+        return selected;
     }
 
     @Override
@@ -65,12 +122,16 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormHolder> {
         return formList.size();
     }
 
+    public void notifying() {
+        notifyDataSetChanged();
+    }
+
 
     public static class FormHolder extends RecyclerView.ViewHolder{
 
         private TextView studyID, initials, age, via;
         private Button load, images, consult;
-        private CheckBox checkBox;
+        private ImageView imageView;
 
         public FormHolder(@NonNull View itemView, OnItemClickListener listener) {
             super(itemView);
@@ -82,7 +143,7 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormHolder> {
             load = itemView.findViewById(R.id.load);
             images = itemView.findViewById(R.id.images);
 //            consult = itemView.findViewById(R.id.consult);
-            checkBox = itemView.findViewById(R.id.ok);
+            imageView= itemView.findViewById(R.id.ok);
 
             images.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -103,28 +164,6 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormHolder> {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION){
                             listener.onLoadClick(position);
-                        }
-                    }
-                }
-            });
-
-            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (checkBox.isChecked()){
-                        if (listener != null){
-                            int position = getAdapterPosition();
-                            if (position != RecyclerView.NO_POSITION){
-                                listener.onCheckedClick(position);
-                            }
-                        }
-                    }
-                    else {
-                        if (listener != null){
-                            int position = getAdapterPosition();
-                            if (position != RecyclerView.NO_POSITION){
-                                listener.onNotCheckedClick(position);
-                            }
                         }
                     }
                 }

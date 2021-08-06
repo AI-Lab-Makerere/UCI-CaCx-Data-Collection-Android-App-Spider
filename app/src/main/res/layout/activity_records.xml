@@ -31,16 +31,51 @@
         tools:listitem="@layout/form"
         android:layout_below="@id/search"/>
 
-    <Button
-        android:id="@+id/submit"
+    <LinearLayout
+        android:id="@+id/now"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Submit Forms"
-        android:textSize="18sp"
+        android:weightSum="3"
+        android:background="@color/colorBackground"
         android:layout_alignParentBottom="true"
-        android:layout_margin="20dp"
-        android:textAllCaps="false"
-        android:textColor="@color/colorBackground"
-        android:background="@drawable/primary_btn"/>
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select All"
+            android:textSize="18sp"
+            android:textAllCaps="false"
+            android:layout_margin="5dp"
+            android:textColor="@color/colorBackground"
+            android:background="@drawable/primary_btn"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btn2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Deselect All"
+            android:layout_margin="5dp"
+            android:textSize="18sp"
+            android:textAllCaps="false"
+            android:textColor="@color/colorBackground"
+            android:background="@drawable/primary_btn"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Submit"
+            android:layout_margin="5dp"
+            android:textSize="18sp"
+            android:textAllCaps="false"
+            android:textColor="@color/colorBackground"
+            android:background="@drawable/primary_btn"/>
+    </LinearLayout>
+
 
 </RelativeLayout>

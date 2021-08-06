@@ -54,7 +54,8 @@
         <activity android:name=".Activities.LoginActivity">
         </activity>
         <activity android:name=".Activities.WelcomeActivity" />
-        <activity android:name=".Activities.SplashActivity">
+        <activity android:name=".Activities.SplashActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

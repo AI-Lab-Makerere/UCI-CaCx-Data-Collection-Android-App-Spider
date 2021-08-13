@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2021. The UCI CaCx mobile app is an app developed by MUTEBI CHODRINE
+ *  under the Artificial Intelligence Research lab, Makerere University and
+ *  it was developed to help the Uganda Cancer Institute in their research.
+ */
+
 package com.ug.cancerapp.Models;
 
 import com.google.gson.annotations.SerializedName;
@@ -25,6 +31,8 @@ public class Capture2 {
     private String ml_via_result;
     private Boolean require_clinician_review;
     private String other_nurses;
+    private float positive_threshold;
+    private String model_version;
 
     @SerializedName("picture1_before")
     private Picture picture1_before;
@@ -38,13 +46,16 @@ public class Capture2 {
     @SerializedName("picture4_after")
     private Picture picture4_after;
 
-    public Capture2(String instanceID, Date entry_date, String username, int health_facility_id, String studyID,
-                    String initials, String district, String county, String zone, int age, String symptoms,
-                    String more_symptoms, String other_symptoms, String cancer_screening, String hiv_status,
-                    String on_haart, int years_on_haart, String patient_pregnant, Date last_known_menstrual_period_date,
-                    int parity, int abortions, String contraceptives, String other_contraceptives, String lesionLocation,
-                    String via_results, String nurse_notes, String ml_via_result, Boolean require_clinician_review,String other_nurses,
-                    Picture picture1_before, Picture picture2_before, Picture picture3_after, Picture picture4_after) {
+    public Capture2(String instanceID, Date entry_date, String username, int health_facility_id,
+                    String studyID, String initials, String district, String county, String zone,
+                    int age, String symptoms, String more_symptoms, String other_symptoms,
+                    String cancer_screening, String hiv_status, String on_haart, int years_on_haart,
+                    String patient_pregnant, Date last_known_menstrual_period_date, int parity,
+                    int abortions, String contraceptives, String other_contraceptives, String lesionLocation,
+                    String via_results, String nurse_notes, String ml_via_result,
+                    Boolean require_clinician_review, String other_nurses, float positive_threshold,
+                    String model_version, Picture picture1_before, Picture picture2_before,
+                    Picture picture3_after, Picture picture4_after) {
         this.instanceID = instanceID;
         this.entry_date = entry_date;
         this.username = username;
@@ -74,6 +85,8 @@ public class Capture2 {
         this.ml_via_result = ml_via_result;
         this.require_clinician_review = require_clinician_review;
         this.other_nurses = other_nurses;
+        this.positive_threshold = positive_threshold;
+        this.model_version = model_version;
         this.picture1_before = picture1_before;
         this.picture2_before = picture2_before;
         this.picture3_after = picture3_after;

@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021. The UCI CaCx mobile app is an app developed by MUTEBI CHODRINE
+  ~  under the Artificial Intelligence Research lab, Makerere University and
+  ~  it was developed to help the Uganda Cancer Institute in their research.
+  -->
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,75 +17,33 @@
         android:layout_height="match_parent"
         android:layout_above="@id/buttons">
 
-        <ScrollView
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Other Nurses Involved"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"/>
+
+        <TextView
+            android:id="@+id/subTitle"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Please enter the names of the other nurses involved in this screening process"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_below="@id/title"
+            android:textColor="@color/colorTextPrimary"/>
+
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fadeScrollbars="true"
-            android:scrollbars="none">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="10dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Other Nurses Involved"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20sp"
-                    android:gravity="center_horizontal"/>
-
-                <TextView
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Please enter the names of the other nurses involved in this screening process"
-                    android:textSize="16sp"
-                    android:textColor="@color/colorTextPrimary"/>
-
-                <TextView
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="(At least Provide One Other Nurse - Nurse1)"
-                    android:textSize="14sp"
-                    android:gravity="center"
-                    android:textStyle="italic"/>
-
-                <EditText
-                    android:id="@+id/nurse1"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/text_bg"
-                    android:hint="Nurse 1*"
-                    android:inputType="text"
-                    android:paddingLeft="5dp" />
-
-                <EditText
-                    android:id="@+id/nurse2"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/text_bg"
-                    android:hint="Nurse 2"
-                    android:paddingLeft="5dp" />
-
-                <EditText
-                    android:id="@+id/nurse3"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/text_bg"
-                    android:hint="Nurse 3"
-                    android:paddingLeft="5dp" />
-
-
-            </LinearLayout>
-
-        </ScrollView>
+            android:layout_below="@id/subTitle"
+            android:id="@+id/recycler_view"
+            tools:listitem="@layout/nurse"/>
 
     </RelativeLayout>
 

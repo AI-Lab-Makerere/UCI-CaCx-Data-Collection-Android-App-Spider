@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2021. The UCI CaCx mobile app is an app developed by MUTEBI CHODRINE
+ *  under the Artificial Intelligence Research lab, Makerere University and
+ *  it was developed to help the Uganda Cancer Institute in their research.
+ */
+
 package com.ug.cancerapp.Activities;
 
 import androidx.annotation.RequiresApi;
@@ -123,6 +129,7 @@ public class RecordsActivity extends AppCompatActivity {
         btnDeselect = findViewById(R.id.btn2);
         root_layout = findViewById(R.id.root_layout);
 
+
         progressDialog = new ProgressDialog(this);
          formDAO = FormDatabase.getInstance(RecordsActivity.this).formDAO();
 
@@ -192,6 +199,7 @@ public class RecordsActivity extends AppCompatActivity {
 
     }
 
+
 //    public void selecting(){
 //        for (int i = formAdapter.getSelected().size() -1; i >= 0; i--){
 //            index = formAdapter.getSelected().get(i).getKey();
@@ -234,7 +242,7 @@ public class RecordsActivity extends AppCompatActivity {
 
             formAdapter = new FormAdapter(RecordsActivity.this, formList, selected);
             recyclerView.setAdapter(formAdapter);
-
+//            runBackgroundTask();
             formAdapter.setOnItemClickListener(new FormAdapter.OnItemClickListener() {
                 @Override
                 public void onLoadClick(int position) {
@@ -360,7 +368,7 @@ public class RecordsActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            Toast.makeText(RecordsActivity.this, "its done", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(RecordsActivity.this, "its done", Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
 //            finish();
 //            startActivity(getIntent());
@@ -483,60 +491,6 @@ public class RecordsActivity extends AppCompatActivity {
 
     }
 
-    private void sendOverNetwork(String token, Capture capture, Capture2 capture2) {
-        Log.v("TAG", "data4");
-        jsonPlaceHolder = ApiClient.getClient().create(JsonPlaceHolder.class);
-
-        if (text2.equals("No")){
-            call = jsonPlaceHolder.capture2("Bearer " + token, capture2);
-        }else {
-            call = jsonPlaceHolder.capture("Bearer " + token, capture);
-        }
-
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if (!response.isSuccessful()){
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(RecordsActivity.this, "Connection Issue: " + response.code() + " error", Toast.LENGTH_SHORT).show();
-                            progressDialog.dismiss();
-                            Log.v("TAG", ""+response.code());
-                        }
-                    });
-                    return;
-                }
-
-                String message = response.body();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(RecordsActivity.this, "Form Uploaded Successfully", Toast.LENGTH_SHORT).show();
-                        Log.v("TAG", message);
-                        progressDialog.dismiss();
-                        formDAO.UpdateUpload(true, key);
-                    }
-                });
-
-
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(RecordsActivity.this, "Something went wrong: " + t.getMessage() , Toast.LENGTH_SHORT).show();
-                        Log.v("TAG", "Something went wrong: " + t.getMessage());
-                        progressDialog.dismiss();
-                    }
-                });
-
-            }
-        });
-    }
-
     @SuppressLint("SetTextI18n")
     private void loadData(Dialog dialog, int position) {
 
@@ -589,6 +543,8 @@ public class RecordsActivity extends AppCompatActivity {
         loc.setText("Location of the Lesion: " + formList.get(position).getLocation());
         TextView notes = dialog.findViewById(R.id.notes);
         notes.setText("Nurse's Notes: " + formList.get(position).getNotes());
+//        TextView nur = dialog.findViewById(R.id.nur);
+//        nur.setText("Other Nurses involved: " + formList.get(position).getNurses());
         TextView model = dialog.findViewById(R.id.model);
         String mmv = formList.get(position).getDiagnosis();
         model.setText("Model Predictions: " + mmv);
@@ -617,7 +573,6 @@ public class RecordsActivity extends AppCompatActivity {
         text2 = form.getScreened_for_cancer();
         String past = form.getScreening_results();
         String sss = form.getScreening_process();
-        sss = "HPV, VIA/VIL";
         String datey = form.getLast_screened();
         String treat = form.getTreatment();
         String value3 = form.getHiv_status();
@@ -694,7 +649,9 @@ public class RecordsActivity extends AppCompatActivity {
         Picture picture3 = new Picture(neg3, pos3, var3, sImage3, "");
         Picture picture4 = new Picture(neg4, pos4, var4, sImage4, "");
 
-        String other = "nurse@styxtechgroup.com";
+        String other = form.getNurses();
+        String version = "2.0.0";
+        float threshold = 5.0F;
 //        String[] elements = other.split(",", -1);
 //        List<String> fixedLenghtList = Arrays.asList(other.split(",", -1));
 //        ArrayList<String> listOfString = new ArrayList<String>(fixedLenghtList);
@@ -708,16 +665,72 @@ public class RecordsActivity extends AppCompatActivity {
         Capture capture = new Capture(instanceID, date1, username, fac_id, studyID, initial,
                 district, county, zone, age, text, ss, symptom, text2, sss, past, treat, date2,
                 value3, valuex, year, value, date3, child, abort, s4, choice, location, via, notes,
-                ml_result, consult, other, picture1, picture2, picture3, picture4);
+                ml_result, consult, other, threshold, version, picture1, picture2, picture3, picture4);
 
         Capture2 capture2 = new Capture2(instanceID, date1, username, fac_id, studyID, initial,
                 district, county, zone, age, text, ss, symptom, text2,
                 value3, valuex, year, value, date3, child, abort, s4, choice, location, via, notes,
-                ml_result, consult, other, picture1, picture2, picture3, picture4);
+                ml_result, consult, other, threshold, version, picture1, picture2, picture3, picture4);
 
         Log.v("TAG", "data3");
 
         sendOverNetwork(token, capture, capture2);
+    }
+
+    private void sendOverNetwork(String token, Capture capture, Capture2 capture2) {
+        Log.v("TAG", "data4");
+        jsonPlaceHolder = ApiClient.getClient().create(JsonPlaceHolder.class);
+
+        if (text2.equals("No")){
+            call = jsonPlaceHolder.capture2("Bearer " + token, capture2);
+        }else {
+            call = jsonPlaceHolder.capture("Bearer " + token, capture);
+        }
+
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (!response.isSuccessful()){
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(RecordsActivity.this, "Connection Issue: " + response.code() + " error", Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
+                            Log.v("TAG", ""+response.code());
+                        }
+                    });
+                    return;
+                }
+
+                String message = response.body();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(RecordsActivity.this, "Form Uploaded Successfully", Toast.LENGTH_SHORT).show();
+                        Log.v("TAG", message);
+//                        formDAO.UpdateUpload(true, index);
+                        formDAO.DeleteForm(index);
+                        progressDialog.dismiss();
+
+                    }
+                });
+
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(RecordsActivity.this, "Something went wrong: " + t.getMessage() , Toast.LENGTH_SHORT).show();
+                        Log.v("TAG", "Something went wrong: " + t.getMessage());
+                        progressDialog.dismiss();
+                    }
+                });
+
+            }
+        });
     }
 
     private boolean checkConnection() {
@@ -756,5 +769,18 @@ public class RecordsActivity extends AppCompatActivity {
         progressDialog.dismiss();
     }
 
-
+//    private void runBackgroundTask() {
+//        int size = formAdapter.getItemCount();
+//        if (size > 0){
+//            formAdapter.selectAll();
+//            boolean InternetResult = checkConnection();
+//            if (InternetResult){
+//                new SendDataTask().execute();
+//            }else {
+//                DialogAppear();
+//            }
+////
+//        }
+//
+//    }
 }

@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2021. The UCI CaCx mobile app is an app developed by MUTEBI CHODRINE
+ *  under the Artificial Intelligence Research lab, Makerere University and
+ *  it was developed to help the Uganda Cancer Institute in their research.
+ */
+
 package com.ug.cancerapp.Apis;
 
 import com.ug.cancerapp.Models.Capture2;
@@ -7,6 +13,7 @@ import com.ug.cancerapp.Models.Capture;
 import com.ug.cancerapp.Models.Feedback;
 import com.ug.cancerapp.Models.Information;
 import com.ug.cancerapp.Models.Model;
+import com.ug.cancerapp.Models.Nurse;
 import com.ug.cancerapp.Models.Review;
 import com.ug.cancerapp.Models.Settings;
 import com.ug.cancerapp.Models.User;
@@ -65,4 +72,8 @@ public interface JsonPlaceHolder {
     @Headers("Accept: application/json")
     @GET("api/my-gynecologist-reviews")
     Call<List<Model>> model(@Header("Authorization") String header);
+
+    @Headers("Accept: application/json")
+    @GET("api/nurses")
+    Call<List<Nurse>> nurses(@Header("Authorization") String header);
 }

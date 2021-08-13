@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2021. The UCI CaCx mobile app is an app developed by MUTEBI CHODRINE
+ *  under the Artificial Intelligence Research lab, Makerere University and
+ *  it was developed to help the Uganda Cancer Institute in their research.
+ */
+
 package com.ug.cancerapp.Fragments;
 
 import android.content.Context;
@@ -21,6 +27,9 @@ import static com.ug.cancerapp.Fragments.OtherFragment.OTHER;
 import static com.ug.cancerapp.Fragments.ScreenFragment.DATES;
 import static com.ug.cancerapp.Fragments.ScreenFragment.DURATION;
 import static com.ug.cancerapp.Fragments.ScreenFragment.METHOD;
+import static com.ug.cancerapp.Fragments.ScreenFragment.CHECKSA1;
+import static com.ug.cancerapp.Fragments.ScreenFragment.CHECKSA2;
+import static com.ug.cancerapp.Fragments.ScreenFragment.CHECKSA3;
 import static com.ug.cancerapp.Fragments.ScreenFragment.CHOICE;
 import static com.ug.cancerapp.Fragments.ScreenFragment.DATEPICKER;
 import static com.ug.cancerapp.Fragments.ScreenFragment.TREATMENT;
@@ -131,6 +140,9 @@ public class ThirdFragment extends Fragment {
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove(METHOD);
+        editor.remove(CHECKSA1);
+        editor.remove(CHECKSA2);
+        editor.remove(CHECKSA3);
         editor.remove(DATEPICKER);
         editor.remove(DATES);
         editor.remove(DURATION);

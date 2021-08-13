@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2021. The UCI CaCx mobile app is an app developed by MUTEBI CHODRINE
+ *  under the Artificial Intelligence Research lab, Makerere University and 
+ *  it was developed to help the Uganda Cancer Institute in their research.
+ */
+
 package com.ug.cancerapp.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -53,6 +59,7 @@ import static com.ug.cancerapp.Fragments.FirstFragment.ZONE;
 import static com.ug.cancerapp.Fragments.FourthFragment.TEXT3;
 import static com.ug.cancerapp.Fragments.Haart2Fragment.YEARS;
 import static com.ug.cancerapp.Fragments.HaartFragment.CHOICE2;
+import static com.ug.cancerapp.Fragments.Other2Fragment.SUM;
 import static com.ug.cancerapp.Fragments.OtherFragment.OTHER;
 import static com.ug.cancerapp.Fragments.ScreenFragment.CHOICE;
 import static com.ug.cancerapp.Fragments.ScreenFragment.DATEPICKER;
@@ -76,6 +83,7 @@ public class SavingActivity extends AppCompatActivity {
     int number = 0;
     int act = 0;
     int ident = 0;
+    String nurses;
 
     private FormViewModel formViewModel;
 
@@ -135,6 +143,11 @@ public class SavingActivity extends AppCompatActivity {
         new newTask().execute();
     }
 
+    public void images(View view) {
+        startActivity(new Intent(this, ImageViewingActivity.class));
+//        finish();
+    }
+
     class newTask extends AsyncTask<Void, Void, Void>{
 
         @Override
@@ -182,6 +195,7 @@ public class SavingActivity extends AppCompatActivity {
             super.onPostExecute(aVoid);
 
             progressDialog.dismiss();
+//            Toast.makeText(SavingActivity.this, nurses, Toast.LENGTH_SHORT).show();
 //            Toast.makeText(SavingActivity.this, "Via: " + viar + "\nVia2: " + viar2 +
 //                    "\nVia3: " + viar3 + "\nVia4: " + viar4 + "\nDiagnosis: " + mmv, Toast.LENGTH_SHORT).show();
             linearLayout.setVisibility(View.VISIBLE);
@@ -326,6 +340,7 @@ public class SavingActivity extends AppCompatActivity {
 
         notes = sharedPreferences.getString(NOTES, "");
         location = sharedPreferences.getString(LESION, "");
+        nurses = sharedPreferences.getString(SUM, "");
 
         diagnosis = mmv;
 
@@ -340,7 +355,7 @@ public class SavingActivity extends AppCompatActivity {
         Form form = new Form(format, studyID, initial, district, county, zone, number, text, ss, symptom,
                 text2, datey, method, treat, past, value3, valuex, num2, value, time, children, abortion, choice,
                 s4, sImage, sImage2, sImage3, sImage4, via, location, notes, diagnosis, consult, false,
-                neg, pos, viar, neg2, pos2, viar2, neg3, pos3, viar3, neg4, pos4, viar4, uniqueID);
+                neg, pos, viar, neg2, pos2, viar2, neg3, pos3, viar3, neg4, pos4, viar4, uniqueID, nurses);
 
         formViewModel.insert(form);
 

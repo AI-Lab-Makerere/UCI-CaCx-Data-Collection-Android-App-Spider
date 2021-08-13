@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2021. The UCI CaCx mobile app is an app developed by MUTEBI CHODRINE
+ *  under the Artificial Intelligence Research lab, Makerere University and
+ *  it was developed to help the Uganda Cancer Institute in their research.
+ */
+
 package com.ug.cancerapp.Fragments;
 
 import android.app.AlertDialog;
@@ -273,7 +279,7 @@ public class FifthFragment extends Fragment implements AdapterView.OnItemSelecte
 //                Toast.makeText(getActivity(), months, Toast.LENGTH_SHORT).show();
             }else if (position == 3) {
                 times.setText(text);
-                months = "29/" + tim;
+                months = "28/" + tim;
 //                Toast.makeText(getActivity(), months, Toast.LENGTH_SHORT).show();
             }
         }else {

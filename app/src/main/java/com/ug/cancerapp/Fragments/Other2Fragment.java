@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2021. The UCI CaCx mobile app is an app developed by MUTEBI CHODRINE
+ *  under the Artificial Intelligence Research lab, Makerere University and
+ *  it was developed to help the Uganda Cancer Institute in their research.
+ */
+
 package com.ug.cancerapp.Fragments;
 
 import android.app.ProgressDialog;
@@ -28,7 +34,6 @@ import com.ug.cancerapp.Database.Form;
 import com.ug.cancerapp.Database.FormViewModel;
 import com.ug.cancerapp.R;
 import com.ug.cancerapp.Activities.DashBoardActivity;
-import com.ug.cancerapp.ml.Cancer;
 
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.support.image.TensorImage;
@@ -88,9 +93,8 @@ import static com.ug.cancerapp.Fragments.YesOrNoFragment.CHOICES;
 public class Other2Fragment extends Fragment {
 
     View view;
-    EditText et1, et2, et3;
     Button next, back;
-    String nurse1, nurse2, nurse3;
+    String nurse1, nurse2, nurse3, total;
 
     public static final String SHARED_PREFS = "sharedPrefs";
     SharedPreferences sharedPreferences;
@@ -99,6 +103,7 @@ public class Other2Fragment extends Fragment {
     public static final String NURSE1 = "nurse1";
     public static final String NURSE2 = "nurse2";
     public static final String NURSE3 = "nurse3";
+    public static final String SUM = "nurses";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -107,33 +112,17 @@ public class Other2Fragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_other2, container, false);
         back = view.findViewById(R.id.back);
         next = view.findViewById(R.id.next);
-        et1 = view.findViewById(R.id.nurse1);
-        et2 = view.findViewById(R.id.nurse2);
-        et3 = view.findViewById(R.id.nurse3);
 
-        sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-
-        loadData();
-        updateViews();
+//        sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+//        editor = sharedPreferences.edit();
+//
+//        loadData();
+//        updateViews();
+//        Toast.makeText(getActivity(), total, Toast.LENGTH_SHORT).show();
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                nurse1 = et1.getText().toString();
-                nurse2 = et2.getText().toString();
-                nurse3 = et3.getText().toString();
-
-                if (nurse1.isEmpty()){
-                    Toast.makeText(getActivity(), "Please provide at least on other Nurse", Toast.LENGTH_SHORT).show();
-                    et1.setCursorVisible(true);
-                }else {
-                    saveData();
-                    startActivity(new Intent(getActivity(), SavingActivity.class));
-
-                }
-
 
             }
         });
@@ -150,15 +139,12 @@ public class Other2Fragment extends Fragment {
         return view;
     }
 
-    private void saveData() {
-
-        nurse1 = et1.getText().toString();
-        nurse2 = et2.getText().toString();
-        nurse3 = et3.getText().toString();
+    private void saveData(String total) {
 
         editor.putString(NURSE1, nurse1);
         editor.putString(NURSE2, nurse2);
         editor.putString(NURSE3, nurse3);
+        editor.putString(SUM, total);
 
         editor.apply();
     }
@@ -169,14 +155,12 @@ public class Other2Fragment extends Fragment {
         nurse1 = sharedPreferences.getString(NURSE1, "");
         nurse2 = sharedPreferences.getString(NURSE2, "");
         nurse3 = sharedPreferences.getString(NURSE3, "");
+        nurse3 = sharedPreferences.getString(NURSE3, "");
+//        total = sharedPreferences.getString(SUM, "");
 
     }
 
     public void updateViews(){
-
-        et2.setText(nurse2);
-        et3.setText(nurse3);
-        et1.setText(nurse1);
 
     }
 }

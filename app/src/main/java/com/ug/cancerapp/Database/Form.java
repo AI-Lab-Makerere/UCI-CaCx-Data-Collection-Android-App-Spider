@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2021. The UCI CaCx mobile app is an app developed by MUTEBI CHODRINE
+ *  under the Artificial Intelligence Research lab, Makerere University and
+ *  it was developed to help the Uganda Cancer Institute in their research.
+ */
+
 package com.ug.cancerapp.Database;
 
 import androidx.room.ColumnInfo;
@@ -39,6 +45,7 @@ public class Form {
     float picture4_pc;
     String picture4_via;
     String instanceID;
+    String nurses;
 
     public Form(String date, String studyID, String initials, String district, String county, String village,
                 int age, String have_symptoms, String symptoms, String other_symptoms, String screened_for_cancer,
@@ -49,7 +56,7 @@ public class Form {
                 String diagnosis, Boolean consult, Boolean uploaded, float picture1_nc, float picture1_pc,
                 String picture1_via, float picture2_nc, float picture2_pc, String picture2_via, float picture3_nc,
                 float picture3_pc, String picture3_via, float picture4_nc, float picture4_pc, String picture4_via,
-                String instanceID) {
+                String instanceID, String nurses) {
         this.date = date;
         this.studyID = studyID;
         this.initials = initials;
@@ -477,5 +484,13 @@ public class Form {
 
     public void setUploaded(Boolean uploaded) {
         this.uploaded = uploaded;
+    }
+
+    public String getNurses() {
+        return nurses;
+    }
+
+    public void setNurses(String nurses) {
+        this.nurses = nurses;
     }
 }

@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2021. The UCI CaCx mobile app is an app developed by MUTEBI CHODRINE
+ *  under the Artificial Intelligence Research lab, Makerere University and
+ *  it was developed to help the Uganda Cancer Institute in their research.
+ */
+
 package com.ug.cancerapp.Database;
 
 
@@ -12,7 +18,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Database(
-        entities = Form.class,
+        entities = {
+                Form.class,
+                Client.class,
+        },
         version = 1,
         exportSchema = false
 )
@@ -22,6 +31,7 @@ public abstract class FormDatabase extends RoomDatabase {
     private static FormDatabase formDatabase = null;
 
     public abstract FormDAO formDAO();
+    public abstract ClientDAO clientDAO();
 
     public static synchronized FormDatabase getInstance(Context context){
         if (formDatabase == null){

@@ -17,44 +17,47 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.ImageViewActivity"></activity>
-        <activity android:name=".Activities.SavingActivity"></activity>
+        <activity
+            android:name=".Activities.ImageViewingActivity"
+            android:exported="true" />
+        <activity android:name=".Activities.ImageViewActivity" />
+        <activity android:name=".Activities.SavingActivity" />
         <activity
             android:name=".Activities.SavedActivity"
             android:parentActivityName=".Activities.DashBoardActivity" />
         <activity android:name=".Activities.CaseActivity" />
         <activity android:name=".Activities.HomeActivity" />
         <activity android:name=".Activities.ModelActivity" />
-        <activity android:name=".Activities.LoopActivity"
+        <activity
+            android:name=".Activities.LoopActivity"
             android:windowSoftInputMode="adjustResize">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".Activities.FeedbackActivity"
             android:parentActivityName=".Activities.GynaecologistActivity"
-            android:windowSoftInputMode="adjustResize"/>
-
-        <activity android:name=".Activities.DataActivity">
-        </activity>
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".Activities.DataActivity"></activity>
         <activity
             android:name=".Activities.GynaecologistActivity"
-            android:parentActivityName=".Activities.HomeActivity"></activity>
+            android:parentActivityName=".Activities.HomeActivity" />
         <activity
             android:name=".Activities.ResultsActivity"
             android:parentActivityName=".Activities.DashBoardActivity" />
         <activity
             android:name=".Activities.RecordsActivity"
             android:parentActivityName=".Activities.DashBoardActivity" />
-        <activity android:name=".Activities.DashBoardActivity">
-        </activity>
-        <activity android:name=".Activities.LoginActivity">
-        </activity>
+        <activity android:name=".Activities.DashBoardActivity"></activity>
+        <activity android:name=".Activities.LoginActivity"></activity>
         <activity android:name=".Activities.WelcomeActivity" />
-        <activity android:name=".Activities.SplashActivity"
+        <activity
+            android:name=".Activities.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -65,7 +68,7 @@
         <activity
             android:name=".Activities.CollectActivity"
             android:parentActivityName=".Activities.DashBoardActivity"
-            android:windowSoftInputMode="adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />

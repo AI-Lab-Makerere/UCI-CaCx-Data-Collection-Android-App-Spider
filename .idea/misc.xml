@@ -7,7 +7,8 @@
         <entry key="..\:/chodrine/MTN/android projects/CancerApp/app/src/main/res/layout/activity_feedback.xml" value="0.1287037037037037" />
         <entry key="..\:/chodrine/MTN/android projects/CancerApp/app/src/main/res/layout/activity_image_view.xml" value="0.1287037037037037" />
         <entry key="..\:/chodrine/MTN/android projects/CancerApp/app/src/main/res/layout/activity_image_viewing.xml" value="0.178125" />
-        <entry key="..\:/chodrine/MTN/android projects/CancerApp/app/src/main/res/layout/activity_saving.xml" value="0.11481481481481481" />
+        <entry key="..\:/chodrine/MTN/android projects/CancerApp/app/src/main/res/layout/activity_saved.xml" value="0.178125" />
+        <entry key="..\:/chodrine/MTN/android projects/CancerApp/app/src/main/res/layout/activity_saving.xml" value="0.25" />
         <entry key="..\:/chodrine/MTN/android projects/CancerApp/app/src/main/res/layout/formxx.xml" value="0.25" />
         <entry key="..\:/chodrine/MTN/android projects/CancerApp/app/src/main/res/layout/fragment_first.xml" value="0.1287037037037037" />
         <entry key="..\:/chodrine/MTN/android projects/CancerApp/app/src/main/res/layout/fragment_fourth.xml" value="0.178125" />
@@ -17,7 +18,10 @@
         <entry key="..\:/chodrine/MTN/android projects/CancerApp/app/src/main/res/layout/fragment_image4.xml" value="0.16458333333333333" />
         <entry key="..\:/chodrine/MTN/android projects/CancerApp/app/src/main/res/layout/fragment_other2.xml" value="0.178125" />
         <entry key="..\:/chodrine/MTN/android projects/CancerApp/app/src/main/res/layout/fragment_screen.xml" value="0.178125" />
+        <entry key="..\:/chodrine/MTN/android projects/CancerApp/app/src/main/res/layout/fragment_yes.xml" value="0.178125" />
+        <entry key="..\:/chodrine/MTN/android projects/CancerApp/app/src/main/res/layout/fragment_yes_or_no.xml" value="0.178125" />
         <entry key="..\:/chodrine/MTN/android projects/CancerApp/app/src/main/res/layout/load_data.xml" value="0.178125" />
+        <entry key="..\:/chodrine/MTN/android projects/CancerApp/app/src/main/res/layout/model.xml" value="0.178125" />
         <entry key="..\:/chodrine/MTN/android projects/CancerApp/app/src/main/res/layout/nurse.xml" value="0.25" />
       </map>
     </option>

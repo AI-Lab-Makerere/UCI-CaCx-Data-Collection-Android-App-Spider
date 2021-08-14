@@ -71,6 +71,11 @@ public class FormRepository {
         return formList;
     }
 
+    public List<Client> getAllClients(){
+        List<Client> clientList = clientDAO.getAllClient();
+        return clientList;
+    }
+
     public List<Form> getAllFormsUploaded(){
         List<Form> formList = formDAO.getAllFormsUploaded();
         return formList;

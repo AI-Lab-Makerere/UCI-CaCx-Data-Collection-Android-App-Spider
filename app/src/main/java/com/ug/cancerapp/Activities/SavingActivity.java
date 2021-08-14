@@ -24,6 +24,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -92,7 +94,7 @@ public class SavingActivity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
-
+    private static final int YES = 0;
 
     String via;
     float pos, pos2, pos4, pos3, neg, neg2, neg3, neg4;
@@ -108,7 +110,9 @@ public class SavingActivity extends AppCompatActivity {
 
     int abortion, children;
 
-    LinearLayout linearLayout;
+    LinearLayout linearLayout, linearLayout2;
+    RadioGroup radioGroup;
+    RadioButton radioButton;
 
     TextView nurse, model, agree, message;
     Dialog dialog;
@@ -120,10 +124,17 @@ public class SavingActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Final Screen");
+        getSupportActionBar().setTitle("Model Results");
 
 
         linearLayout = findViewById(R.id.finals);
+        linearLayout2 = findViewById(R.id.still);
+        nurse = findViewById(R.id.nurse);
+        model = findViewById(R.id.model);
+        agree = findViewById(R.id.agree);
+        message = findViewById(R.id.check);
+        radioGroup = findViewById(R.id.radioGroup);
+        radioButton = findViewById(R.id.consult);
 
         progressDialog = new ProgressDialog(this);
 
@@ -157,7 +168,7 @@ public class SavingActivity extends AppCompatActivity {
             progressDialog.setCancelable(false);
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialog.setMessage("Saving Data, Please give us a second...");
+            progressDialog.setMessage("Running model Predictions, Please wait...");
             progressDialog.show();
         }
 
@@ -199,6 +210,7 @@ public class SavingActivity extends AppCompatActivity {
 //            Toast.makeText(SavingActivity.this, "Via: " + viar + "\nVia2: " + viar2 +
 //                    "\nVia3: " + viar3 + "\nVia4: " + viar4 + "\nDiagnosis: " + mmv, Toast.LENGTH_SHORT).show();
             linearLayout.setVisibility(View.VISIBLE);
+            showModelResults();
         }
     }
 
@@ -344,54 +356,55 @@ public class SavingActivity extends AppCompatActivity {
 
         diagnosis = mmv;
 
-        if (mmv.equals(via)){
-            consult = false;
-        }else {
-            consult = true;
-        }
-
         uniqueID = UUID.randomUUID().toString();
 
-        Form form = new Form(format, studyID, initial, district, county, zone, number, text, ss, symptom,
-                text2, datey, method, treat, past, value3, valuex, num2, value, time, children, abortion, choice,
-                s4, sImage, sImage2, sImage3, sImage4, via, location, notes, diagnosis, consult, false,
-                neg, pos, viar, neg2, pos2, viar2, neg3, pos3, viar3, neg4, pos4, viar4, uniqueID, nurses);
-
-        formViewModel.insert(form);
+//        Form form = new Form(format, studyID, initial, district, county, zone, number, text, ss, symptom,
+//                text2, datey, method, treat, past, value3, valuex, num2, value, time, children, abortion, choice,
+//                s4, sImage, sImage2, sImage3, sImage4, via, location, notes, diagnosis, consult, false,
+//                neg, pos, viar, neg2, pos2, viar2, neg3, pos3, viar3, neg4, pos4, viar4, uniqueID, nurses);
+//
+//        formViewModel.insert(form);
 
     }
 
-    public void viewModel(View view) {
-
-        dialog = new Dialog(this);
-        dialog.setContentView(R.layout.model);
-        Window window = dialog.getWindow();
-        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-
-        nurse = dialog.findViewById(R.id.nurse);
-        model = dialog.findViewById(R.id.model);
-        agree = dialog.findViewById(R.id.agree);
-        message = dialog.findViewById(R.id.check);
-
+    private void showModelResults() {
         nurse.setText(via);
         model.setText(mmv);
 
         if (mmv.equals("Positive") && via.equals("Positive")){
             agree.setText("Agreement");
             agree.setTextColor(Color.parseColor("#FFA726"));
+            linearLayout2.setVisibility(View.VISIBLE);
         }else if (mmv.equals("Negative") && via.equals("Negative")){
             agree.setText("Agreement");
             agree.setTextColor(Color.parseColor("#FFA726"));
+            linearLayout2.setVisibility(View.VISIBLE);
         }else {
             agree.setText("Disagreement");
             agree.setTextColor(Color.parseColor("#C33B2F"));
             message.setVisibility(View.VISIBLE);
+            consult = true;
+        }
+    }
+
+    private void updateConsult() {
+
+        if (radioButton.isChecked()){
+            consult = true;
+        }else {
+            consult = false;
         }
 
-        dialog.show();
     }
 
     public void newForm(View view) {
+        updateConsult();
+        Form form = new Form(format, studyID, initial, district, county, zone, number, text, ss, symptom,
+                text2, datey, method, treat, past, value3, valuex, num2, value, time, children, abortion, choice,
+                s4, sImage, sImage2, sImage3, sImage4, via, location, notes, diagnosis, consult, false,
+                neg, pos, viar, neg2, pos2, viar2, neg3, pos3, viar3, neg4, pos4, viar4, uniqueID, nurses);
+
+        formViewModel.insert(form);
 //        editor.clear();
 //        editor.apply();
         startActivity(new Intent(this, CollectActivity.class));
@@ -399,6 +412,13 @@ public class SavingActivity extends AppCompatActivity {
     }
 
     public void dashboard(View view) {
+        updateConsult();
+        Form form = new Form(format, studyID, initial, district, county, zone, number, text, ss, symptom,
+                text2, datey, method, treat, past, value3, valuex, num2, value, time, children, abortion, choice,
+                s4, sImage, sImage2, sImage3, sImage4, via, location, notes, diagnosis, consult, false,
+                neg, pos, viar, neg2, pos2, viar2, neg3, pos3, viar3, neg4, pos4, viar4, uniqueID, nurses);
+
+        formViewModel.insert(form);
 //        editor.clear();
 //        editor.apply();
         startActivity(new Intent(this, DashBoardActivity.class));

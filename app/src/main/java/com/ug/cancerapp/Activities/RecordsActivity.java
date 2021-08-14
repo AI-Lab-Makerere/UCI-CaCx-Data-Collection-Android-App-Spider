@@ -347,20 +347,6 @@ public class RecordsActivity extends AppCompatActivity {
 
             }
 
-//            for (i = 0; i < arrayForm.size(); i++){
-////                form = formRepository.getOnlyOne(arrayForm.get((int) i));
-////                FormDAO formDAO = FormDatabase.getInstance(RecordsActivity.this).formDAO();
-////                formDAO.DeleteForm(arrayForm.get((int) i));
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        progressDialog.setMessage("Sending Data, Please wait...");
-//                        progressDialog.show();
-//                    }
-//                });
-////                sendData();
-//            }
-
             return null;
         }
 
@@ -368,10 +354,7 @@ public class RecordsActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-//            Toast.makeText(RecordsActivity.this, "its done", Toast.LENGTH_SHORT).show();
-            progressDialog.dismiss();
-//            finish();
-//            startActivity(getIntent());
+
         }
     }
 
@@ -711,7 +694,8 @@ public class RecordsActivity extends AppCompatActivity {
 //                        formDAO.UpdateUpload(true, index);
                         formDAO.DeleteForm(index);
                         progressDialog.dismiss();
-
+                        formList.clear();
+                        new LoadDataTask().execute();
                     }
                 });
 

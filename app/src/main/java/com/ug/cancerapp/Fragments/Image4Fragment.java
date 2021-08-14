@@ -32,7 +32,7 @@ import com.ug.cancerapp.R;
 
 public class Image4Fragment extends Fragment {
 
-    Button next;
+    Button next, back;
     TouchImageView touchImageView;
     View view;
     SharedPreferences sharedPreferences;
@@ -47,10 +47,11 @@ public class Image4Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_image1, container, false);
+        view = inflater.inflate(R.layout.fragment_image4, container, false);
 
         touchImageView = view.findViewById(R.id.singleImage);
-        next = view.findViewById(R.id.next);
+//        next = view.findViewById(R.id.next);
+        back = view.findViewById(R.id.back);
 
         sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -60,10 +61,20 @@ public class Image4Fragment extends Fragment {
         bitmap1 = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         touchImageView.setImageBitmap(bitmap1);
 
-        next.setOnClickListener(new View.OnClickListener() {
+//        next.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(getActivity(), SavingActivity.class));
+//            }
+//        });
+
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), SavingActivity.class));
+                FragmentTransaction fr = getFragmentManager().beginTransaction();
+                fr.replace(R.id.fragment_container, new Image3Fragment());
+                fr.addToBackStack(null);
+                fr.commit();
             }
         });
 

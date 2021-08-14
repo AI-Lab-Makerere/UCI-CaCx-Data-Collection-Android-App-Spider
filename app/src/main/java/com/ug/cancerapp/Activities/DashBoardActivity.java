@@ -28,13 +28,17 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.ug.cancerapp.Database.ClientDAO;
+import com.ug.cancerapp.Database.FormDatabase;
 import com.ug.cancerapp.R;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -45,6 +49,7 @@ public class DashBoardActivity extends AppCompatActivity {
     public static final String SHARED_API = "sharedApi";
     public static final String SHARED_PREFS = "sharedPrefs";
     Date date1;
+    ClientDAO clientDAO;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -58,6 +63,30 @@ public class DashBoardActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("UCI Cacx");
 
+        clientDAO = FormDatabase.getInstance(this).clientDAO();
+        Date date = Calendar.getInstance().getTime();
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        String today = format.format(date);
+        String tomorrow = "15/8/2021";
+        SimpleDateFormat sdf1=new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            Date d1 = sdf1.parse(today);
+            Date d2 = sdf1.parse(tomorrow);
+            Calendar cal=Calendar.getInstance();
+            cal.setTime(d1);
+            long y=cal.getTimeInMillis();
+            cal.setTime(d2);
+            long y1=cal.getTimeInMillis();
+//            if(y<y1){
+//                Toast.makeText(this, "this is bad", Toast.LENGTH_SHORT).show();
+//            }else {
+//                Toast.makeText(this, "its a good thing", Toast.LENGTH_SHORT).show();
+//            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        
 
     }
 
@@ -119,6 +148,7 @@ public class DashBoardActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.clear();
             editor.apply();
+            clientDAO.deleteTable();
             startActivity(new Intent(DashBoardActivity.this, WelcomeActivity.class));
             finish();
         }

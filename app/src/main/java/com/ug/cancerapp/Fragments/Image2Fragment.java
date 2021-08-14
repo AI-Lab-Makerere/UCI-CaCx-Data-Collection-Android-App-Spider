@@ -44,7 +44,7 @@ public class Image2Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_image1, container, false);
+        view = inflater.inflate(R.layout.fragment_image2, container, false);
 
         touchImageView = view.findViewById(R.id.singleImage);
         next = view.findViewById(R.id.next);
@@ -68,15 +68,15 @@ public class Image2Fragment extends Fragment {
             }
         });
 
-//        back.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                FragmentTransaction fr = getFragmentManager().beginTransaction();
-//                fr.replace(R.id.fragment_container, new Image1Fragment());
-//                fr.addToBackStack(null);
-//                fr.commit();
-//            }
-////        });
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction fr = getFragmentManager().beginTransaction();
+                fr.replace(R.id.fragment_container, new Image1Fragment());
+                fr.addToBackStack(null);
+                fr.commit();
+            }
+        });
 
         return view;
     }

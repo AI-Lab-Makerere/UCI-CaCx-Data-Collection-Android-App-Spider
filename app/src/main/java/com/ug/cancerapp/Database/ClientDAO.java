@@ -7,9 +7,12 @@
 package com.ug.cancerapp.Database;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+
+import java.util.List;
 
 @Dao
 public interface ClientDAO {
@@ -20,4 +23,9 @@ public interface ClientDAO {
     @Query("SELECT EXISTS(SELECT * FROM Nurses WHERE `id` = :id)")
     boolean clientExist(int id);
 
+    @Query("SELECT * FROM Nurses")
+    List<Client> getAllClient();
+
+    @Query("DELETE FROM Nurses")
+    void deleteTable();
 }

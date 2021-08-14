@@ -27,23 +27,33 @@
         android:background="#FDFBFB"
         app:layout_constraintBottom_toBottomOf="parent">
 
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="After Acetic Acid"-->
-<!--            android:layout_centerInParent="true"-->
-<!--            android:textColor="@color/colorTextPrimary"/>-->
-
 
         <Button
-            android:id="@+id/next"
+            android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_margin="10dp"
             android:background="@drawable/primary_btn"
-            android:text="next"
-            android:textColor="@color/colorBackground" />
+            android:layout_margin="10dp"
+            android:text="Back"
+            android:textColor="@color/colorBackground"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="After Acetic Acid (4)"
+            android:layout_centerInParent="true"
+            android:textColor="@color/colorTextPrimary"/>
+
+
+<!--        <Button-->
+<!--            android:id="@+id/next"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:layout_margin="10dp"-->
+<!--            android:background="@drawable/primary_btn"-->
+<!--            android:text="next"-->
+<!--            android:textColor="@color/colorBackground" />-->
 
     </RelativeLayout>
 

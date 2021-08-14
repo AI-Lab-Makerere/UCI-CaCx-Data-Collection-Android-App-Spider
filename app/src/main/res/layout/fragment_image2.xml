@@ -36,12 +36,12 @@
             android:text="Back"
             android:textColor="@color/colorBackground"/>
 
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Before Acetic Acid"-->
-<!--            android:layout_centerInParent="true"-->
-<!--            android:textColor="@color/colorTextPrimary"/>-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Before Acetic Acid (2)"
+            android:layout_centerInParent="true"
+            android:textColor="@color/colorTextPrimary"/>
 
 
         <Button

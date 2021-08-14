@@ -32,7 +32,11 @@ import android.widget.Toast;
 import com.ug.cancerapp.R;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import static com.ug.cancerapp.Fragments.FourthFragment.TEXT3;
 import static com.ug.cancerapp.Fragments.Haart2Fragment.YEARS;
@@ -53,7 +57,7 @@ public class FifthFragment extends Fragment implements AdapterView.OnItemSelecte
     private static final int NOT_SURE = 2;
     DatePickerDialog.OnDateSetListener dateSetListener;
 
-    String value, time, child, abort, fouthText, haart2Text;
+    String value, time, child, abort, fouthText, haart2Text, today;
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String PREGNANT = "pregnant";
     public static final String DATS = "date";
@@ -81,6 +85,11 @@ public class FifthFragment extends Fragment implements AdapterView.OnItemSelecte
         radioButton3 = view.findViewById(R.id.not_sure);
         spinner = view.findViewById(R.id.day);
         times = view.findViewById(R.id.time);
+
+        Date dat = Calendar.getInstance().getTime();
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        today = format.format(dat);
+//        Toast.makeText(getActivity(), today, Toast.LENGTH_SHORT).show();
 
         loadData();
         updateViews();
@@ -134,10 +143,7 @@ public class FifthFragment extends Fragment implements AdapterView.OnItemSelecte
                         Toast.makeText(getActivity(), "The maximum number of abortions should not be greater than maximum number of children", Toast.LENGTH_SHORT).show();
                     } else {
                         saveData();
-                        FragmentTransaction fr = getFragmentManager().beginTransaction();
-                        fr.replace(R.id.fragment_container, new YesOrNoFragment());
-                        fr.addToBackStack(null);
-                        fr.commit();
+                        compareDates();
                     }
                 }
 
@@ -290,5 +296,28 @@ public class FifthFragment extends Fragment implements AdapterView.OnItemSelecte
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    private void compareDates() {
+        SimpleDateFormat sdf1=new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            Date d1 = sdf1.parse(today);
+            Date d2 = sdf1.parse(months);
+            Calendar cal=Calendar.getInstance();
+            cal.setTime(d1);
+            long y=cal.getTimeInMillis();
+            cal.setTime(d2);
+            long y1=cal.getTimeInMillis();
+            if(y<y1){
+                Toast.makeText(getActivity(), "Please check the date for the last menstrual period", Toast.LENGTH_SHORT).show();
+            }else {
+                FragmentTransaction fr = getFragmentManager().beginTransaction();
+                fr.replace(R.id.fragment_container, new YesOrNoFragment());
+                fr.addToBackStack(null);
+                fr.commit();
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }

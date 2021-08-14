@@ -37,7 +37,11 @@ import android.widget.Toast;
 import com.ug.cancerapp.R;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 
 public class ScreenFragment extends Fragment implements AdapterView.OnItemSelectedListener{
@@ -72,7 +76,7 @@ public class ScreenFragment extends Fragment implements AdapterView.OnItemSelect
     public static final String TREATMENT = "treatment";
     public static final String DURATION = "duration";
 
-    String datey, past, treat, method;
+    String datey, past, treat, method, today;
     Boolean check1, check2, check3, check4, check5;
 
     DatePickerDialog.OnDateSetListener dateSetListener;
@@ -103,6 +107,10 @@ public class ScreenFragment extends Fragment implements AdapterView.OnItemSelect
         back = view.findViewById(R.id.back);
         next = view.findViewById(R.id.next);
         radioGroup = view.findViewById(R.id.radioGroup);
+
+        Date dat = Calendar.getInstance().getTime();
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        today = format.format(dat);
 
         loadData();
         updateViews();
@@ -151,10 +159,7 @@ public class ScreenFragment extends Fragment implements AdapterView.OnItemSelect
                     Toast.makeText(getActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }else{
                     saveData(s);
-                    FragmentTransaction fr = getFragmentManager().beginTransaction();
-                    fr.replace(R.id.fragment_container, new FourthFragment());
-                    fr.addToBackStack(null);
-                    fr.commit();
+                    compareDates();
                 }
             }
         });
@@ -287,5 +292,28 @@ public class ScreenFragment extends Fragment implements AdapterView.OnItemSelect
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    private void compareDates() {
+        SimpleDateFormat sdf1=new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            Date d1 = sdf1.parse(today);
+            Date d2 = sdf1.parse(months);
+            Calendar cal=Calendar.getInstance();
+            cal.setTime(d1);
+            long y=cal.getTimeInMillis();
+            cal.setTime(d2);
+            long y1=cal.getTimeInMillis();
+            if(y<y1){
+                Toast.makeText(getActivity(), "Please check the Screening Date", Toast.LENGTH_SHORT).show();
+            }else {
+                FragmentTransaction fr = getFragmentManager().beginTransaction();
+                fr.replace(R.id.fragment_container, new FourthFragment());
+                fr.addToBackStack(null);
+                fr.commit();
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }

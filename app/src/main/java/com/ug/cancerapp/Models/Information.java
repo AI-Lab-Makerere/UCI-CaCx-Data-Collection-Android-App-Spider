@@ -6,7 +6,6 @@
 
 package com.ug.cancerapp.Models;
 
-import java.util.Date;
 import java.util.List;
 
 public class Information {
@@ -24,7 +23,7 @@ public class Information {
     private String parity, abortions;
     private String contraceptives, otherContraceptive;
     private String viaResult, anyNotes, lesionLocation, ml_via_result;
-    List<Mlresults> mlresults;
+    List<Images> mlresults;
 
 
     public Information(String instanceID, String studyID, String initials, String district, String county,
@@ -33,7 +32,7 @@ public class Information {
                        String priorTreatment, String whenLastScreening, String hivStatus, String onHAART,
                        String hAARTDuration, String untitled67, String lnmp, String parity, String abortions,
                        String contraceptives, String otherContraceptive, String viaResult, String nurse_notes,
-                       String lesionLocation, String ml_via_result, List<Mlresults> mlresults) {
+                       String lesionLocation, String ml_via_result, List<Images> mlresults) {
         this.instanceID = instanceID;
         this.studyID = studyID;
         this.initials = initials;
@@ -169,7 +168,7 @@ public class Information {
         return anyNotes;
     }
 
-    public List<Mlresults> getMlresults() {
+    public List<Images> getMlresults() {
         return mlresults;
     }
 

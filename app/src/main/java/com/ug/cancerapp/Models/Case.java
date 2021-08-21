@@ -8,7 +8,6 @@ package com.ug.cancerapp.Models;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Date;
 import java.util.List;
 
 public class Case {
@@ -24,10 +23,10 @@ public class Case {
     @SerializedName("gynecologist_reviews")
     List<Gyneco> gyneco;
     @SerializedName("mlresults")
-    List<Mlresults> mlresults;
+    List<Images> mlresults;
 
     public Case(String instanceID, String studyID, int age, String date, String initials,
-                String viaResult, String ml_via_result, List<Gyneco> gyneco, List<Mlresults> mlresults) {
+                String viaResult, String ml_via_result, List<Gyneco> gyneco, List<Images> mlresults) {
         this.instanceID = instanceID;
         this.studyID = studyID;
         this.age = age;
@@ -59,7 +58,7 @@ public class Case {
         return gyneco;
     }
 
-    public List<Mlresults> getMlresults() {
+    public List<Images> getMlresults() {
         return mlresults;
     }
 

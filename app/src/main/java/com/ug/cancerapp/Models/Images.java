@@ -6,11 +6,11 @@
 
 package com.ug.cancerapp.Models;
 
-public class Mlresults {
+public class Images {
 
     String image_url;
 
-    public Mlresults(String image_url) {
+    public Images(String image_url) {
         this.image_url = image_url;
     }
 

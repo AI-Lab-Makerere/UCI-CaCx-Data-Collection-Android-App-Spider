@@ -18,13 +18,13 @@ public class FormRepository {
 
     private FormDAO formDAO;
     private ClientDAO clientDAO;
-//    private LiveData<List<Form>> allForms;
+    private LiveData<List<Form>> allData;
 
     public FormRepository(Application application){
         FormDatabase database = FormDatabase.getInstance(application);
         formDAO = database.formDAO();
         clientDAO = database.clientDAO();
-//        allForms = formDAO.getAllForms();
+        allData = formDAO.getAllData();
     }
 
     public void insert(Form form){
@@ -65,6 +65,9 @@ public class FormRepository {
         }
     }
 
+    public LiveData<List<Form>> getAllData() {
+        return allData;
+    }
 
     public List<Form> getAllForms(){
         List<Form> formList = formDAO.getAllForms();

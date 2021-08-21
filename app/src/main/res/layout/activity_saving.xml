@@ -29,7 +29,7 @@
             android:orientation="vertical"
             android:padding="10dp"
             android:id="@+id/finals"
-            android:visibility="gone"
+            android:visibility="visible"
             android:background="@color/colorBackground">
 
             <TextView
@@ -164,7 +164,7 @@
             </LinearLayout>
 
             <Button
-                android:layout_width="200dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="View Images"
@@ -177,7 +177,19 @@
             <Button
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="10dp"
+                android:text="Go To Dashboard"
+                android:onClick="dashboard"
+                android:layout_gravity="center"
+                android:textColor="@color/colorBackground"
+                android:textAllCaps="false"
+                android:background="@drawable/primary_btn"
+                android:layout_marginBottom="10dp"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:textSize="18sp"
                 android:text="Screen New Patient"
                 android:textStyle="bold"
@@ -187,17 +199,7 @@
                 android:textAllCaps="false"
                 android:background="@drawable/primary_btn"/>
 
-            <Button
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Go To Dashboard"
-                android:onClick="dashboard"
-                android:layout_gravity="center"
-                android:textColor="@color/colorBackground"
-                android:textAllCaps="false"
-                android:background="@drawable/primary_btn"
-                android:layout_marginBottom="10dp"/>
+
 
         </LinearLayout>
 

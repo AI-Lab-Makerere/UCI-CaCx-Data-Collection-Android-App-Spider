@@ -3,12 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/chodrine/MTN/android projects/CancerApp/app/src/main/res/drawable/ic_data.xml" value="0.19427083333333334" />
+        <entry key="..\:/chodrine/MTN/android projects/CancerApp/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.19427083333333334" />
+        <entry key="..\:/chodrine/MTN/android projects/CancerApp/app/src/main/res/drawable/ic_log.xml" value="0.19427083333333334" />
         <entry key="..\:/chodrine/MTN/android projects/CancerApp/app/src/main/res/drawable/ic_rec.xml" value="0.19427083333333334" />
         <entry key="..\:/chodrine/MTN/android projects/CancerApp/app/src/main/res/layout/activity_feedback.xml" value="0.1287037037037037" />
         <entry key="..\:/chodrine/MTN/android projects/CancerApp/app/src/main/res/layout/activity_image_view.xml" value="0.1287037037037037" />
         <entry key="..\:/chodrine/MTN/android projects/CancerApp/app/src/main/res/layout/activity_image_viewing.xml" value="0.178125" />
+        <entry key="..\:/chodrine/MTN/android projects/CancerApp/app/src/main/res/layout/activity_loop.xml" value="0.178125" />
         <entry key="..\:/chodrine/MTN/android projects/CancerApp/app/src/main/res/layout/activity_saved.xml" value="0.178125" />
-        <entry key="..\:/chodrine/MTN/android projects/CancerApp/app/src/main/res/layout/activity_saving.xml" value="0.25" />
+        <entry key="..\:/chodrine/MTN/android projects/CancerApp/app/src/main/res/layout/activity_saving.xml" value="0.22" />
+        <entry key="..\:/chodrine/MTN/android projects/CancerApp/app/src/main/res/layout/activity_sending.xml" value="0.178125" />
         <entry key="..\:/chodrine/MTN/android projects/CancerApp/app/src/main/res/layout/formxx.xml" value="0.25" />
         <entry key="..\:/chodrine/MTN/android projects/CancerApp/app/src/main/res/layout/fragment_first.xml" value="0.1287037037037037" />
         <entry key="..\:/chodrine/MTN/android projects/CancerApp/app/src/main/res/layout/fragment_fourth.xml" value="0.178125" />

@@ -17,12 +17,12 @@ import java.util.List;
 public class FormViewModel extends AndroidViewModel {
 
     private FormRepository repository;
-//    private LiveData<List<Form>> allForms;
+    private LiveData<List<Form>> allData;
 
     public FormViewModel(@NonNull Application application) {
         super(application);
         repository = new FormRepository(application);
-//        allForms = repository.getAllForms();
+        allData = repository.getAllData();
     }
 
     public void insert(Form form)
@@ -32,6 +32,10 @@ public class FormViewModel extends AndroidViewModel {
 
     public void insertNurse(Client client){
         repository.insertNurse(client);
+    }
+
+    public LiveData<List<Form>> getAllData() {
+        return allData;
     }
 
 //    public void delete(Form form) {

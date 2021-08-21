@@ -39,7 +39,7 @@ import static com.ug.cancerapp.Activities.LoginActivity.FACID;
 import static com.ug.cancerapp.Activities.LoginActivity.TOKEN;
 import static com.ug.cancerapp.Fragments.FirstFragment.STUDY;
 
-public class SplashActivity extends AppCompatActivity {
+public class    SplashActivity extends AppCompatActivity {
 
     LinearLayout root_layout;
     static int SPLASH_TIME_OUT = 1000;

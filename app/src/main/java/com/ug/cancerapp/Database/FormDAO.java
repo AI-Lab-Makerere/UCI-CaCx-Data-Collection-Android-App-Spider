@@ -22,6 +22,9 @@ public interface FormDAO {
     @Query("SELECT * FROM Cervix_Screening WHERE uploaded = 0 ORDER BY `key` DESC")
     List<Form> getAllForms();
 
+    @Query("SELECT * FROM Cervix_Screening ORDER BY `key` DESC")
+    LiveData<List<Form>> getAllData();
+
     @Query("SELECT * FROM Cervix_Screening WHERE uploaded = 1 ORDER BY `key` DESC")
     List<Form> getAllFormsUploaded();
 

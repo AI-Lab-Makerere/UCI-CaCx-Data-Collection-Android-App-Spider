@@ -107,6 +107,7 @@ public class RecordsActivity extends AppCompatActivity {
     int fac_id;
 
     String others = "mchodrine@gmail.com";
+    private boolean autoSendOngoing = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,15 +172,24 @@ public class RecordsActivity extends AppCompatActivity {
 //                }else {
 ////
                     boolean InternetResult = checkConnection();
-                    if (InternetResult){
-                        new SendDataTask().execute();
-                    }else {
-                        DialogAppear();
-                    }
+//                    if (InternetResult){
+//                        new SendDataTask().execute();
+//                    }else {
+//                        DialogAppear();
+//                    }
 //
 //                }
 
+                if (!InternetResult){
+                    DialogAppear();
+                }
 
+                if (autoSendOngoing){
+                    Toast.makeText(RecordsActivity.this, "Background send running, please try again shortly", Toast.LENGTH_SHORT).show();
+                }
+
+                int checkedItemCount = formAdapter.getItemCount();
+                Toast.makeText(RecordsActivity.this, "total is :" + checkedItemCount, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -240,7 +250,7 @@ public class RecordsActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            formAdapter = new FormAdapter(RecordsActivity.this, formList, selected);
+            formAdapter = new FormAdapter();
             recyclerView.setAdapter(formAdapter);
 //            runBackgroundTask();
             formAdapter.setOnItemClickListener(new FormAdapter.OnItemClickListener() {

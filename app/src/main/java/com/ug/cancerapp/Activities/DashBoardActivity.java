@@ -99,7 +99,8 @@ public class DashBoardActivity extends AppCompatActivity {
     }
 
     public void diagnosis(View view) {
-        startActivity(new Intent(DashBoardActivity.this, RecordsActivity.class));
+//        startActivity(new Intent(DashBoardActivity.this, RecordsActivity.class));
+        startActivity(new Intent(DashBoardActivity.this, SendingActivity.class));
     }
 
     private void setUpStatus() {

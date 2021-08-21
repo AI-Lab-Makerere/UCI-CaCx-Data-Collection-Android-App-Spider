@@ -31,15 +31,16 @@ import java.util.List;
 
 public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormHolder> {
 
-    List<Form> formList, selected;
+    List<Form> formList = new ArrayList<>();
+    List<Form> selected = new ArrayList<>();
     Context context;
     private OnItemClickListener mListener;
 
-    public FormAdapter(Context context, List<Form> formList, List<Form> selected) {
-        this.formList = formList;
-        this.selected = selected;
-        this.context = context;
-    }
+//    public FormAdapter(Context context, List<Form> formList, List<Form> selected) {
+//        this.formList = formList;
+//        this.selected = selected;
+//        this.context = context;
+//    }
 
     public interface OnItemClickListener {
         void onLoadClick(int position);
@@ -128,7 +129,8 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormHolder> {
         return formList.size();
     }
 
-    public void notifying() {
+    public void setForms(List<Form> forms) {
+        this.formList = forms;
         notifyDataSetChanged();
     }
 

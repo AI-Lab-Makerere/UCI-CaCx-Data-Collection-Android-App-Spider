@@ -5,7 +5,7 @@
   ~  it was developed to help the Uganda Cancer Institute in their research.
   -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,182 +14,21 @@
     android:gravity="center"
     tools:context=".Activities.LoopActivity">
 
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="10dp"
-        android:fadeScrollbars="true"
-        android:layout_above="@id/buttons"
-        android:scrollbars="none">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="Identification"
-                android:textColor="@color/colorPrimary"
-                android:textSize="20sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="Study ID"
-                android:textColor="@color/colorTextPrimary"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/studyId"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/text_bg"
-                android:inputType="textCapCharacters"
-                android:paddingLeft="5dp"
-                android:saveEnabled="false" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="10">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="5"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="Initials"
-                        android:textColor="@color/colorTextPrimary"
-                        android:textSize="18sp" />
-
-                    <EditText
-                        android:id="@+id/initials"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@drawable/text_bg"
-                        android:inputType="textCapCharacters"
-                        android:paddingLeft="5dp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="5"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="Age"
-                        android:textColor="@color/colorTextPrimary"
-                        android:textSize="18sp" />
-
-                    <EditText
-                        android:id="@+id/age"
-                        android:layout_width="70dp"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@drawable/text_bg"
-                        android:inputType="number"
-                        android:maxLength="2"
-                        android:paddingLeft="5dp" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="District"
-                android:textColor="@color/colorTextPrimary"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/district"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/text_bg"
-                android:paddingLeft="5dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="County/ Division"
-                android:textColor="@color/colorTextPrimary"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/county"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/text_bg"
-                android:paddingLeft="5dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Village/ LC1/ Zone"
-                android:textColor="@color/colorTextPrimary"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/zone"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/text_bg"
-                android:paddingLeft="5dp" />
-
-
-        </LinearLayout>
-
-    </ScrollView>
-
-    <RelativeLayout
-        android:id="@+id/buttons"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="#FDFBFB"
-        android:layout_marginBottom="-1dp">
+        android:text="One Time Work Manager"
+        android:textSize="30sp"
+        android:onClick="oneTime"
+        android:gravity="center"/>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Periodic Work Manager"
+        android:textSize="30sp"
+        android:onClick="periodic"
+        android:layout_marginTop="30dp"
+        android:gravity="center"/>
 
-        <Button
-            android:id="@+id/next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_margin="10dp"
-            android:background="@drawable/primary_btn"
-            android:text="next"
-            android:textColor="@color/colorBackground" />
-
-    </RelativeLayout>
-
-
-</RelativeLayout>
+</LinearLayout>

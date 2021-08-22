@@ -41,10 +41,12 @@ import com.ug.cancerapp.Database.Form;
 import com.ug.cancerapp.Database.FormDAO;
 import com.ug.cancerapp.Database.FormDatabase;
 import com.ug.cancerapp.Database.FormRepository;
+import com.ug.cancerapp.Models.ApiError;
 import com.ug.cancerapp.Models.Capture;
 import com.ug.cancerapp.Models.Capture2;
 import com.ug.cancerapp.Models.Picture;
 import com.ug.cancerapp.R;
+import com.ug.cancerapp.helpers.ErrorUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -52,12 +54,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LocationUploadWorker extends Worker {
+
 
     private NotificationManager notificationManager;
     public static final String KEY_X_ARG = "X";
@@ -67,10 +69,9 @@ public class LocationUploadWorker extends Worker {
     public static final String SHARED_API = "sharedApi";
     String username, token, facility, text2;
     int fac_id;
-    JsonPlaceHolder jsonPlaceHolder;
+    public static JsonPlaceHolder jsonPlaceHolder;
     Date date1, date2, date3;
     Call<String> call;
-
 
     public LocationUploadWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
@@ -88,6 +89,8 @@ public class LocationUploadWorker extends Worker {
     @Override
     public Result doWork() {
 
+        String progress = "Form Upload In progress";
+        setForegroundAsync(createForegroundInfo(progress));
 
 
         String x = getInputData().getString(KEY_X_ARG);
@@ -101,30 +104,21 @@ public class LocationUploadWorker extends Worker {
             counting.add(Long.parseLong(i));
         }
 
-        try {
-            for( Long value : counting ){
-                try {
-                    Thread.sleep(2000);
-                    form = formRepository.getOnlyOne(value);
-                    String studyID = form.getStudyID();
-                    Log.d("LocationUploadWorker", "Testing: " + studyID);
-                    sendData(value);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
 
+        for( Long value : counting ){
+            try {
+                Thread.sleep(2000);
+                form = formRepository.getOnlyOne(value);
+                String studyID = form.getStudyID();
+                Log.d("LocationUploadWorker", "Testing: " + studyID);
+                sendData(value);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
 
-            return Result.success();
-
-        }catch (Throwable e) {
-            e.printStackTrace();
-            // Technically WorkManager will return Result.failure()
-            // but it's best to be explicit about it.
-            // Thus if there were errors, we're return FAILURE
-            Log.e("LocationUploadWorker4", "Error fetching data", e);
-            return Result.failure();
         }
+
+        return Result.success();
 
     }
 
@@ -278,8 +272,14 @@ public class LocationUploadWorker extends Worker {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (!response.isSuccessful()){
-                    Log.d("LocationUploadWorker2", "Testing: " + response.code());
-                    formDAO.DeleteForm(value);
+
+                    ApiError apiError = ErrorUtils.parseError(response);
+                    String error = apiError.getMessage();
+                    if(error.equals("The given data was invalid.")){
+                        formDAO.DeleteForm(value);
+                    }
+                    Log.d("LocationUploadWorker2", "Testing: " + apiError.getMessage());
+
                     return;
                 }
 

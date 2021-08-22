@@ -6,6 +6,8 @@
 
 package com.ug.cancerapp.Models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class Information {
@@ -23,16 +25,12 @@ public class Information {
     private String parity, abortions;
     private String contraceptives, otherContraceptive;
     private String viaResult, anyNotes, lesionLocation, ml_via_result;
-    List<Images> mlresults;
+//    List<Images> mlresults;
+    @SerializedName("images")
+    List<Images> images;
 
 
-    public Information(String instanceID, String studyID, String initials, String district, String county,
-                       String village, int age, String symptoms, String selectSymptoms, String otherSymptoms,
-                       String priorCaCxScreening, String pastScreeningMethod, String pastCaCxScreeningResults,
-                       String priorTreatment, String whenLastScreening, String hivStatus, String onHAART,
-                       String hAARTDuration, String untitled67, String lnmp, String parity, String abortions,
-                       String contraceptives, String otherContraceptive, String viaResult, String nurse_notes,
-                       String lesionLocation, String ml_via_result, List<Images> mlresults) {
+    public Information(String instanceID, String studyID, String initials, String district, String county, String village, int age, String symptoms, String selectSymptoms, String otherSymptoms, String priorCaCxScreening, String pastScreeningMethod, String pastCaCxScreeningResults, String priorTreatment, String whenLastScreening, String hivStatus, String onHAART, String hAARTDuration, String untitled67, String lnmp, String parity, String abortions, String contraceptives, String otherContraceptive, String viaResult, String anyNotes, String lesionLocation, String ml_via_result, List<Images> images) {
         this.instanceID = instanceID;
         this.studyID = studyID;
         this.initials = initials;
@@ -58,10 +56,10 @@ public class Information {
         this.contraceptives = contraceptives;
         this.otherContraceptive = otherContraceptive;
         this.viaResult = viaResult;
-        this.anyNotes = nurse_notes;
+        this.anyNotes = anyNotes;
         this.lesionLocation = lesionLocation;
         this.ml_via_result = ml_via_result;
-        this.mlresults = mlresults;
+        this.images = images;
     }
 
     public String getInstanceID() {
@@ -168,8 +166,13 @@ public class Information {
         return anyNotes;
     }
 
-    public List<Images> getMlresults() {
-        return mlresults;
+//    public List<Images> getMlresults() {
+//        return mlresults;
+//    }
+
+
+    public List<Images> getImages() {
+        return images;
     }
 
     public String getLesionLocation() {

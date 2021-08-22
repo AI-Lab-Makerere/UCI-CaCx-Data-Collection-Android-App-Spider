@@ -122,15 +122,13 @@ public class FeedbackActivity extends AppCompatActivity implements AdapterView.O
 
                 moreNotes = notes.getText().toString().trim();
 
-                if (viaResults.equals("Select One")){
+                if (viaResults.equals("Select either Positive or Negative")){
                     Toast.makeText(FeedbackActivity.this, "Please select either Positive or Negative", Toast.LENGTH_SHORT).show();
                 }
                 else if (moreNotes.isEmpty()){
                     Toast.makeText(FeedbackActivity.this, "Please provide some notes supporting your VIA Results", Toast.LENGTH_SHORT).show();
                 }else {
                     saveData();
-                    startActivity(new Intent(FeedbackActivity.this, GynaecologistActivity.class));
-                    finish();
                 }
             }
         });
@@ -202,6 +200,8 @@ public class FeedbackActivity extends AppCompatActivity implements AdapterView.O
 
 //               String studyId = response.body().getStudyID();
                 progressDialog.dismiss();
+                startActivity(new Intent(FeedbackActivity.this, GynaecologistActivity.class));
+                finish();
 
             }
 
@@ -226,14 +226,15 @@ public class FeedbackActivity extends AppCompatActivity implements AdapterView.O
             public void onResponse(Call<Information> call, Response<Information> response) {
                 if (!response.isSuccessful()){
 //                    progressBar.setVisibility(View.INVISIBLE);
+                    progressDialog.dismiss();
                     Toast.makeText(FeedbackActivity.this, "Connection issue: " + response.code(), Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                image1 = response.body().getMlresults().get(0).getImage_url();
-                image2 = response.body().getMlresults().get(1).getImage_url();
-                image3 = response.body().getMlresults().get(2).getImage_url();
-                image4 = response.body().getMlresults().get(3).getImage_url();
+                image1 = response.body().getImages().get(0).getPicture1_before().getRequest_image_url();
+                image2 = response.body().getImages().get(1).getPicture2_before().getRequest_image_url();
+                image3 = response.body().getImages().get(2).getPicture3_before().getRequest_image_url();
+                image4 = response.body().getImages().get(3).getPicture4_before().getRequest_image_url();
 
 //                Toast.makeText(FeedbackActivity.this, image1, Toast.LENGTH_SHORT).show();
                 Picasso.get().load(image1).into(imageView1);
@@ -248,7 +249,7 @@ public class FeedbackActivity extends AppCompatActivity implements AdapterView.O
 
             @Override
             public void onFailure(Call<Information> call, Throwable t) {
-//                progressBar.setVisibility(View.INVISIBLE);
+                progressDialog.dismiss();
                 Toast.makeText(FeedbackActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });

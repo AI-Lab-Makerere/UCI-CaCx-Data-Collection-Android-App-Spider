@@ -22,11 +22,11 @@ public class Case {
     String ml_via_result;
     @SerializedName("gynecologist_reviews")
     List<Gyneco> gyneco;
-    @SerializedName("mlresults")
-    List<Images> mlresults;
+    @SerializedName("images")
+    List<Images> images;
 
     public Case(String instanceID, String studyID, int age, String date, String initials,
-                String viaResult, String ml_via_result, List<Gyneco> gyneco, List<Images> mlresults) {
+                String viaResult, String ml_via_result, List<Gyneco> gyneco, List<Images> images) {
         this.instanceID = instanceID;
         this.studyID = studyID;
         this.age = age;
@@ -35,7 +35,7 @@ public class Case {
         this.viaResult = viaResult;
         this.ml_via_result = ml_via_result;
         this.gyneco = gyneco;
-        this.mlresults = mlresults;
+        this.images = images;
     }
 
     public String getInstanceID() {
@@ -58,8 +58,8 @@ public class Case {
         return gyneco;
     }
 
-    public List<Images> getMlresults() {
-        return mlresults;
+    public List<Images> getImages() {
+        return images;
     }
 
     public String getInitials() {

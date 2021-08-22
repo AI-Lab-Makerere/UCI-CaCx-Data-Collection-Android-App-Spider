@@ -158,7 +158,6 @@ public class GynaecologistActivity extends AppCompatActivity {
 //                intent.putExtra("nurse", nurse);
 //                intent.putExtra("ml_result", ml_result);
                 startActivity(intent);
-                finish();
             }
         });
     }

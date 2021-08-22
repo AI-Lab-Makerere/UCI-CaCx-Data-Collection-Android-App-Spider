@@ -16,26 +16,27 @@
     <include layout="@layout/toolbar"
         android:id="@+id/toolbar"/>
 
-    <EditText
-        android:id="@+id/search"
-        android:layout_below="@id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_margin="10dp"
-        android:hint="Search By StudyID, VIA Results or Initials"
-        android:padding="10dp"
-        android:textSize="16sp"
-        android:inputType="textCapCharacters"
-        android:textColor="@color/colorTextPrimary"
-        android:background="@drawable/text_input"
-        android:drawableRight="@drawable/ic_search" />
+<!--    <EditText-->
+<!--        android:id="@+id/search"-->
+<!--        android:layout_below="@id/toolbar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_margin="10dp"-->
+<!--        android:hint="Search By StudyID, VIA Results or Initials"-->
+<!--        android:padding="10dp"-->
+<!--        android:textSize="16sp"-->
+<!--        android:inputType="textCapCharacters"-->
+<!--        android:textColor="@color/colorTextPrimary"-->
+<!--        android:background="@drawable/text_input"-->
+<!--        android:drawableRight="@drawable/ic_search" />-->
 
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/recycler_view"
-        tools:listitem="@layout/form"
-        android:layout_below="@id/search"/>
+        tools:listitem="@layout/formxx"
+        android:layout_below="@id/toolbar"/>
 
     <LinearLayout
         android:id="@+id/now"

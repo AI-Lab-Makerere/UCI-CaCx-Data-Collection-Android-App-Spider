@@ -100,49 +100,49 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="10"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/images"
-                android:layout_width="0dp"
-                android:layout_height="35dp"
-                android:layout_weight="5"
-                android:text="View Images"
-                android:textAllCaps="false"
-                android:layout_marginRight="5dp"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@color/colorBackground"
-                android:background="@drawable/primary_btn"/>
-
-            <Button
-                android:id="@+id/load"
-                android:layout_width="0dp"
-                android:layout_height="35dp"
-                android:layout_weight="5"
-                android:text="Load Data"
-                android:textAllCaps="false"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@color/colorBackground"
-                android:background="@drawable/primary_btn"/>
+<!--        <LinearLayout-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:weightSum="10"-->
+<!--            android:orientation="horizontal">-->
 
 <!--            <Button-->
-<!--                android:id="@+id/consult"-->
+<!--                android:id="@+id/images"-->
 <!--                android:layout_width="0dp"-->
-<!--                android:layout_height="40dp"-->
-<!--                android:layout_weight="4"-->
-<!--                android:layout_marginLeft="5dp"-->
-<!--                android:text="Consult"-->
+<!--                android:layout_height="35dp"-->
+<!--                android:layout_weight="5"-->
+<!--                android:text="View Images"-->
+<!--                android:textAllCaps="false"-->
+<!--                android:layout_marginRight="5dp"-->
+<!--                android:layout_gravity="center_horizontal"-->
+<!--                android:textColor="@color/colorBackground"-->
+<!--                android:background="@drawable/primary_btn"/>-->
+
+<!--            <Button-->
+<!--                android:id="@+id/load"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="35dp"-->
+<!--                android:layout_weight="5"-->
+<!--                android:text="Load Data"-->
 <!--                android:textAllCaps="false"-->
 <!--                android:layout_gravity="center_horizontal"-->
 <!--                android:textColor="@color/colorBackground"-->
 <!--                android:background="@drawable/primary_btn"/>-->
 
-        </LinearLayout>
+<!--&lt;!&ndash;            <Button&ndash;&gt;-->
+<!--&lt;!&ndash;                android:id="@+id/consult"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_width="0dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_height="40dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_weight="4"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_marginLeft="5dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:text="Consult"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textAllCaps="false"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:layout_gravity="center_horizontal"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textColor="@color/colorBackground"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:background="@drawable/primary_btn"/>&ndash;&gt;-->
+
+<!--        </LinearLayout>-->
 
     </LinearLayout>
 

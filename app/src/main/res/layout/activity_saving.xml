@@ -29,7 +29,7 @@
             android:orientation="vertical"
             android:padding="10dp"
             android:id="@+id/finals"
-            android:visibility="visible"
+            android:visibility="gone"
             android:background="@color/colorBackground">
 
             <TextView

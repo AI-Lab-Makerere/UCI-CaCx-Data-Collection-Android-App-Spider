@@ -153,29 +153,29 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormHolder> {
 //            consult = itemView.findViewById(R.id.consult);
             imageView= itemView.findViewById(R.id.ok);
 
-            images.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null){
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION){
-                            listener.onViewClick(position);
-                        }
-                    }
-                }
-            });
-
-            load.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null){
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION){
-                            listener.onLoadClick(position);
-                        }
-                    }
-                }
-            });
+//            images.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if (listener != null){
+//                        int position = getAdapterPosition();
+//                        if (position != RecyclerView.NO_POSITION){
+//                            listener.onViewClick(position);
+//                        }
+//                    }
+//                }
+//            });
+//
+//            load.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if (listener != null){
+//                        int position = getAdapterPosition();
+//                        if (position != RecyclerView.NO_POSITION){
+//                            listener.onLoadClick(position);
+//                        }
+//                    }
+//                }
+//            });
         }
     }
 }

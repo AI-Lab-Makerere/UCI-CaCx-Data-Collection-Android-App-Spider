@@ -131,7 +131,7 @@ public class CaseActivity extends AppCompatActivity {
                 Intent intent = new Intent(CaseActivity.this, FeedbackActivity.class);
                 intent.putExtra("uuid", instanceId);
                 startActivity(intent);
-                finish();
+//                finish();
             }
 
             @Override
@@ -141,7 +141,7 @@ public class CaseActivity extends AppCompatActivity {
                 intent.putExtra("uuid", instanceId);
                 intent.putExtra("extra", "case");
                 startActivity(intent);
-                finish();
+//                finish();
             }
 
             @Override

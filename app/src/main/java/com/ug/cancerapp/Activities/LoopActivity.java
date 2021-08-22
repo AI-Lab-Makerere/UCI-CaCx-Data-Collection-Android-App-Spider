@@ -10,8 +10,10 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.work.Constraints;
+import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
+import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 import androidx.work.WorkRequest;
 
@@ -37,6 +39,7 @@ import android.widget.Toast;
 
 import com.ug.cancerapp.R;
 import com.ug.cancerapp.Worker.LocationUploadWorker;
+import com.ug.cancerapp.Worker.RepeatingFunction;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
 import java.text.SimpleDateFormat;
@@ -47,6 +50,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class LoopActivity extends AppCompatActivity{
@@ -64,15 +68,25 @@ public class LoopActivity extends AppCompatActivity{
 
     public void oneTime(View view) {
 
-        WorkRequest uploadWorkRequest = new OneTimeWorkRequest.Builder(LocationUploadWorker.class)
-                .setConstraints(new Constraints.Builder()
+        Constraints constraints = new Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .setRequiresBatteryNotLow(false)
-                .build())
                 .build();
-        WorkManager.getInstance(LoopActivity.this).enqueue(uploadWorkRequest);
+
+        PeriodicWorkRequest uploadWorkRequest = new PeriodicWorkRequest
+                .Builder(RepeatingFunction.class, 15, TimeUnit.MINUTES)
+                .setConstraints(constraints)
+                .build();
+
+        WorkManager.getInstance(LoopActivity.this).enqueueUniquePeriodicWork(
+                "UCI_WorkManager",
+                ExistingPeriodicWorkPolicy.KEEP,
+                uploadWorkRequest);
     }
 
     public void periodic(View view) {
+
+        WorkManager.getInstance(LoopActivity.this).cancelUniqueWork("UCI_WorkManager");
+        Toast.makeText(LoopActivity.this, "Worker cancelled", Toast.LENGTH_SHORT).show();
     }
 }

@@ -309,7 +309,7 @@ public class FifthFragment extends Fragment implements AdapterView.OnItemSelecte
             cal.setTime(d2);
             long y1=cal.getTimeInMillis();
             if(y<y1){
-                Toast.makeText(getActivity(), "Please check the date for the last menstrual period", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Please change the both Date and also the Period of the month", Toast.LENGTH_SHORT).show();
             }else {
                 FragmentTransaction fr = getFragmentManager().beginTransaction();
                 fr.replace(R.id.fragment_container, new YesOrNoFragment());

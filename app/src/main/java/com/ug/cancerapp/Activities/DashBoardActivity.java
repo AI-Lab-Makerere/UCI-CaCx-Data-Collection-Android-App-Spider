@@ -64,28 +64,6 @@ public class DashBoardActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("UCI Cacx");
 
         clientDAO = FormDatabase.getInstance(this).clientDAO();
-        Date date = Calendar.getInstance().getTime();
-        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        String today = format.format(date);
-        String tomorrow = "15/8/2021";
-        SimpleDateFormat sdf1=new SimpleDateFormat("dd/MM/yyyy");
-        try {
-            Date d1 = sdf1.parse(today);
-            Date d2 = sdf1.parse(tomorrow);
-            Calendar cal=Calendar.getInstance();
-            cal.setTime(d1);
-            long y=cal.getTimeInMillis();
-            cal.setTime(d2);
-            long y1=cal.getTimeInMillis();
-//            if(y<y1){
-//                Toast.makeText(this, "this is bad", Toast.LENGTH_SHORT).show();
-//            }else {
-//                Toast.makeText(this, "its a good thing", Toast.LENGTH_SHORT).show();
-//            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
         
 
     }

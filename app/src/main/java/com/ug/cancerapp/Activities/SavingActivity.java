@@ -405,8 +405,8 @@ public class SavingActivity extends AppCompatActivity {
                 neg, pos, viar, neg2, pos2, viar2, neg3, pos3, viar3, neg4, pos4, viar4, uniqueID, nurses);
 
         formViewModel.insert(form);
-//        editor.clear();
-//        editor.apply();
+        editor.clear();
+        editor.apply();
         startActivity(new Intent(this, CollectActivity.class));
         finish();
     }
@@ -419,8 +419,8 @@ public class SavingActivity extends AppCompatActivity {
                 neg, pos, viar, neg2, pos2, viar2, neg3, pos3, viar3, neg4, pos4, viar4, uniqueID, nurses);
 
         formViewModel.insert(form);
-//        editor.clear();
-//        editor.apply();
+        editor.clear();
+        editor.apply();
         startActivity(new Intent(this, DashBoardActivity.class));
         finish();
     }

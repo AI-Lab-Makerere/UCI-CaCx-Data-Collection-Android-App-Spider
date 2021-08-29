@@ -180,7 +180,7 @@ public class SendingActivity extends AppCompatActivity {
                     if (commaseparatedlist.length() > 0)
                         commaseparatedlist = commaseparatedlist.substring(0, commaseparatedlist.length() - 1);
 
-                    Toast.makeText(SendingActivity.this, "All the collected information will be sent to the server", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SendingActivity.this, "With a good internet connection all these forms will be sent", Toast.LENGTH_SHORT).show();
                     
                     Data myData = new Data.Builder()
                             .putString(KEY_X_ARG, commaseparatedlist)

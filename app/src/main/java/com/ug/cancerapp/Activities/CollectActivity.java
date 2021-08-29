@@ -81,8 +81,8 @@ public class CollectActivity extends AppCompatActivity {
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                editor.clear();
-//                editor.apply();
+                editor.clear();
+                editor.apply();
                 dialog.dismiss();
                 startActivity(new Intent(CollectActivity.this, DashBoardActivity.class));
             }

@@ -16,7 +16,7 @@ public class Case {
     String studyID;
     int age;
     @SerializedName("created_at")
-    String date;
+    String created_at;
     String initials;
     String viaResult;
     String ml_via_result;
@@ -30,7 +30,7 @@ public class Case {
         this.instanceID = instanceID;
         this.studyID = studyID;
         this.age = age;
-        this.date = date;
+        this.created_at = date;
         this.initials = initials;
         this.viaResult = viaResult;
         this.ml_via_result = ml_via_result;
@@ -50,8 +50,8 @@ public class Case {
         return age;
     }
 
-    public String getDate() {
-        return date;
+    public String getCreated_at() {
+        return created_at;
     }
 
     public List<Gyneco> getGyneco() {

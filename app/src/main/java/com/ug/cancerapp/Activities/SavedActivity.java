@@ -72,6 +72,8 @@ public class SavedActivity extends AppCompatActivity {
     ProgressBar progressBar;
     LinearLayout ns;
     TextView error, message, swipe;
+    Button submit;
+    EditText search;
     ImageView imageView;
     SwipeRefreshLayout swipeRefreshLayout;
     ImageView imageView1, imageView2, imageView3, imageView4;
@@ -87,6 +89,9 @@ public class SavedActivity extends AppCompatActivity {
     public static final String SHARED_API = "sharedApi";
     public static final String CHOD = "chodrine";
     String username, token, facility, text2, ago;
+    String yaap = "";
+    String look = "";
+    Call<List<Case>> call;
 
     JsonPlaceHolder jsonPlaceHolder;
 
@@ -110,6 +115,8 @@ public class SavedActivity extends AppCompatActivity {
         swipe = findViewById(R.id.swip);
         imageView = findViewById(R.id.wifi);
         root_layout = findViewById(R.id.root_layout);
+        search = findViewById(R.id.search);
+        submit = findViewById(R.id.submit);
 
 
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_API, MODE_PRIVATE);
@@ -138,6 +145,24 @@ public class SavedActivity extends AppCompatActivity {
             DialogAppear();
         }
 
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                look = search.getText().toString();
+
+                if (look.isEmpty()){
+                    Toast.makeText(SavedActivity.this, "Please provide a Study ID", Toast.LENGTH_SHORT).show();
+                }else {
+                    boolean InternetResult = checkConnection();
+                    if (InternetResult){
+                        handleCases();
+                    }else {
+                        DialogAppear();
+                    }
+                }
+
+            }
+        });
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -180,7 +205,13 @@ public class SavedActivity extends AppCompatActivity {
         gynecologists.clear();
         progressBar.setVisibility(View.VISIBLE);
 
-        Call<List<Case>> call = jsonPlaceHolder.uploaded("Bearer " + token);
+        if (look.equals("")){
+            call = jsonPlaceHolder.uploaded("Bearer " + token);
+        }else {
+            call = jsonPlaceHolder.search("Bearer " + token, look);
+        }
+
+//        Call<List<Case>> call = jsonPlaceHolder.uploaded("Bearer " + token);
         call.enqueue(new Callback<List<Case>>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -204,7 +235,7 @@ public class SavedActivity extends AppCompatActivity {
                     age += cas.getAge();
                     initials += cas.getInitials();
                     via += cas.getViaResult();
-                    date += cas.getDate();
+                    date += cas.getCreated_at();
                     try {
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
                         long time = 0;
@@ -214,6 +245,7 @@ public class SavedActivity extends AppCompatActivity {
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
+
                     Gynecologist gynecologist = new Gynecologist(instanceID, studyId, age, ago, via, initials, "", "");
                     gynecologists.add(gynecologist);
 

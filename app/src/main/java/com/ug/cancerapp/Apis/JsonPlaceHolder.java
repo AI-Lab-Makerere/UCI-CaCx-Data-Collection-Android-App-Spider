@@ -27,6 +27,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import retrofit2.http.Url;
 
 public interface JsonPlaceHolder {
@@ -54,6 +55,10 @@ public interface JsonPlaceHolder {
     Call<List<Case>> uploaded(@Header("Authorization") String header);
 
     @Headers("Accept: application/json")
+    @GET("api/my-entries")
+    Call<List<Case>> search(@Header("Authorization") String header, @Query("search") String parameter);
+
+    @Headers("Accept: application/json")
     @POST("api/capture-gynecologist-review")
     Call<Review> feedback(@Header("Authorization") String header, @Body Feedback feedback);
 
@@ -64,6 +69,10 @@ public interface JsonPlaceHolder {
     @Headers("Accept: application/json")
     @GET("api/my-reviewed-entries")
     Call<List<Case>> reviewed(@Header("Authorization") String header);
+
+    @Headers("Accept: application/json")
+    @GET("api/my-reviewed-entries")
+    Call<List<Case>> searching(@Header("Authorization") String header, @Query("search") String parameter);
 
     @Headers("Accept: application/json")
     @GET("api/settings")

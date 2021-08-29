@@ -80,6 +80,8 @@ public class ScreenFragment extends Fragment implements AdapterView.OnItemSelect
     Boolean check1, check2, check3, check4, check5;
 
     DatePickerDialog.OnDateSetListener dateSetListener;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -112,6 +114,9 @@ public class ScreenFragment extends Fragment implements AdapterView.OnItemSelect
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         today = format.format(dat);
 
+        sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
         loadData();
         updateViews();
 
@@ -139,8 +144,12 @@ public class ScreenFragment extends Fragment implements AdapterView.OnItemSelect
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                s = "";
                 treat = treatments.getText().toString();
+                if (past.equals("Negative") && treat.isEmpty()){
+                    treat = "None";
+                }
+
                 tim = date.getText().toString();
                 timmy = time.getText().toString();
 
@@ -151,10 +160,11 @@ public class ScreenFragment extends Fragment implements AdapterView.OnItemSelect
                     s += "VIA/VIL, ";
                 }
                 if(others.isChecked()){
-                    s += "Others, ";
+                    s = "Other, ";
                 }
 
                 s = s.replaceAll(", $", "");
+
                 if (s.isEmpty() || past.isEmpty() || tim.isEmpty() || treat.isEmpty() || timmy.isEmpty() ){
                     Toast.makeText(getActivity(), "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }else{
@@ -208,8 +218,7 @@ public class ScreenFragment extends Fragment implements AdapterView.OnItemSelect
     }
 
     private void saveData(String s) {
-        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+
 
         editor.putString(DATEPICKER, months);
         editor.putString(DATES, tim);
@@ -219,7 +228,7 @@ public class ScreenFragment extends Fragment implements AdapterView.OnItemSelect
         editor.putBoolean(CHECKSA1, hpv.isChecked());
         editor.putBoolean(CHECKSA2, via.isChecked());
         editor.putBoolean(CHECKSA3, others.isChecked());
-        editor.putString(TREATMENT, treatments.getText().toString());
+        editor.putString(TREATMENT, treat);
 
         editor.apply();
 //        Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
@@ -305,8 +314,9 @@ public class ScreenFragment extends Fragment implements AdapterView.OnItemSelect
             cal.setTime(d2);
             long y1=cal.getTimeInMillis();
             if(y<y1){
-                Toast.makeText(getActivity(), "Please check the Screening Date", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Please change the both Screening Date and also the Period of the month", Toast.LENGTH_SHORT).show();
             }else {
+//                Toast.makeText(getActivity(), treat, Toast.LENGTH_SHORT).show();
                 FragmentTransaction fr = getFragmentManager().beginTransaction();
                 fr.replace(R.id.fragment_container, new FourthFragment());
                 fr.addToBackStack(null);

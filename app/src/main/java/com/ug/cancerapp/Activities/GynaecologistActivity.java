@@ -186,7 +186,7 @@ public class GynaecologistActivity extends AppCompatActivity {
                     instanceID += cas.getInstanceID();
                     studyId += cas.getStudyID();
                     age += cas.getAge();
-                    date += cas.getDate();
+                    date += cas.getCreated_at();
 
                     try {
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");

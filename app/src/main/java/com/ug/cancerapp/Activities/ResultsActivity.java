@@ -25,6 +25,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -66,7 +68,8 @@ public class ResultsActivity extends AppCompatActivity {
     Dialog dialog;
     ImageView imageView;
     SwipeRefreshLayout swipeRefreshLayout;
-
+    Button submit;
+    EditText search;
     List<Gynecologist> gynecologistList;
     ReviewAdapter reviewAdapter;
     JsonPlaceHolder jsonPlaceHolder;
@@ -76,6 +79,8 @@ public class ResultsActivity extends AppCompatActivity {
     public static final String SHARED_API = "sharedApi";
     public static final String CHOD = "chodrine";
     String username, token, facility, ago;
+    String look = "";
+    Call<List<Case>> call;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +102,9 @@ public class ResultsActivity extends AppCompatActivity {
         swipe = findViewById(R.id.swip);
         imageView = findViewById(R.id.wifi);
         root_layout = findViewById(R.id.root_layout);
+        search = findViewById(R.id.search);
+        submit = findViewById(R.id.submit);
+
 
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_API, MODE_PRIVATE);
         token = sharedPreferences.getString(TOKEN, "");
@@ -124,6 +132,25 @@ public class ResultsActivity extends AppCompatActivity {
         }else {
             DialogAppear();
         }
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                look = search.getText().toString();
+
+                if (look.isEmpty()){
+                    Toast.makeText(ResultsActivity.this, "Please provide a Study ID", Toast.LENGTH_SHORT).show();
+                }else {
+                    boolean InternetResult = checkConnection();
+                    if (InternetResult){
+                        ReviewedCases();
+                    }else {
+                        DialogAppear();
+                    }
+                }
+
+            }
+        });
 
         reviewAdapter.setOnItemClickListener(new ReviewAdapter.OnItemClickListener() {
             @Override
@@ -173,7 +200,12 @@ public class ResultsActivity extends AppCompatActivity {
         gynecologistList.clear();
         progressBar.setVisibility(View.VISIBLE);
 
-        Call<List<Case>> call = jsonPlaceHolder.reviewed("Bearer " + token);
+        if(look.equals("")){
+            call = jsonPlaceHolder.reviewed("Bearer " + token);
+        }else {
+            call = jsonPlaceHolder.searching("Bearer " + token, look);
+        }
+
         call.enqueue(new Callback<List<Case>>() {
             @Override
             public void onResponse(Call<List<Case>> call, Response<List<Case>> response) {
@@ -212,6 +244,8 @@ public class ResultsActivity extends AppCompatActivity {
 
                     Gynecologist gynecologist = new Gynecologist(instanceID, studyId, age, date, via, "", gyneResults, gynenotes);
                     gynecologistList.add(gynecologist);
+
+
 
                 }
 

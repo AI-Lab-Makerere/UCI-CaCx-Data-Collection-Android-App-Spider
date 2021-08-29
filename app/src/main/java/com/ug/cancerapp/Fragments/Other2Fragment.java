@@ -133,7 +133,7 @@ public class Other2Fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_other2, container, false);
-        back = view.findViewById(R.id.back);
+//        back = view.findViewById(R.id.back);
         next = view.findViewById(R.id.next);
         recyclerView = view.findViewById(R.id.recycler_view);
 
@@ -162,14 +162,14 @@ public class Other2Fragment extends Fragment {
             }
         });
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction fr = getFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_container, new ViaFragment());
-                fr.commit();
-            }
-        });
+//        back.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                FragmentTransaction fr = getFragmentManager().beginTransaction();
+//                fr.replace(R.id.fragment_container, new ViaFragment());
+//                fr.commit();
+//            }
+//        });
 
         return view;
     }

@@ -180,6 +180,7 @@ public class LocationUploadWorker extends Worker {
         text2 = form.getScreened_for_cancer();
         String past = form.getScreening_results();
         String sss = form.getScreening_process();
+        Log.d("LocationUploadWorker9", "sendData: " + sss);
         String datey = form.getLast_screened();
         String treat = form.getTreatment();
         String value3 = form.getHiv_status();

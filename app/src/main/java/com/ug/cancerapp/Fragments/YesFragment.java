@@ -61,6 +61,7 @@ public class YesFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                s = "";
 
                 if(vb.isChecked()){
                     s += "Vaginal bleeding, ";

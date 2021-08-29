@@ -86,6 +86,7 @@ public class SixtyFragment extends Fragment {
 
     private void checkedlist() {
 
+        s = "";
 
         if(pill.isChecked()){
             s += "Pills, ";

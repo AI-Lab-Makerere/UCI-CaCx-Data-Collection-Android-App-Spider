@@ -60,7 +60,7 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.SavedHolder>
         holder.initials.setText("Initials: " + gynecologists.get(position).getInitials());
         holder.age.setText("Age: " + gynecologists.get(position).getAge());
         holder.via.setText("VIA Results: " + gynecologists.get(position).getViaResults());
-        holder.dat.setText("Form filled in: " + gynecologists.get(position).getDate());
+        holder.dat.setText("Form Submitted " + gynecologists.get(position).getDate());
     }
 
     @Override

@@ -53,7 +53,7 @@ public class GynecologistAdapter extends RecyclerView.Adapter<GynecologistAdapte
 
         holder.study.setText("StudyID: " + gynecologists.get(position).getStudyId());
         holder.age.setText("Age: " + gynecologists.get(position).getAge());
-        holder.dat.setText("Form filled in: " + gynecologists.get(position).getDate());
+        holder.dat.setText("Form Submitted " + gynecologists.get(position).getDate());
     }
 
     @Override

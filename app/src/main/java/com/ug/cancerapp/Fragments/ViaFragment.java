@@ -88,6 +88,16 @@ public class ViaFragment extends Fragment {
                 notes = message.getText().toString();
                 location = lesion.getText().toString();
 
+                if (via.equals("Negative")){
+                    if (notes.isEmpty()){
+                        notes = "None";
+                    }
+                    if (location.isEmpty()){
+                        location = "None";
+                    }
+                }
+
+
                 if (via.isEmpty() || notes.isEmpty() || location.isEmpty()){
                     Toast.makeText(getActivity(), "Fill in all fields", Toast.LENGTH_SHORT).show();
                 }else {
@@ -119,8 +129,8 @@ public class ViaFragment extends Fragment {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putString(VIA, via);
-        editor.putString(NOTES, message.getText().toString());
-        editor.putString(LESION, lesion.getText().toString());
+        editor.putString(NOTES, notes);
+        editor.putString(LESION, location);
 
         editor.apply();
 //        Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();

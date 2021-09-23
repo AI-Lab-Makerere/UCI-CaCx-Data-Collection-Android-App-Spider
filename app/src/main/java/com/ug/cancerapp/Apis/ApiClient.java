@@ -20,7 +20,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class ApiClient {
 
-    private static final String BASE_URL = "https://orchestra.styxtechgroup.com/";
+    private static final String BASE_URL = "http://orchestra.uci.or.ug:9090/";
     private static Retrofit retrofit = null;
 
     public static Retrofit getClient() {

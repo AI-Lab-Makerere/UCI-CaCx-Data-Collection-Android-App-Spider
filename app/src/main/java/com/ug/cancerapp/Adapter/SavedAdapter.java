@@ -56,8 +56,8 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.SavedHolder>
 
     @Override
     public void onBindViewHolder(@NonNull SavedHolder holder, int position) {
-        holder.studyID.setText("StudyID: " + gynecologists.get(position).getStudyId());
-        holder.initials.setText("Initials: " + gynecologists.get(position).getInitials());
+        holder.studyID.setText("Name: " + gynecologists.get(position).getStudyId());
+        holder.initials.setText("Telephone number: " + gynecologists.get(position).getInitials());
         holder.age.setText("Age: " + gynecologists.get(position).getAge());
         holder.via.setText("VIA Results: " + gynecologists.get(position).getViaResults());
         holder.dat.setText("Form Submitted " + gynecologists.get(position).getDate());

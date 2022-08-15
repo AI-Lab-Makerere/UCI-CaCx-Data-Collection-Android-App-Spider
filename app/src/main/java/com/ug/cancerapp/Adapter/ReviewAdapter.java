@@ -49,7 +49,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
 
     @Override
     public void onBindViewHolder(@NonNull ReviewHolder holder, int position) {
-        holder.study.setText("StudyID: " + gynecologists.get(position).getStudyId());
+        holder.study.setText("Name: " + gynecologists.get(position).getStudyId());
         holder.age.setText("Nurse's VIA Results: " + gynecologists.get(position).getViaResults());
         holder.via.setText("Expert's VIA Results: " + gynecologists.get(position).getGynResults());
         holder.date.setText("Model Predictions: " + gynecologists.get(position).getDate());

@@ -129,7 +129,7 @@ public class FifthFragment extends Fragment implements AdapterView.OnItemSelecte
                 tim = date.getText().toString();
                 timmy = times.getText().toString();
 
-                if (value.isEmpty() || tim.isEmpty() || child.isEmpty() || abort.isEmpty() || timmy.isEmpty()) {
+                if (value.isEmpty() || child.isEmpty() || abort.isEmpty()) {
                     Toast.makeText(getActivity(), "Fill in all the fields", Toast.LENGTH_SHORT).show();
                 } else {
                     int part = Integer.parseInt(child);
@@ -143,7 +143,6 @@ public class FifthFragment extends Fragment implements AdapterView.OnItemSelecte
                         Toast.makeText(getActivity(), "The maximum number of abortions should not be greater than maximum number of children", Toast.LENGTH_SHORT).show();
                     } else {
                         saveData();
-                        compareDates();
                     }
                 }
 
@@ -231,6 +230,8 @@ public class FifthFragment extends Fragment implements AdapterView.OnItemSelecte
         editor.putString(ABORTION, abortions.getText().toString());
 
         editor.apply();
+
+        compareDates();
 //        Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
     }
 
@@ -274,7 +275,7 @@ public class FifthFragment extends Fragment implements AdapterView.OnItemSelecte
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         text = parent.getItemAtPosition(position).toString();
-        if (!(tim == null)){
+        if (!tim.isEmpty()){
             if (position == 1){
                 times.setText(text);
                 months = "01/" + tim;
@@ -289,7 +290,7 @@ public class FifthFragment extends Fragment implements AdapterView.OnItemSelecte
 //                Toast.makeText(getActivity(), months, Toast.LENGTH_SHORT).show();
             }
         }else {
-            Toast.makeText(getActivity(), "Please first select the month and the year", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Please first select the date", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -299,25 +300,33 @@ public class FifthFragment extends Fragment implements AdapterView.OnItemSelecte
     }
 
     private void compareDates() {
-        SimpleDateFormat sdf1=new SimpleDateFormat("dd/MM/yyyy");
-        try {
-            Date d1 = sdf1.parse(today);
-            Date d2 = sdf1.parse(months);
-            Calendar cal=Calendar.getInstance();
-            cal.setTime(d1);
-            long y=cal.getTimeInMillis();
-            cal.setTime(d2);
-            long y1=cal.getTimeInMillis();
-            if(y<y1){
-                Toast.makeText(getActivity(), "Please change the both Date and also the Period of the month", Toast.LENGTH_SHORT).show();
-            }else {
-                FragmentTransaction fr = getFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_container, new YesOrNoFragment());
-                fr.addToBackStack(null);
-                fr.commit();
+        if (tim.isEmpty() && months.isEmpty()){
+            FragmentTransaction fr = getFragmentManager().beginTransaction();
+            fr.replace(R.id.fragment_container, new YesOrNoFragment());
+            fr.addToBackStack(null);
+            fr.commit();
+        }else {
+            SimpleDateFormat sdf1=new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                Date d1 = sdf1.parse(today);
+                Date d2 = sdf1.parse(months);
+                Calendar cal=Calendar.getInstance();
+                cal.setTime(d1);
+                long y=cal.getTimeInMillis();
+                cal.setTime(d2);
+                long y1=cal.getTimeInMillis();
+                if(y<y1){
+                    Toast.makeText(getActivity(), "Please change the both Date and also the Period of the month", Toast.LENGTH_SHORT).show();
+                }else {
+                    FragmentTransaction fr = getFragmentManager().beginTransaction();
+                    fr.replace(R.id.fragment_container, new YesOrNoFragment());
+                    fr.addToBackStack(null);
+                    fr.commit();
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
-        } catch (ParseException e) {
-            e.printStackTrace();
         }
+
     }
 }

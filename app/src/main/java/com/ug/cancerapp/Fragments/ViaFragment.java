@@ -98,7 +98,7 @@ public class ViaFragment extends Fragment {
                 }
 
 
-                if (via.isEmpty() || notes.isEmpty() || location.isEmpty()){
+                if (via.isEmpty() || location.isEmpty()){
                     Toast.makeText(getActivity(), "Fill in all fields", Toast.LENGTH_SHORT).show();
                 }else {
                     saveData();

@@ -488,9 +488,9 @@ public class RecordsActivity extends AppCompatActivity {
     private void loadData(Dialog dialog, int position) {
 
         TextView study = dialog.findViewById(R.id.studyId);
-        study.setText("StudyID: " + formList.get(position).getStudyID());
+        study.setText("Name: " + formList.get(position).getStudyID());
         TextView initial = dialog.findViewById(R.id.initials);
-        initial.setText("Initials: " + formList.get(position).getInitials());
+        initial.setText("Telephone Number: " + formList.get(position).getInitials());
         TextView age = dialog.findViewById(R.id.age);
         age.setText("Age: " + formList.get(position).getAge());
         TextView address = dialog.findViewById(R.id.address);

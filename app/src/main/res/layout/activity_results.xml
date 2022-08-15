@@ -41,44 +41,43 @@
                 android:visibility="invisible"
                 />
 
-            <LinearLayout
-                android:id="@+id/searching"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="10"
-                android:layout_margin="10dp">
+<!--            <LinearLayout-->
+<!--                android:id="@+id/searching"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:weightSum="10"-->
+<!--                android:layout_margin="10dp">-->
 
-                <EditText
-                    android:id="@+id/search"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="8"
-                    android:hint="Search by Study ID"
-                    android:padding="10dp"
-                    android:background="@drawable/text_input"
-                    android:layout_marginRight="5dp"/>
+<!--                <EditText-->
+<!--                    android:id="@+id/search"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="50dp"-->
+<!--                    android:layout_weight="8"-->
+<!--                    android:hint="Search by Study ID"-->
+<!--                    android:padding="10dp"-->
+<!--                    android:background="@drawable/text_input"-->
+<!--                    android:layout_marginRight="5dp"/>-->
 
-                <Button
-                    android:id="@+id/submit"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="2"
-                    android:layout_marginLeft="5dp"
-                    android:text="Search"
-                    android:textSize="18sp"
-                    android:textAllCaps="false"
-                    android:textColor="@color/colorBackground"
-                    android:background="@drawable/primary_btn"/>
+<!--                <Button-->
+<!--                    android:id="@+id/submit"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="50dp"-->
+<!--                    android:layout_weight="2"-->
+<!--                    android:layout_marginLeft="5dp"-->
+<!--                    android:text="Search"-->
+<!--                    android:textSize="18sp"-->
+<!--                    android:textAllCaps="false"-->
+<!--                    android:textColor="@color/colorBackground"-->
+<!--                    android:background="@drawable/primary_btn"/>-->
 
-            </LinearLayout>
+<!--            </LinearLayout>-->
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:listitem="@layout/review"
-                android:layout_below="@id/searching"/>
+                tools:listitem="@layout/review"/>
 
             <include layout="@layout/network_issues"/>
 

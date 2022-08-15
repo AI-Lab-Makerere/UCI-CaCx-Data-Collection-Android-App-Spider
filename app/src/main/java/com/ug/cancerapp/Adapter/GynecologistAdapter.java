@@ -51,7 +51,7 @@ public class GynecologistAdapter extends RecyclerView.Adapter<GynecologistAdapte
     @Override
     public void onBindViewHolder(@NonNull GynecologistHolder holder, int position) {
 
-        holder.study.setText("StudyID: " + gynecologists.get(position).getStudyId());
+        holder.study.setText("Name: " + gynecologists.get(position).getStudyId());
         holder.age.setText("Age: " + gynecologists.get(position).getAge());
         holder.dat.setText("Form Submitted " + gynecologists.get(position).getDate());
     }

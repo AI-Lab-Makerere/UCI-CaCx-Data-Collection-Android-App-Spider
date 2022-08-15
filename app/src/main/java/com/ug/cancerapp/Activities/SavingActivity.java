@@ -180,21 +180,26 @@ public class SavingActivity extends AppCompatActivity {
             bitmap1 = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
             ident = 1;
             runTensorflowModel(bitmap1);
-            sImage2 = sharedPreferences.getString(IMAGE2, "");
-            byte[] bytes2 = Base64.decode(sImage2, Base64.DEFAULT);
-            bitmap2 = BitmapFactory.decodeByteArray(bytes2, 0, bytes2.length);
-            ident = 2;
-            runTensorflowModel(bitmap2);
+//            sImage2 = sharedPreferences.getString(IMAGE2, "");
+//            byte[] bytes2 = Base64.decode(sImage2, Base64.DEFAULT);
+//            bitmap2 = BitmapFactory.decodeByteArray(bytes2, 0, bytes2.length);
+//            ident = 2;
+//            runTensorflowModel(bitmap2);
             sImage3 = sharedPreferences.getString(IMAGE3, "");
             byte[] bytes3 = Base64.decode(sImage3, Base64.DEFAULT);
             bitmap3 = BitmapFactory.decodeByteArray(bytes3, 0, bytes3.length);
             ident = 3;
             runTensorflowModel(bitmap3);
+
             sImage4 = sharedPreferences.getString(IMAGE4, "");
-            byte[] bytes4 = Base64.decode(sImage4, Base64.DEFAULT);
-            bitmap4 = BitmapFactory.decodeByteArray(bytes4, 0, bytes4.length);
-            ident = 4;
-            runTensorflowModel(bitmap4);
+            if (!sImage4.isEmpty()){
+
+                byte[] bytes4 = Base64.decode(sImage4, Base64.DEFAULT);
+                bitmap4 = BitmapFactory.decodeByteArray(bytes4, 0, bytes4.length);
+                ident = 4;
+                runTensorflowModel(bitmap4);
+            }
+
             getModelResults();
             savingData();
 
@@ -285,23 +290,28 @@ public class SavingActivity extends AppCompatActivity {
 
         float threshold = (float) 0.5;
 
-        if (viar3.equals(viar4)) {
+        if (sImage4.isEmpty()){
             mmv = viar3;
-        } else {
-            if (viar3.equals("Positive")) {
-                if (pos3 >= threshold) {
-                    mmv = viar3;
-                } else {
-                    mmv = "Negative";
-                }
+        }else {
+            if (viar3.equals(viar4)) {
+                mmv = viar3;
             } else {
-                if (pos4 >= threshold) {
-                    mmv = viar4;
+                if (viar3.equals("Positive")) {
+                    if (pos3 >= threshold) {
+                        mmv = viar3;
+                    } else {
+                        mmv = "Negative";
+                    }
                 } else {
-                    mmv = "Negative";
+                    if (pos4 >= threshold) {
+                        mmv = viar4;
+                    } else {
+                        mmv = "Negative";
+                    }
                 }
             }
         }
+
     }
 
     private void savingData() {

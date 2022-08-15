@@ -51,7 +51,7 @@ public class CaseAdapter extends RecyclerView.Adapter<CaseAdapter.CaseHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull CaseHolder holder, int position) {
-        holder.study.setText("StudyID: " + gynecologist.get(position).getStudyId());
+        holder.study.setText("Name: " + gynecologist.get(position).getStudyId());
         holder.age.setText("Age: " + gynecologist.get(position).getAge());
         holder.via.setText("Expert's Via Results: " + gynecologist.get(position).getViaResults());
     }

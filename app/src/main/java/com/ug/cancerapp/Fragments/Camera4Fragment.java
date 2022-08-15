@@ -34,7 +34,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.ug.cancerapp.R;
-import com.ug.cancerapp.ml.Cancer;
 
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.support.image.TensorImage;
@@ -95,21 +94,7 @@ public class Camera4Fragment extends Fragment {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (sImage.isEmpty()){
-                    Toast.makeText(getActivity(), "Take a picture or load one from gallery", Toast.LENGTH_SHORT).show();
-                }else {
-//                    progressDialog.setMessage("Saving Image...");
-//                    progressDialog.show();
-//                    byte[] bytes = Base64.decode(sImage, Base64.DEFAULT);
-//                    Bitmap bitmap2 = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-//                    runTensorflowModel(bitmap2);
-                    saveData();
-//                    progressDialog.dismiss();
-                    FragmentTransaction fr = getFragmentManager().beginTransaction();
-                    fr.replace(R.id.fragment_container, new ViaFragment());
-                    fr.addToBackStack(null);
-                    fr.commit();
-                }
+                saveData();
             }
         });
 
@@ -212,21 +197,20 @@ public class Camera4Fragment extends Fragment {
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        editor.putString(IMAGE4, sImage);
-//        editor.putString(VR4, viar);
-//        editor.putString(FLON4, negative);
-//        editor.putString(FLOP4, positive);
+        if (!sImage.isEmpty()){
+            editor.putString(IMAGE4, sImage);
+            editor.apply();
+        }
 
-        editor.apply();
-//        Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
+        FragmentTransaction fr = getFragmentManager().beginTransaction();
+        fr.replace(R.id.fragment_container, new ViaFragment());
+        fr.addToBackStack(null);
+        fr.commit();
     }
 
     public void loadData(){
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         sImage = sharedPreferences.getString(IMAGE4, "");
-//        viar = sharedPreferences.getString(VR4, "");
-//        negative = sharedPreferences.getString(FLON4, "");
-//        positive = sharedPreferences.getString(FLOP4, "");
 
     }
 
@@ -236,46 +220,5 @@ public class Camera4Fragment extends Fragment {
         imageView.setImageBitmap(bitmap);
     }
 
-    private void runTensorflowModel(Bitmap bitmap) {
-
-        try {
-            Cancer model = Cancer.newInstance(getActivity());
-
-            // Creates inputs for reference.
-            TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 300, 300, 3}, DataType.FLOAT32);
-
-            TensorImage tensorImage = new TensorImage(DataType.FLOAT32);
-            tensorImage.load(bitmap);
-            ByteBuffer byteBuffer = tensorImage.getBuffer();
-            inputFeature0.loadBuffer(byteBuffer);
-
-            // Runs model inference and gets result.
-            Cancer.Outputs outputs = model.process(inputFeature0);
-            TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
-
-            // Releases model resources if no longer used.
-            model.close();
-
-            float viaNegative = outputFeature0.getFloatArray()[0];
-            float viaPositive = outputFeature0.getFloatArray()[1];
-
-            if (viaNegative > viaPositive){
-                viar = "Negative";
-                negative = String.valueOf(viaNegative);
-                positive = String.valueOf(viaPositive);
-//                Toast.makeText(getActivity(), viar, Toast.LENGTH_SHORT).show();
-            }else {
-                viar = "Positive";
-                negative = String.valueOf(viaNegative);
-                positive = String.valueOf(viaPositive);
-//                Toast.makeText(getActivity(), viar, Toast.LENGTH_SHORT).show();
-
-            }
-
-
-        } catch (IOException e) {
-            // TODO Handle the exception
-        }
-    }
 
 }

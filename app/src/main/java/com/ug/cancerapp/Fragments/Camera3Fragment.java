@@ -34,7 +34,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.ug.cancerapp.R;
-import com.ug.cancerapp.ml.Cancer;
 
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.support.image.TensorImage;
@@ -237,46 +236,5 @@ public class Camera3Fragment extends Fragment {
         imageView.setImageBitmap(bitmap);
     }
 
-    private void runTensorflowModel(Bitmap bitmap) {
-
-        try {
-            Cancer model = Cancer.newInstance(getActivity());
-
-            // Creates inputs for reference.
-            TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 300, 300, 3}, DataType.FLOAT32);
-
-            TensorImage tensorImage = new TensorImage(DataType.FLOAT32);
-            tensorImage.load(bitmap);
-            ByteBuffer byteBuffer = tensorImage.getBuffer();
-            inputFeature0.loadBuffer(byteBuffer);
-
-            // Runs model inference and gets result.
-            Cancer.Outputs outputs = model.process(inputFeature0);
-            TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
-
-            // Releases model resources if no longer used.
-            model.close();
-
-            float viaNegative = outputFeature0.getFloatArray()[0];
-            float viaPositive = outputFeature0.getFloatArray()[1];
-
-            if (viaNegative > viaPositive){
-                viar = "Negative";
-                negative = String.valueOf(viaNegative);
-                positive = String.valueOf(viaPositive);
-//                Toast.makeText(getActivity(), viar, Toast.LENGTH_SHORT).show();
-            }else {
-                viar = "Positive";
-                negative = String.valueOf(viaNegative);
-                positive = String.valueOf(viaPositive);
-//                Toast.makeText(getActivity(), viar, Toast.LENGTH_SHORT).show();
-
-            }
-
-
-        } catch (IOException e) {
-            // TODO Handle the exception
-        }
-    }
 
 }

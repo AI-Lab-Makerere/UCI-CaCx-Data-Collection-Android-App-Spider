@@ -40,7 +40,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="Study ID"
+                    android:text="Full Name"
                     android:textColor="@color/colorTextPrimary"
                     android:textSize="18sp" />
 
@@ -50,7 +50,7 @@
                     android:layout_height="50dp"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/text_bg"
-                    android:inputType="textCapCharacters"
+                    android:textSize="14sp"
                     android:paddingLeft="5dp"
                     android:saveEnabled="false" />
 
@@ -63,14 +63,14 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="5"
+                        android:layout_weight="8"
                         android:orientation="vertical">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
-                            android:text="Initials"
+                            android:text="Telephone Number"
                             android:textColor="@color/colorTextPrimary"
                             android:textSize="18sp" />
 
@@ -80,7 +80,7 @@
                             android:layout_height="50dp"
                             android:layout_marginTop="5dp"
                             android:background="@drawable/text_bg"
-                            android:inputType="textCapCharacters"
+                            android:inputType="number"
                             android:paddingLeft="5dp" />
 
                     </LinearLayout>
@@ -89,7 +89,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:layout_weight="5"
+                        android:layout_weight="2"
                         android:orientation="vertical">
 
                         <TextView

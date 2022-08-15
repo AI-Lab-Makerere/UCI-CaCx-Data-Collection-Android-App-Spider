@@ -63,8 +63,8 @@ public class FormAdapter extends RecyclerView.Adapter<FormAdapter.FormHolder> {
     @Override
     public void onBindViewHolder(@NonNull FormHolder holder, int position) {
         Form form = formList.get(position);
-        holder.studyID.setText("StudyID: " + form.getStudyID());
-        holder.initials.setText("Initials: " + form.getInitials());
+        holder.studyID.setText("Name: " + form.getStudyID());
+        holder.initials.setText("Telephone Number: " + form.getInitials());
         holder.age.setText("Age: " + String.valueOf(form.getAge()));
         holder.via.setText("VIA Results: " + form.getVia());
 

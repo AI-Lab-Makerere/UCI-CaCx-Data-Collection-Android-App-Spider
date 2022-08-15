@@ -47,6 +47,13 @@
                     android:textColor="@color/colorTextPrimary"
                     android:textSize="16sp" />
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="First select the screening date then the period"
+                    android:textColor="@color/colorTextSecondary"
+                    android:textSize="12sp" />
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -196,7 +203,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="What any treatment given? Give details"
+                    android:text="Any treatment given? Give details"
                     android:textColor="@color/colorTextPrimary"
                     android:textSize="16sp" />
 

@@ -131,8 +131,8 @@ public class LocationUploadWorker extends Worker {
         String title = "UCI CaCx...";
         String cancel = "Cancel";
         // This PendingIntent can be used to cancel the worker
-        PendingIntent intent = WorkManager.getInstance(context)
-                .createCancelPendingIntent(getId());
+//        PendingIntent intent = WorkManager.getInstance(context)
+//                .createCancelPendingIntent(getId());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createChannel();
@@ -145,7 +145,7 @@ public class LocationUploadWorker extends Worker {
                 .setOngoing(true)
                 // Add the cancel action to the notification which can
                 // be used to cancel the worker
-                .addAction(android.R.drawable.ic_delete, cancel, intent)
+//                .addAction(android.R.drawable.ic_delete, cancel, intent)
                 .build();
 
         return new ForegroundInfo(100, notification);

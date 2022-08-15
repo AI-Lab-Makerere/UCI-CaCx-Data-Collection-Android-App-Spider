@@ -101,13 +101,13 @@ public class LoginActivity extends AppCompatActivity {
         clientDAO = FormDatabase.getInstance(LoginActivity.this).clientDAO();
 
         category = getIntent().getStringExtra("category");
-        if (category.equals("gynecologist")) {
-            username.setText("clinician@styxtechgroup.com");
-            password.setText("Admin123");
-        } else {
-            username.setText("nurse@styxtechgroup.com");
-            password.setText("Admin123");
-        }
+//        if (category.equals("gynecologist")) {
+//            username.setText("clinician@styxtechgroup.com");
+//            password.setText("Admin123");
+//        } else {
+//            username.setText("nurse@styxtechgroup.com");
+//            password.setText("Admin123");
+//        }
 
 
         submit.setOnClickListener(new View.OnClickListener() {

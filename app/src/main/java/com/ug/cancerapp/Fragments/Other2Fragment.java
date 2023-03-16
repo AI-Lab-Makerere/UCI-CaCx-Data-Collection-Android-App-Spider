@@ -29,9 +29,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.ug.cancerapp.Activities.ModelActivity;
 import com.ug.cancerapp.Activities.RecordsActivity;
 import com.ug.cancerapp.Activities.SavingActivity;
@@ -44,6 +49,7 @@ import com.ug.cancerapp.Database.FormDAO;
 import com.ug.cancerapp.Database.FormDatabase;
 import com.ug.cancerapp.Database.FormRepository;
 import com.ug.cancerapp.Database.FormViewModel;
+import com.ug.cancerapp.Models.Nurses;
 import com.ug.cancerapp.R;
 import com.ug.cancerapp.Activities.DashBoardActivity;
 
@@ -52,6 +58,7 @@ import org.tensorflow.lite.support.image.TensorImage;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -59,6 +66,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import static com.ug.cancerapp.Activities.LoginActivity.NURSES;
 import static com.ug.cancerapp.Activities.SplashActivity.THRESHOLD;
 import static com.ug.cancerapp.Fragments.Camera1Fragment.FLON;
 import static com.ug.cancerapp.Fragments.Camera1Fragment.FLOP;
@@ -111,15 +119,19 @@ public class Other2Fragment extends Fragment {
     String nurse1, nurse2, nurse3, total;
     ArrayList<Client> clientList, selected;
     NurseAdapter nurseAdapter;
-    RecyclerView recyclerView;
+//    RecyclerView recyclerView;
+    LinearLayout linearLayout;
 
     FormRepository formRepository;
     Client client;
     ClientDAO clientDAO;
 
     public static final String SHARED_PREFS = "sharedPrefs";
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
+    public static final String SHARED_API = "sharedApi";
+    SharedPreferences sharedPreferences, sharedPreferences1;
+    SharedPreferences.Editor editor, editor1;
+    ArrayList<Nurses> nursesList = new ArrayList<>();
+    List<String> emails = new ArrayList<>();
 
     public static final String NURSE1 = "nurse1";
     public static final String NURSE2 = "nurse2";
@@ -133,15 +145,16 @@ public class Other2Fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_other2, container, false);
-//        back = view.findViewById(R.id.back);
+        back = view.findViewById(R.id.back);
         next = view.findViewById(R.id.next);
-        recyclerView = view.findViewById(R.id.recycler_view);
+        linearLayout = view.findViewById(R.id.rootContainer);
+//        recyclerView = view.findViewById(R.id.recycler_view);
+//
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        recyclerView.setHasFixedSize(true);
+//        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        new loadData().execute();
+//        new loadData().execute();
 
         formRepository = new FormRepository((Application) getActivity().getApplicationContext());
         clientDAO = FormDatabase.getInstance(getActivity()).clientDAO();
@@ -149,6 +162,11 @@ public class Other2Fragment extends Fragment {
 
         sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+
+        sharedPreferences1 = getActivity().getSharedPreferences(SHARED_API, Context.MODE_PRIVATE);
+        editor1 = sharedPreferences1.edit();
+
+        loadUsers();
 //
 //        loadData();
 //        updateViews();
@@ -157,26 +175,55 @@ public class Other2Fragment extends Fragment {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getEmailAddress();
-
+                editor.putString(SUM, mail);
+                editor.apply();
+                startActivity(new Intent(getActivity(), SavingActivity.class));
             }
         });
 
-//        back.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FragmentTransaction fr = getFragmentManager().beginTransaction();
-//                fr.replace(R.id.fragment_container, new ViaFragment());
-//                fr.commit();
-//            }
-//        });
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction fr = getFragmentManager().beginTransaction();
+                fr.replace(R.id.fragment_container, new ViaFragment());
+                fr.commit();
+            }
+        });
 
         return view;
     }
 
+    private void loadUsers() {
+        Gson gson = new Gson();
+        String json = sharedPreferences1.getString(NURSES, null);
+        Type type = new TypeToken<ArrayList<Nurses>>() {}.getType();
+        nursesList = gson.fromJson(json, type);
+        if (nursesList == null){
+            nursesList = new ArrayList<>();
+        }else {
+            for (Nurses nurse : nursesList ){
+                CheckBox checkBox = new CheckBox(getActivity());
+                checkBox.setText(nurse.getName());
+                checkBox.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        if (checkBox.isChecked()){
+                            emails.add(nurse.getEmail());
+                        }else {
+                            emails.remove(nurse.getEmail());
+                        }
+                        mail = String.join(", ", emails);
+                    }
+                });
+                linearLayout.addView(checkBox);
+            }
+        }
+    }
+
     class loadData extends AsyncTask<Void, Void, Void>{
 
-        List<Client> clientList1;
+        List<Client> clientList1 = new ArrayList<>();
 
         @Override
         protected void onPreExecute() {
@@ -187,11 +234,12 @@ public class Other2Fragment extends Fragment {
         @Override
         protected Void doInBackground(Void... voids) {
 
-            clientList1 = formRepository.getAllClients();
-            clientList = new ArrayList<>();
-            selected = new ArrayList<>();
-
-            clientList.addAll(clientList1);
+//            clientList1 = formRepository.getAllClients();
+//            clientList = new ArrayList<>();
+//            selected = new ArrayList<>();
+//
+//            clientList.addAll(clientList1);
+            Toast.makeText(getActivity(), "" + formRepository.getAllClients(), Toast.LENGTH_SHORT).show();
 
             return null;
         }
@@ -199,36 +247,36 @@ public class Other2Fragment extends Fragment {
         @Override
         protected void onPostExecute(Void unused) {
             super.onPostExecute(unused);
-            nurseAdapter = new NurseAdapter(clientList, selected, getActivity());
-            recyclerView.setAdapter(nurseAdapter);
+//            nurseAdapter = new NurseAdapter(clientList, selected, getActivity());
+//            recyclerView.setAdapter(nurseAdapter);
         }
     }
 
-    public void getEmailAddress(){
-        mail = "";
-        int si = nurseAdapter.getSelected().size();
-        if (si > 0){
-            for (int i = si -1; i >= 0; i--){
-                index = nurseAdapter.getSelected().get(i).getEmail();
-                mail += index + ", ";
-            }
-            mail = mail.replaceAll(", $", "");
-            editor.putString(SUM, mail);
-            editor.apply();
-            startActivity(new Intent(getActivity(), SavingActivity.class));
-        }else {
-            Toast.makeText(getActivity(), "Select at least one other nurse", Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
-//    private void saveData() {
-//
-//        getEmailAddress();
+//    public void getEmailAddress(){
+//        mail = "";
+//        int si = nurseAdapter.getSelected().size();
+//        if (si > 0){
+//            for (int i = si -1; i >= 0; i--){
+//                index = nurseAdapter.getSelected().get(i).getEmail();
+//                mail += index + ", ";
+//            }
+//            mail = mail.replaceAll(", $", "");
+//            editor.putString(SUM, mail);
+//            editor.apply();
+//            startActivity(new Intent(getActivity(), SavingActivity.class));
+//        }else {
+//            Toast.makeText(getActivity(), "Select at least one other nurse", Toast.LENGTH_SHORT).show();
+//        }
 //
 //    }
-//
-//    public void loadData(){
+
+    private void saveData() {
+
+//        getEmailAddress();
+
+    }
+
+    public void loadData(){
 //        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
 //
 //        nurse1 = sharedPreferences.getString(NURSE1, "");
@@ -236,10 +284,10 @@ public class Other2Fragment extends Fragment {
 //        nurse3 = sharedPreferences.getString(NURSE3, "");
 //        nurse3 = sharedPreferences.getString(NURSE3, "");
 ////        total = sharedPreferences.getString(SUM, "");
-//
-//    }
-//
-//    public void updateViews(){
-//
-//    }
+
+    }
+
+    public void updateViews(){
+
+    }
 }

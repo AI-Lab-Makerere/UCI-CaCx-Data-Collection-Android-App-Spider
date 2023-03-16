@@ -32,18 +32,22 @@
             android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Please enter the names of the other nurses involved in this screening process"
+            android:text="Please select the nurses involved in this screening process"
             android:textSize="16sp"
             android:gravity="center"
             android:layout_below="@id/title"
             android:textColor="@color/colorTextPrimary"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <LinearLayout
             android:layout_below="@id/subTitle"
-            android:id="@+id/recycler_view"
-            tools:listitem="@layout/nurse"/>
+            android:id="@+id/rootContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:orientation="vertical">
+
+        </LinearLayout>
 
     </RelativeLayout>
 
@@ -53,14 +57,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
 
-<!--        <Button-->
-<!--            android:id="@+id/back"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_margin="10dp"-->
-<!--            android:background="@drawable/primary_btn"-->
-<!--            android:text="Back"-->
-<!--            android:textColor="@color/colorBackground" />-->
+        <Button
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/primary_btn"
+            android:text="Back"
+            android:textColor="@color/colorBackground" />
 
         <Button
             android:id="@+id/next"

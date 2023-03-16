@@ -26,6 +26,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,10 +101,10 @@ public class Camera1Fragment extends Fragment {
                     Toast.makeText(getActivity(), "Take a picture or load one from gallery", Toast.LENGTH_SHORT).show();
                 }else {
                     saveData();
-                    FragmentTransaction fr = getFragmentManager().beginTransaction();
-                    fr.replace(R.id.fragment_container, new Camera2Fragment());
-                    fr.addToBackStack(null);
-                    fr.commit();
+//                    FragmentTransaction fr = getFragmentManager().beginTransaction();
+//                    fr.replace(R.id.fragment_container, new Camera2Fragment());
+//                    fr.addToBackStack(null);
+//                    fr.commit();
                 }
 
             }
@@ -179,6 +180,7 @@ public class Camera1Fragment extends Fragment {
                 bitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+//                runTensorflowModel(bitmap);
                 byte[] bytes = stream.toByteArray();
                 sImage = Base64.encodeToString(bytes, Base64.DEFAULT);
                 imageView.setImageBitmap(bitmap);
@@ -196,6 +198,7 @@ public class Camera1Fragment extends Fragment {
                 bitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+//                runTensorflowModel(bitmap);
                 byte[] bytes = stream.toByteArray();
                 sImage = Base64.encodeToString(bytes, Base64.DEFAULT);
                 imageView.setImageURI(uri);
@@ -214,11 +217,15 @@ public class Camera1Fragment extends Fragment {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putString(IMAGE, sImage);
-//        editor.putString(VR, viar);
-//        editor.putString(FLON, negative);
-//        editor.putString(FLOP, positive);
+
 
         editor.apply();
+
+        FragmentTransaction fr = getFragmentManager().beginTransaction();
+        fr.replace(R.id.fragment_container, new Camera2Fragment());
+        fr.addToBackStack(null);
+        fr.commit();
+
 //        Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
     }
 
@@ -242,5 +249,6 @@ public class Camera1Fragment extends Fragment {
         value = sharedPreferences.getString(CHECKS, "");
 
     }
+
 
 }

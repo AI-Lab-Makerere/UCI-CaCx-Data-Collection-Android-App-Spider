@@ -33,6 +33,7 @@ import com.ug.cancerapp.Database.Form;
 import com.ug.cancerapp.Database.FormViewModel;
 import com.ug.cancerapp.R;
 import com.ug.cancerapp.ml.Cancer;
+import com.ug.cancerapp.ml.Cancer2;
 
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.support.image.TensorImage;
@@ -222,6 +223,7 @@ public class SavingActivity extends AppCompatActivity {
     private void runTensorflowModel(Bitmap bitmap) {
 
         try {
+
             Cancer model = Cancer.newInstance(this);
 
             // Creates inputs for reference.

@@ -102,9 +102,9 @@ public class ViaFragment extends Fragment {
                     Toast.makeText(getActivity(), "Fill in all fields", Toast.LENGTH_SHORT).show();
                 }else {
                     saveData();
-                    FragmentTransaction fr = getFragmentManager().beginTransaction();
-                    fr.replace(R.id.fragment_container, new Other2Fragment());
-                    fr.commit();
+//                    FragmentTransaction fr = getFragmentManager().beginTransaction();
+//                    fr.replace(R.id.fragment_container, new Other2Fragment());
+//                    fr.commit();
 
                 }
 
@@ -133,6 +133,13 @@ public class ViaFragment extends Fragment {
         editor.putString(LESION, location);
 
         editor.apply();
+
+        FragmentTransaction fr = getFragmentManager().beginTransaction();
+        fr.replace(R.id.fragment_container, new Other2Fragment());
+        fr.addToBackStack(null);
+        fr.commit();
+
+//        startActivity(new Intent(getActivity(), SavingActivity.class));
 //        Toast.makeText(getActivity(), "Data saved", Toast.LENGTH_SHORT).show();
     }
 

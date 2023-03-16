@@ -32,6 +32,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 import com.ug.cancerapp.Apis.ApiClient;
 import com.ug.cancerapp.Apis.JsonPlaceHolder;
 import com.ug.cancerapp.Database.Client;
@@ -42,6 +43,7 @@ import com.ug.cancerapp.Database.FormViewModel;
 import com.ug.cancerapp.Models.Case;
 import com.ug.cancerapp.Models.CurrentUser;
 import com.ug.cancerapp.Models.Nurse;
+import com.ug.cancerapp.Models.Nurses;
 import com.ug.cancerapp.Models.Settings;
 import com.ug.cancerapp.Models.User;
 import com.ug.cancerapp.R;
@@ -52,6 +54,7 @@ import retrofit2.Response;
 
 import static com.ug.cancerapp.Activities.SplashActivity.THRESHOLD;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
@@ -77,10 +80,13 @@ public class LoginActivity extends AppCompatActivity {
     public static final String FACNAME = "fac_name";
     public static final String FACID = "fac_id";
     public static final String TOKEN= "token";
+    public static final String NURSES= "nurses";
 
     String facId, email;
 
     SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    ArrayList<Nurses> nursesList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +103,7 @@ public class LoginActivity extends AppCompatActivity {
         root_layout = findViewById(R.id.root_layout);
 
         sharedPreferences = getSharedPreferences(SHARED_API, MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         formViewModel = ViewModelProviders.of(this).get(FormViewModel.class);
         clientDAO = FormDatabase.getInstance(LoginActivity.this).clientDAO();
 
@@ -155,6 +162,8 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 token = response.body();
+                editor.putString(TOKEN, token);
+                editor.apply();
 //                Toast.makeText(LoginActivity.this, token, Toast.LENGTH_SHORT).show();
                 LoaduserInformation(token);
 
@@ -203,16 +212,12 @@ public class LoginActivity extends AppCompatActivity {
 
     private void saveData(String email, String userId, String facId, String facName, String token) {
 
-
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
         editor.putString(EMAIL, email);
         editor.putString(USERID, userId);
         editor.putString(FACID, facId);
         editor.putString(FACNAME, facName);
-        editor.putString(TOKEN, token);
-
         editor.apply();
+
         progressBar.setVisibility(View.INVISIBLE);
         submit.setEnabled(true);
 
@@ -229,6 +234,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void getNurses() {
+        nursesList.clear();
         Call<List<Nurse>> call = jsonPlaceHolder.nurses("Bearer " + token);
         call.enqueue(new Callback<List<Nurse>>() {
             @Override
@@ -249,12 +255,23 @@ public class LoginActivity extends AppCompatActivity {
                     emails += nurse.getEmail();
                     id += nurse.getId();
                     health_facility_id += nurse.getHealth_facility_id();
-                    if (!clientDAO.clientExist(id)){
-                        Client client = new Client(id, health_facility_id, name, emails);
-                        formViewModel.insertNurse(client);
-                    }
+                    Nurses nurses1 = new Nurses(id, health_facility_id, name, emails);
+                    nursesList.add(nurses1);
+//                    if (!clientDAO.clientExist(id)){
+//                        Client client = new Client(id, health_facility_id, name, emails);
+//                        formViewModel.insertNurse(client);
+//                    }
 
                 }
+                if (nursesList.size() == 0){
+                    Toast.makeText(LoginActivity.this, "No nurses available", Toast.LENGTH_SHORT).show();
+                    editor.putString(NURSES, null);
+                }else {
+                    Gson gson = new Gson();
+                    String json = gson.toJson(nursesList);
+                    editor.putString(NURSES, json);
+                }
+                editor.apply();
                 progressBar.setVisibility(View.INVISIBLE);
                 submit.setEnabled(true);
                 startActivity(new Intent(LoginActivity.this, DashBoardActivity.class));

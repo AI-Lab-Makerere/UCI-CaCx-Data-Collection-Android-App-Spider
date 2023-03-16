@@ -25,6 +25,7 @@ import android.widget.Button;
 
 import com.ug.cancerapp.Fragments.Camera1Fragment;
 import com.ug.cancerapp.Fragments.FifthFragment;
+import com.ug.cancerapp.Fragments.Other2Fragment;
 import com.ug.cancerapp.Fragments.ScreenFragment;
 import com.ug.cancerapp.Fragments.ViaFragment;
 import com.ug.cancerapp.R;
@@ -58,6 +59,7 @@ public class CollectActivity extends AppCompatActivity {
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.fragment_container, new FirstFragment());
+//        fragmentTransaction.add(R.id.fragment_container, new Other2Fragment());
         fragmentTransaction.commit();
 
     }
